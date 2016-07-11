@@ -16,10 +16,7 @@ namespace Indico20.BusinessObjects.Repositories
 
         public void Add(UserSatatus entity)
         {
-            Add(entity,@"INSERT INTO UserStatus 
-                (Key,
-                 Name)
-                VALUES('{0}','{1}')",entity.Key,entity.Name);
+            Execute(QueryBuilder.Insert(TableName,GetColumnValueMapping(entity)));
         }
 
         public void AddRange(IEnumerable<UserSatatus> entities)
@@ -30,15 +27,9 @@ namespace Indico20.BusinessObjects.Repositories
             var stringBuilder = new StringBuilder();
             foreach (var entity in list)
             {
-                stringBuilder.Append(string.Format(@"INSERT INTO UserStatus 
-                (Key,
-                 Name)
-                VALUES('{0}','{1}');", entity.Key, entity.Name));
+                stringBuilder.Append(QueryBuilder.Insert(TableName, GetColumnValueMapping(entity)));
             }
-            using (var connection = Connection)
-            {
-                connection.Execute(stringBuilder.ToString());
-            }
+            Execute(stringBuilder.ToString());
         }
 
         public IEnumerable<UserSatatus> Find(Expression<Func<UserSatatus, bool>> predicate)
@@ -69,12 +60,17 @@ namespace Indico20.BusinessObjects.Repositories
         public void Update(UserSatatus entity)
         {
 
-            Update(entity, QueryBuilder.Update(TableName, new Dictionary<string, object>()
-            {
-                { "Key",entity.Key},
-                { "Name",entity.Name}
+            Update(entity, QueryBuilder.Update(TableName, GetColumnValueMapping(entity),entity.ID));
+        }
 
-            },entity.ID));
+        public Dictionary<string, object> GetColumnValueMapping(UserSatatus entity)
+        {
+            return new Dictionary<string, object>()
+            {
+                {"Key", entity.Key},
+                {"Name", entity.Name}
+
+            };
         }
     }
 }

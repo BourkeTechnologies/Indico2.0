@@ -81,5 +81,13 @@ namespace Indico20.BusinessObjects.Repositories
                 connection.Execute(string.Format(insertQuery, par));
             }
         }
+
+        protected void Execute(string query)
+        {
+            using (var connection = Connection)
+            {
+                connection.Execute(query);
+            }
+        }
     }
 }

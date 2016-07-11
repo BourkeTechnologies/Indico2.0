@@ -19,5 +19,6 @@ namespace Indico20.BusinessObjects.Base
         void Remove(T entity);
         void Removerange(IEnumerable<T> entities);
         string TableName { get; }
+        Dictionary<string, object> GetColumnValueMapping(T entity);
     }
 }

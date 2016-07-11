@@ -11,6 +11,7 @@ using Indico20.BusinessObjects.Base;
 using Indico20.BusinessObjects.Common;
 using Indico20.BusinessObjects.Objects;
 using Indico20CodeBase.Extensions;
+using Indico20CodeBase.Tools;
 
 namespace Indico20.BusinessObjects.Repositories
 {
@@ -20,137 +21,80 @@ namespace Indico20.BusinessObjects.Repositories
 
         public void Add(User entity)
         {
-            using (var connection = Connection)
-            {
-                connection.Execute(string.Format("INSERT INTO [dbo].[User] (Company,IsDistributor,Status,Username,Password,GivenName," +
-                                                  "FamilyName,EmailAddress,PhotoPath,Creator,CreatedDate,Modifier,ModifiedDate,IsActive,IsDeleted," +
-                                                  "Guid,OfficeTelephoneNumber,MobileTelephoneNumber,HomeTelephoneNumber,DateLastLogin,HaveAccessForHTTPPost," +
-                                                  "Designation,IsDirectSalesPerson)" +
-                                                  " VALUES({0},{1},{2},'{3}','{4}','{5}'," +
-                                                  "'{6}','{7}','{8}',{9},'{10}',{11}," +
-                                                  "'{12}',{13},{14},'{15}','{16}','{17}'," +
-                                                  "'{18}','{19}',{20},'{21}',{22});" + Environment.NewLine,
-                                    entity.Company,entity.IsDistributor.ToOneZero(),entity.Status,entity.Username,entity.Password,entity.GivenName,
-                                    entity.FamilyName,entity.EmailAddress,entity.PhotoPath,entity.Creator,entity.CreatedDate,entity.Modifier,entity.ModifiedDate,
-                                    entity.IsActive.ToOneZero(),entity.IsDeleted.ToOneZero(),entity.Guid,entity.OfficeTelephoneNumber,entity.MobileTelephoneNumber,
-                                    entity.HomeTelephoneNumber,entity.DateLastLogin,entity.HaveAccessForHTTPPost.GetValueOrDefault().ToOneZero(),
-                                    entity.Designation,entity.IsDirectSalesPerson.ToOneZero()));
-            }
+            Execute(QueryBuilder.Insert(TableName,GetColumnValueMapping(entity)));
         }
 
         public void AddRange(IEnumerable<User> entities)
         {
+            var list = entities as List<User> ?? entities.ToList();
+            if (list.Count < 1)
+                return;
             var queryBuilder = new StringBuilder();
-            foreach (var entity in entities)
+            foreach (var entity in list)
             {
-                queryBuilder.Append(string.Format("INSERT INTO [dbo].[User] (Company,IsDistributor,Status,Username,Password,GivenName," +
-                                                  "FamilyName,EmailAddress,PhotoPath,Creator,CreatedDate,Modifier,ModifiedDate,IsActive,IsDeleted," +
-                                                  "Guid,OfficeTelephoneNumber,MobileTelephoneNumber,HomeTelephoneNumber,DateLastLogin,HaveAccessForHTTPPost," +
-                                                  "Designation,IsDirectSalesPerson)" +
-                                                  " VALUES({0},{1},{2},'{3}','{4}','{5}'," +
-                                                  "'{6}','{7}','{8}',{9},'{10}',{11}," +
-                                                  "'{12}',{13},{14},'{15}','{16}','{17}'," +
-                                                  "'{18}','{19}',{20},'{21}',{22});"+Environment.NewLine,entity.Company,entity.IsDistributor.ToOneZero(),entity.Status, entity.Username,
-                                            entity.Password,entity.GivenName,entity.FamilyName,entity.EmailAddress,entity.PhotoPath,entity.Creator,entity.CreatedDate,entity.Modifier,
-                                            entity.ModifiedDate,entity.IsActive.ToOneZero(), entity.IsDeleted.ToOneZero(),entity.Guid,entity.OfficeTelephoneNumber,entity.MobileTelephoneNumber,
-                                            entity.HomeTelephoneNumber,entity.DateLastLogin,entity.HaveAccessForHTTPPost.GetValueOrDefault().ToOneZero(),entity.Designation,entity.IsDirectSalesPerson.ToOneZero()));
+                queryBuilder.Append(QueryBuilder.Insert(TableName,GetColumnValueMapping(entity)));
             }
-
-            using (var connection = Connection)
-            {
-                connection.Execute(queryBuilder.ToString());
-            }
-        }
-
-        public IQueryable<User> AsQueryable()
-        {
-            using (var connection = Connection)
-            {
-                return connection.Query<User>("SELECT * FROM [dbo].[User]").AsQueryable();
-            }
+            Execute(queryBuilder.ToString());
         }
 
         public IEnumerable<User> Find(Expression<Func<User, bool>> predicate)
         {
-            using (var connection = Connection)
-            {
-               return connection.Query<User>("SELECT * FROM [dbo].[User]").Where(predicate.Compile());
-            }
+            return Find(TableName, predicate);
         }
 
         public User Get(int id)
         {
-            using (var connection = Connection)
-            {
-                return connection.Query("SELECT * FROM [dbo].[User] WHERE ID = @Id", new { Id = id }).SingleOrDefault();
-            }
+            return Get<User>(TableName, id);
         }
 
         public IEnumerable<User> GetAll()
         {
-            using (var connection = Connection)
-            {
-                return connection.Query<User>("SELECT * FROM [dbo].[User]");
-            }
+            return GetAll<User>(TableName);
         }
 
         public void Remove(User entity)
         {
-            using (var connection = Connection)
-            {
-                connection.Execute("DELETE FROM [dbo].[User] WHERE ID = @Id", new {Id = entity.ID});
-            }
+            Remove(TableName,entity);
         }
 
         public void Removerange(IEnumerable<User> entities)
         {
-            var queryBuilder = new StringBuilder();
-            foreach (var entity in entities)
-            {
-                queryBuilder.Append(string.Format("DELECT FROM [dbo].[User] WHERE ID = {0};"+Environment.NewLine, entity.ID));
-            }
-            using (var connection = Connection)
-            {
-                connection.Execute(queryBuilder.ToString());
-            }
+            RemoveRange(TableName,entities);
         }
 
         public void Update(User entity)
         {
-            var query = string.Format(@"UPDATE [dbo].[User] 
-                SET Company = {0},
-                     IsDistributor = '{1}',
-                     Status = {2},
-                     Username = '{3}',
-                     Password = '{4}',
-                     GivenName = '{5}',
-                     FamilyName = '{6}',
-                     EmailAddress = '{7}',
-                     PhotoPath = '{8}',
-                     Creator = {9},
-                     CreatedDate = '{10}',
-                     Modifier = {11},
-                     ModifiedDate = '{12}',
-                     IsActive = '{13}',
-                     IsDeleted = '{14}',
-                     Guid = '{15}',
-                     OfficeTelephoneNumber = '{16}',
-                     MobileTelephoneNumber = '{17}',
-                     HomeTelephoneNumber = '{18}',
-                     DateLastLogin = '{19}',
-                     HaveAccessForHTTPPost = '{20}',
-                     Designation = '{21}',
-                     IsDirectSalesPerson = '{22}'", entity.Company,
-                entity.IsDistributor, entity.Status, entity.Username, entity.Password, entity.GivenName, entity.FamilyName,
-                entity.EmailAddress, entity.PhotoPath, entity.Creator, entity.CreatedDate, entity.Modifier, entity.ModifiedDate,
-                entity.IsActive, entity.IsDeleted, entity.Guid, entity.OfficeTelephoneNumber, entity.MobileTelephoneNumber,
-                entity.HomeTelephoneNumber, entity.DateLastLogin, entity.HaveAccessForHTTPPost, entity.Designation, entity.IsDirectSalesPerson);
+            Update(entity,QueryBuilder.Update(TableName,GetColumnValueMapping(entity), entity.ID ));
+        }
 
-            using (var connection = Connection)
+        public Dictionary<string, object> GetColumnValueMapping(User entity)
+        {
+            return new Dictionary<string, object>()
             {
-
-                connection.Execute(query);
-            }
+                {"Company", entity.Company},
+                {"IsDistributor", entity.IsDistributor},
+                {"Status", entity.Status},
+                {"Username", entity.Username},
+                {"Password", entity.Password},
+                {"GivenName", entity.GivenName},
+                {"FamilyName", entity.FamilyName},
+                {"EmailAddress", entity.EmailAddress},
+                {"PhotoPath", entity.PhotoPath},
+                {"Creator", entity.Creator},
+                {"CreatedDate", entity.CreatedDate},
+                {"Modifier", entity.Modifier},
+                {"ModifiedDate", entity.ModifiedDate},
+                {"IsActive", entity.IsActive},
+                {"IsDeleted", entity.IsDeleted},
+                {"Guid", entity.Guid},
+                {"OfficeTelephoneNumber", entity.OfficeTelephoneNumber},
+                {"MobileTelephoneNumber", entity.MobileTelephoneNumber},
+                {"HomeTelephoneNumber", entity.HomeTelephoneNumber},
+                {"DateLastLogin", entity.DateLastLogin},
+                {"HaveAccessForHTTPPost", entity.HaveAccessForHTTPPost},
+                {"Designation", entity.Designation},
+                {"IsDirectSalesPerson", entity.IsDirectSalesPerson}
+            };
         }
     }
 }
