@@ -6,11 +6,13 @@ namespace Indico20.BusinessObjects.Base
     {
         public static  UserRepository Users { get; private set; }
         public static CompanyRepository Companies { get; private set; }
+        public static MenuItemRepository MenuItems { get; private set; }
 
         static RepositoryStore()
         {
             Users=new UserRepository();
             Companies=new CompanyRepository();
+            MenuItems=new MenuItemRepository();
         }
     }
 }

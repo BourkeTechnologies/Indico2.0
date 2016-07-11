@@ -15,6 +15,8 @@ namespace Indico20.BusinessObjects.Repositories
 
         public void Add(Company entity)
         {
+            if(entity==null)
+                return;
             Execute(QueryBuilder.Insert(TableName,GetColumnValueMapping(entity)));
         }
 
