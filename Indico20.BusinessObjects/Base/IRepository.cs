@@ -1,10 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Linq.Expressions;
-using System.Security.Cryptography.X509Certificates;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Indico20.BusinessObjects.Base
 {
@@ -17,7 +13,7 @@ namespace Indico20.BusinessObjects.Base
         void AddRange(IEnumerable<T> entities);
         void Add(T entity);
         void Remove(T entity);
-        void Removerange(IEnumerable<T> entities);
+        void RemoveRange(IEnumerable<T> entities);
         string TableName { get; }
         Dictionary<string, object> GetColumnValueMapping(T entity);
     }

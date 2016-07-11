@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
-using Dapper;
 using Indico20.BusinessObjects.Base;
 using Indico20.BusinessObjects.Objects;
 using Indico20CodeBase.Tools;
@@ -52,7 +51,7 @@ namespace Indico20.BusinessObjects.Repositories
             Remove(TableName,entity);
         }
 
-        public void Removerange(IEnumerable<UserSatatus> entities)
+        public void RemoveRange(IEnumerable<UserSatatus> entities)
         {
             RemoveRange(TableName,entities);
         }
@@ -69,7 +68,6 @@ namespace Indico20.BusinessObjects.Repositories
             {
                 {"Key", entity.Key},
                 {"Name", entity.Name}
-
             };
         }
     }

@@ -1,18 +1,32 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using System.Security.Policy;
 using System.Text;
 using Indico20CodeBase.Extensions;
 
 namespace Indico20CodeBase.Tools
 {
+    /// <summary>
+    /// this class will help to build SQL queries easily
+    /// </summary>
     public class QueryBuilder
     {
+        /// <summary>
+        /// generate query for delete row from a table
+        /// </summary>
+        /// <param name="tableName">name of the table</param>
+        /// <param name="id">id of the item</param>
+        /// <returns>string</returns>
         public static string DeleteFromTable(string tableName, int id)
         {
             return string.Format("DELETE FROM [dbo].[{0}] WHERE ID = '{1}'",tableName,id);
         }
 
+        /// <summary>
+        /// delete range of items from a table
+        /// </summary>
+        /// <param name="tableName">name of the table</param>
+        /// <param name="ids">list of ids to delete</param>
+        /// <returns>string</returns>
         public static string DeleteFromTable(string tableName, IEnumerable<int> ids)
         {
             var stringBuilder = new StringBuilder();
@@ -23,16 +37,34 @@ namespace Indico20CodeBase.Tools
             return stringBuilder.ToString();
         }
 
+        /// <summary>
+        /// generates the query for select all items from a table
+        /// </summary>
+        /// <param name="tableName">name of the table</param>
+        /// <returns>string</returns>
         public static string SelectAll(string tableName)
         {
             return string.Format("SELECT * FROM [dbo].[{0}]",tableName);
         }
 
+        /// <summary>
+        /// generate the query for select an specific item from a table  or a view
+        /// </summary>
+        /// <param name="tableName">name of the table</param>
+        /// <param name="id">id to select</param>
+        /// <returns>string</returns>
         public static string Select(string tableName, int id)
         {
             return string.Format("SELECT * FROM [dbo].[{0}] WHERE ID = {1}", tableName, id);
         }
 
+        /// <summary>
+        /// creates an query for update item in the database
+        /// </summary>
+        /// <param name="tableName">name of the table</param>
+        /// <param name="values">dictionary that contains column name and value</param>
+        /// <param name="id">id of the item to update</param>
+        /// <returns>string</returns>
         public static string Update(string tableName, Dictionary<string, object> values,int id)
         {
             if (values == null || values.Count < 1)
@@ -51,6 +83,12 @@ namespace Indico20CodeBase.Tools
             return stringBuilder.ToString();
         }
 
+        /// <summary>
+        ///generates query for insert into a table 
+        /// </summary>
+        /// <param name="tableName">name of the table</param>
+        /// <param name="values">dictionary that contains column name and value</param>
+        /// <returns>string</returns>
         public static string Insert(string tableName, Dictionary<string, object> values)
         {
             if (values == null || values.Count < 1)

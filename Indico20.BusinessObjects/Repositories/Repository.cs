@@ -2,16 +2,12 @@
 using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
-using System.Security.Cryptography.X509Certificates;
 using Dapper;
 using Indico20.BusinessObjects.Base;
 using Indico20.BusinessObjects.Common;
-using Indico20.BusinessObjects.Procedures;
 using Indico20CodeBase.Tools;
 using System.Linq.Expressions;
 using System;
-using System.Text;
-using Indico20.BusinessObjects.Objects;
 
 namespace Indico20.BusinessObjects.Repositories
 {
@@ -71,14 +67,6 @@ namespace Indico20.BusinessObjects.Repositories
             using (var connection = Connection)
             {
                 return connection.Query<T>(QueryBuilder.SelectAll(tableName)).Where(predicate.Compile());
-            }
-        }
-
-        protected void Add(IEntity entity, string insertQuery, params object[] par)
-        {
-            using (var connection = Connection)
-            {
-                connection.Execute(string.Format(insertQuery, par));
             }
         }
 

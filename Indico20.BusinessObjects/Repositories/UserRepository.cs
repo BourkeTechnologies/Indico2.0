@@ -57,14 +57,16 @@ namespace Indico20.BusinessObjects.Repositories
             Remove(TableName,entity);
         }
 
-        public void Removerange(IEnumerable<User> entities)
+        public void RemoveRange(IEnumerable<User> entities)
         {
             RemoveRange(TableName,entities);
         }
 
         public void Update(User entity)
         {
-            Update(entity,QueryBuilder.Update(TableName,GetColumnValueMapping(entity), entity.ID ));
+            if(entity==null)
+                return;
+            Execute(QueryBuilder.Update(TableName,GetColumnValueMapping(entity), entity.ID ));
         }
 
         public Dictionary<string, object> GetColumnValueMapping(User entity)
