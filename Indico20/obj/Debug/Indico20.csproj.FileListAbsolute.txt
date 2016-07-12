@@ -1,3 +1,4 @@
+C:\Projects\Indico20\Indico20\obj\Debug\Indico20.csprojResolveAssemblyReference.cache
 C:\Projects\Indico20\Indico20\bin\roslyn\csc.exe
 C:\Projects\Indico20\Indico20\bin\roslyn\Microsoft.Build.Tasks.CodeAnalysis.dll
 C:\Projects\Indico20\Indico20\bin\roslyn\Microsoft.CodeAnalysis.CSharp.dll
@@ -17,14 +18,13 @@ C:\Projects\Indico20\Indico20\bin\Antlr3.Runtime.dll
 C:\Projects\Indico20\Indico20\bin\Indico20.BusinessObjects.dll
 C:\Projects\Indico20\Indico20\bin\System.Web.Optimization.dll
 C:\Projects\Indico20\Indico20\bin\WebGrease.dll
-C:\Projects\Indico20\Indico20\bin\Dapper.dll
 C:\Projects\Indico20\Indico20\bin\Indico20CodeBase.dll
+C:\Projects\Indico20\Indico20\bin\Dapper.dll
 C:\Projects\Indico20\Indico20\bin\Indico20.BusinessObjects.pdb
 C:\Projects\Indico20\Indico20\bin\Antlr3.Runtime.pdb
 C:\Projects\Indico20\Indico20\bin\System.Web.Optimization.xml
+C:\Projects\Indico20\Indico20\bin\Indico20CodeBase.pdb
 C:\Projects\Indico20\Indico20\bin\Dapper.pdb
 C:\Projects\Indico20\Indico20\bin\Dapper.xml
-C:\Projects\Indico20\Indico20\bin\Indico20CodeBase.pdb
-C:\Projects\Indico20\Indico20\obj\Debug\Indico20.csprojResolveAssemblyReference.cache
 C:\Projects\Indico20\Indico20\obj\Debug\Indico20.dll
 C:\Projects\Indico20\Indico20\obj\Debug\Indico20.pdb

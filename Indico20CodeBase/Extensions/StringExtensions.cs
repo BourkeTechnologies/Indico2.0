@@ -43,5 +43,16 @@ namespace Indico20CodeBase.Extensions
         {
             return string.Format(str, parameters);
         }
+
+        /// <summary>
+        /// surround the string with another string 
+        /// </summary>
+        /// <param name="str">string to use </param>
+        /// <param name="text">string to add to start and end</param>
+        /// <returns>result text</returns>
+        public static string SurroundWith(this string str,string text)
+        {
+            return text + str + text;
+        }
     }
 }

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.UI;
+using Indico20.BusinessObjects.Base;
 using Indico20.BusinessObjects.Procedures;
 using RemoteConsolePortal.Common;
 using Indico20.Controllers.Common;
@@ -54,8 +55,8 @@ namespace RemoteConsolePortal.Controllers
         [ChildActionOnly]
         public PartialViewResult Navigation()
         {
-            var menuItems = GetMenuItems.Get(1);
-            var getMenuItemses = menuItems as IList<GetMenuItems> ?? menuItems.ToList();
+            var menuItems = RepositoryStore.MenuItems.GetMenuItemsForUserRole(1);
+            var getMenuItemses = menuItems as IList<GetMenuItemsForUserRoleResult> ?? menuItems.ToList();
             var models = new List<NavigationModel>();
             if (getMenuItemses.Any())
             {
@@ -63,7 +64,7 @@ namespace RemoteConsolePortal.Controllers
                     where menuItem.IsVisible
                     select new NavigationModel
                     {
-                        ID = menuItem.ID, Action = menuItem.Action, Controller = menuItem.Controller, IsLeftAligned = menuItem.IsAlignedLeft, Name = menuItem.MenuName, Parameters = menuItem.Parameters, Position = menuItem.Position, Title = menuItem.Title
+                        ID = menuItem.ID, Action = menuItem.Action, Controller = menuItem.Controller, IsLeftAligned = menuItem.IsAlignedLeft, Name = menuItem.MenuName, Parameters = menuItem.Parameters, Position = menuItem.Position, Title = menuItem.Title,Parent = menuItem.Parent
                     });
 
                 foreach (var mi in models)

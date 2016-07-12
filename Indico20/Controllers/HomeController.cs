@@ -15,19 +15,19 @@ namespace Indico20.Controllers
             return View();
         }
 
-        public ActionResult ViewOrders()
-        {
-            var items = BasicOrderBO.GetAll();
-            ViewBag.Orders = items;
-            return View();
-        }
+        //public ActionResult ViewOrders()
+        //{
+        //    var items = BasicOrderBO.GetAll();
+        //    ViewBag.Orders = items;
+        //    return View();
+        //}
 
-        public ActionResult ViewOrderDetail(int id)
-        {
-            var items = BasicOrderDetailBO.GetAllForAOrder(id);
-            ViewBag.OrderDetails = items;
-            ViewBag.Header = "Showing Order Details Associated With Order " + id;
-            return View();
-        }
+        //public ActionResult ViewOrderDetail(int id)
+        //{
+        //    var items = BasicOrderDetailBO.GetAllForAOrder(id);
+        //    ViewBag.OrderDetails = items;
+        //    ViewBag.Header = "Showing Order Details Associated With Order " + id;
+        //    return View();
+        //}
     }
 }

@@ -88,7 +88,7 @@ namespace Indico20.BusinessObjects.Repositories
 
         public IEnumerable<GetMenuItemsForUserRoleResult> GetMenuItemsForUserRole(int userRole)
         {
-            
+            return Query<GetMenuItemsForUserRoleResult>(QueryBuilder.ExecuteStoredProcedure("SPC_GetMenuItemsForUserRole", userRole));
         }
     }
 }

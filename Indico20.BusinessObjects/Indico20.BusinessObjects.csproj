@@ -35,6 +35,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -44,18 +45,27 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Base\IndicoBO.cs" />
-    <Compile Include="Objects\BasicOrderBO.cs" />
-    <Compile Include="Objects\BasicOrderDetailBO.cs" />
-    <Compile Include="Objects\OrderBO.cs" />
-    <Compile Include="Objects\UserBO.cs" />
-    <Compile Include="Procedures\GetMenuItems.cs" />
+    <Compile Include="Base\IEntity.cs" />
+    <Compile Include="Base\IRepository.cs" />
+    <Compile Include="Base\ISpResult.cs" />
+    <Compile Include="Base\RepositoryStore.cs" />
+    <Compile Include="Common\Indico20Configuration.cs" />
+    <Compile Include="Objects\Company.cs" />
+    <Compile Include="Objects\MenuItem.cs" />
+    <Compile Include="Objects\User.cs" />
+    <Compile Include="Objects\UserSatatus.cs" />
+    <Compile Include="Procedures\GetMenuItemsForUserRoleResult.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Settings.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
+    <Compile Include="Repositories\CompanyRepository.cs" />
+    <Compile Include="Repositories\MenuItemRepository.cs" />
+    <Compile Include="Repositories\Repository.cs" />
+    <Compile Include="Repositories\UserRepository.cs" />
+    <Compile Include="Repositories\UserStatusRepository.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

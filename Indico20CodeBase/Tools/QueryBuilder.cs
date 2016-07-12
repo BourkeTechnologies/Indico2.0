@@ -1,5 +1,4 @@
-﻿using System.CodeDom;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Indico20CodeBase.Extensions;
@@ -9,6 +8,7 @@ namespace Indico20CodeBase.Tools
     /// <summary>
     /// this class will help to build SQL queries easily
     /// </summary>
+    /// <author>shanaka rusith</author>
     public class QueryBuilder
     {
         /// <summary>
@@ -16,10 +16,10 @@ namespace Indico20CodeBase.Tools
         /// </summary>
         /// <param name="tableName">name of the table</param>
         /// <param name="id">id of the item</param>
-        /// <returns>string</returns>
+        /// <returns>generated query</returns>
         public static string DeleteFromTable(string tableName, int id)
         {
-            return string.Format("DELETE FROM [dbo].[{0}] WHERE ID = '{1}'",tableName,id);
+            return string.Format("DELETE FROM [dbo].[{0}] WHERE ID = {1}",tableName,id);
         }
 
         /// <summary>
@@ -27,7 +27,7 @@ namespace Indico20CodeBase.Tools
         /// </summary>
         /// <param name="tableName">name of the table</param>
         /// <param name="ids">list of ids to delete</param>
-        /// <returns>string</returns>
+        /// <returns>generated query</returns>
         public static string DeleteFromTable(string tableName, IEnumerable<int> ids)
         {
             var stringBuilder = new StringBuilder();
@@ -42,7 +42,7 @@ namespace Indico20CodeBase.Tools
         /// generates the query for select all items from a table
         /// </summary>
         /// <param name="tableName">name of the table</param>
-        /// <returns>string</returns>
+        /// <returns>generated query</returns>
         public static string SelectAll(string tableName)
         {
             return string.Format("SELECT * FROM [dbo].[{0}]",tableName);
@@ -53,7 +53,7 @@ namespace Indico20CodeBase.Tools
         /// </summary>
         /// <param name="tableName">name of the table</param>
         /// <param name="id">id to select</param>
-        /// <returns>string</returns>
+        /// <returns>generated query</returns>
         public static string Select(string tableName, int id)
         {
             return string.Format("SELECT * FROM [dbo].[{0}] WHERE ID = {1}", tableName, id);
@@ -65,19 +65,19 @@ namespace Indico20CodeBase.Tools
         /// <param name="tableName">name of the table</param>
         /// <param name="values">dictionary that contains column name and value</param>
         /// <param name="id">id of the item to update</param>
-        /// <returns>string</returns>
+        /// <returns>generated query</returns>
         public static string Update(string tableName, Dictionary<string, object> values,int id)
         {
             if (values == null || values.Count < 1)
                 return "";
             var stringBuilder = new StringBuilder();
-            stringBuilder.Append(string.Format("UPDATE FROM [dbo].[{0}] SET ", tableName));
+            stringBuilder.Append(string.Format("UPDATE [dbo].[{0}] SET ", tableName));
             var first = true;
             foreach (var key in values.Keys)
             {
                 var value = values[key];
                 var wrapper = value.IsNumeric()?"": "'";
-                stringBuilder.Append(string.Format("{0}{1} = {2}{3}{4}",!first? ", ":"", key, wrapper, value, wrapper));
+                stringBuilder.Append(string.Format("{0}{1} = {2}{3}{4}",!first? ", ":"", string.Format("[{0}]",key), wrapper, value, wrapper));
                 first = false;
             }
             stringBuilder.AppendLine(string.Format("WHERE ID = {0}",id));
@@ -89,7 +89,7 @@ namespace Indico20CodeBase.Tools
         /// </summary>
         /// <param name="tableName">name of the table</param>
         /// <param name="values">dictionary that contains column name and value</param>
-        /// <returns>string</returns>
+        /// <returns>generated query</returns>
         public static string Insert(string tableName, Dictionary<string, object> values)
         {
             if (values == null || values.Count < 1)
@@ -106,10 +106,16 @@ namespace Indico20CodeBase.Tools
                 valuestrings.Add(string.Format("{0}{1}{2}",wrapper,value,wrapper));
             }
            
-            stringBuilder.Append(string.Format("({0}) VALUES({1});", columnNames.Aggregate((c, n)=>c+","+n), valuestrings.Aggregate((c, n) => c + "," + n)));
+            stringBuilder.Append(string.Format("({0}) VALUES({1});", columnNames.Aggregate((c, n)=>c+","+string.Format("[{0}]",n)), valuestrings.Aggregate((c, n) => c + "," + n)));
             return stringBuilder.ToString();
         }
 
+        /// <summary>
+        /// generates query for execute stored procedure with parameters
+        /// </summary>
+        /// <param name="spName">name of the stored procedure</param>
+        /// <param name="parameters">parameters for the procedure</param>
+        /// <returns>generated query</returns>
         public static string ExecuteStoredProcedure(string spName, params object[] parameters)
         {
             if (string.IsNullOrWhiteSpace(spName))
