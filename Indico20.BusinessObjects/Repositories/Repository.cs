@@ -77,5 +77,13 @@ namespace Indico20.BusinessObjects.Repositories
                 connection.Execute(query);
             }
         }
+
+        protected IEnumerable<T> Query<T>(string query) where T : class
+        {
+            using (var connection = Connection)
+            {
+                return connection.Query<T>(query);
+            }
+        }
     }
 }

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System.CodeDom;
+using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Indico20CodeBase.Extensions;
@@ -107,6 +108,16 @@ namespace Indico20CodeBase.Tools
            
             stringBuilder.Append(string.Format("({0}) VALUES({1});", columnNames.Aggregate((c, n)=>c+","+n), valuestrings.Aggregate((c, n) => c + "," + n)));
             return stringBuilder.ToString();
+        }
+
+        public static string ExecuteStoredProcedure(string spName, params object[] parameters)
+        {
+            if (string.IsNullOrWhiteSpace(spName))
+                return "";
+            var builder = new StringBuilder();
+            var valuestrings = (from item in parameters let wrapper = item.IsNumeric() ? "" : "'" select string.Format("{0}{1}{2}", wrapper, item, wrapper)).ToList();
+            builder.Append(string.Format("EXEC [dbo].[{0}] {1}", spName, valuestrings.Aggregate((c, n) => c + "," + n)));
+            return builder.ToString();
         }
     }
 }

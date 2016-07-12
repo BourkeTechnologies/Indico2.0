@@ -5,6 +5,7 @@ using System.Linq.Expressions;
 using System.Text;
 using Indico20.BusinessObjects.Base;
 using Indico20.BusinessObjects.Objects;
+using Indico20.BusinessObjects.Procedures;
 using Indico20CodeBase.Tools;
 
 namespace Indico20.BusinessObjects.Repositories
@@ -83,6 +84,11 @@ namespace Indico20.BusinessObjects.Repositories
                 { "Name", entity.Name},
                 { "Title", entity.Title}
            };
+        }
+
+        public IEnumerable<GetMenuItemsForUserRoleResult> GetMenuItemsForUserRole(int userRole)
+        {
+            
         }
     }
 }
