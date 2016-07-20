@@ -53,7 +53,3 @@ Indico20/bin/
 Indico20.BusinessObjects/bin/
 Indico20.Tests/bin/
 Indico20CodeBase/bin/
-Indico20.BusinessObjects/bin/Debug/Indico20.BusinessObjects.pdb
-*.dll
-*.pdb
-*.cache
