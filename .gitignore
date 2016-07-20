@@ -49,7 +49,7 @@ Temporary Items
 .vs/Indico20/v14/.suo
 .vs/Indico20/v14/.suo
 
-Indico20/bin/*
-Indico20.BusinessObjects/bin/*
-Indico20.Tests/bin/*
-Indico20CodeBase/bin/*
+Indico20/bin/
+Indico20.BusinessObjects/bin/
+Indico20.Tests/bin/
+Indico20CodeBase/bin/
