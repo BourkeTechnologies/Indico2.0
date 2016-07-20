@@ -1,3 +1,4 @@
+C:\Projects\Indico20\Indico20\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll
 C:\Projects\Indico20\Indico20\bin\roslyn\csc.exe
 C:\Projects\Indico20\Indico20\bin\roslyn\Microsoft.Build.Tasks.CodeAnalysis.dll
 C:\Projects\Indico20\Indico20\bin\roslyn\Microsoft.CodeAnalysis.CSharp.dll
@@ -15,7 +16,6 @@ C:\Projects\Indico20\Indico20\bin\Indico20.dll
 C:\Projects\Indico20\Indico20\bin\Indico20.pdb
 C:\Projects\Indico20\Indico20\bin\Antlr3.Runtime.dll
 C:\Projects\Indico20\Indico20\bin\Indico20.BusinessObjects.dll
-C:\Projects\Indico20\Indico20\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll
 C:\Projects\Indico20\Indico20\bin\Microsoft.Web.Infrastructure.dll
 C:\Projects\Indico20\Indico20\bin\Newtonsoft.Json.dll
 C:\Projects\Indico20\Indico20\bin\System.Net.Http.Formatting.dll
