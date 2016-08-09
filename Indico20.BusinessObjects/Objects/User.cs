@@ -1,22 +1,31 @@
-﻿using System;
-using Indico20.BusinessObjects.Base;
+﻿using Indico20.BusinessObjects.Base;
+using System;
 
 namespace Indico20.BusinessObjects.Objects
 {
     public class User : IEntity
     {
+        private UnitOfWork _unitOfWork;
+        public User() { }
 
+        public User(UnitOfWork unit)
+        {
+            _unitOfWork = unit;
+        }
+
+        private Company _company;
         public int ID { get; set; }
         public int Company { get; set; }
 
         public Company ObjCompany
         {
-            get { return RepositoryStore.Companies.Get(Company); }
+            get { return _company ?? _unitOfWork.Companies.Get(ID); }
             set
             {
                 if(value==null)
                     return;
-                Company = value.ID;
+                _company = value;
+                Company = _company.ID;
             }
         }
 
@@ -43,5 +52,30 @@ namespace Indico20.BusinessObjects.Objects
         public string Designation { get; set; }
         public bool IsDirectSalesPerson { get; set; }
         public bool Changed { get; set; }
+
+        public void Add(UnitOfWork unit = null)
+        {
+            if (_unitOfWork == null && unit != null)
+                _unitOfWork = unit;
+            if(_unitOfWork!=null)
+                _unitOfWork.Users.Add(this);
+
+        }
+
+        public void Delete(UnitOfWork unit = null)
+        {
+            if (_unitOfWork == null && unit != null)
+                _unitOfWork = unit;
+            if (_unitOfWork != null)
+                _unitOfWork.Users.Remove(ID);
+        }
+
+        public void Update(UnitOfWork unit = null)
+        {
+            if (_unitOfWork == null && unit != null)
+                _unitOfWork = unit;
+            if (_unitOfWork != null)
+                _unitOfWork.Users.Update(this);
+        }
     }
 }

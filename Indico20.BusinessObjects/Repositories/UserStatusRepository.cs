@@ -1,68 +1,82 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Linq.Expressions;
-using System.Text;
 using Indico20.BusinessObjects.Base;
 using Indico20.BusinessObjects.Objects;
-using Indico20CodeBase.Tools;
+using Ninject;
 
 namespace Indico20.BusinessObjects.Repositories
 {
-    class UserStatusRepository : Repository, IRepository<UserSatatus>
+    public class UserStatusRepository : Repository, IRepository<UserStatus>
     {
-        public string TableName => "UserStatus";
 
-        public void Add(UserSatatus entity)
+        public UserStatusRepository(IUnitOfWork unit)
         {
-            Execute(QueryBuilder.Insert(TableName,GetColumnValueMapping(entity)));
+            TableName = "UserStatus";
+            UnitOfWork = unit;
+        }
+        public void Add(UserStatus entity)
+        {
+            UnitOfWork.Add(TableName, GetColumnValueMapping(entity));
         }
 
-        public void AddRange(IEnumerable<UserSatatus> entities)
+        public void AddRange(IEnumerable<UserStatus> entities)
         {
-            var list = entities as List<UserSatatus> ?? entities.ToList();
-            if(list.Count<1)
+            var list = entities as List<UserStatus> ?? entities.ToList();
+            if (list.Count < 1)
                 return;
-            var stringBuilder = new StringBuilder();
-            foreach (var entity in list)
+            var items = list.Select(GetColumnValueMapping).ToList();
+            UnitOfWork.AddRange(TableName, items);
+        }
+
+        public IEnumerable<UserStatus> Find(Func<UserStatus, bool> predicate)
+        {
+            var kernel = new StandardKernel();
+            var items = Find(TableName, predicate).ToList();
+            if (items.Count <= 0)
+                return items;
+            foreach (var item in items)
             {
-                stringBuilder.Append(QueryBuilder.Insert(TableName, GetColumnValueMapping(entity)));
+                kernel.Inject(item);
             }
-            Execute(stringBuilder.ToString());
+            return items;
         }
 
-        public IEnumerable<UserSatatus> Find(Expression<Func<UserSatatus, bool>> predicate)
+        public UserStatus Get(int id)
         {
-            return Find(TableName, predicate);
+            var kernel = new StandardKernel();
+            var userSatatus = Get<UserStatus>(TableName, id);
+            kernel.Inject(userSatatus);
+            return userSatatus;
         }
 
-        public UserSatatus Get(int id)
+        public IEnumerable<UserStatus> GetAll()
         {
-            return Get<UserSatatus>(TableName, id);
+            var list = GetAll<UserStatus>(TableName).ToList();
+            var kernel = new StandardKernel();
+            foreach (var status in list)
+            {
+                kernel.Inject(status);
+            }
+            return list;
         }
 
-        public IEnumerable<UserSatatus> GetAll()
+        public void Remove(int id)
         {
-            return GetAll<UserSatatus>(TableName);
+            UnitOfWork.Remove(TableName, id);
         }
 
-        public void Remove(UserSatatus entity)
+        public void RemoveRange(IEnumerable<int> ids)
         {
-            Remove(TableName,entity);
+            UnitOfWork.RemoveRange(TableName, ids);
         }
 
-        public void RemoveRange(IEnumerable<UserSatatus> entities)
+        public void Update(UserStatus entity)
         {
-            RemoveRange(TableName,entities);
+            UnitOfWork.Update(TableName, GetColumnValueMapping(entity),entity.ID);
         }
 
-        public void Update(UserSatatus entity)
-        {
-
-            Update(entity, QueryBuilder.Update(TableName, GetColumnValueMapping(entity),entity.ID));
-        }
-
-        public Dictionary<string, object> GetColumnValueMapping(UserSatatus entity)
+        public Dictionary<string, object> GetColumnValueMapping(UserStatus entity)
         {
             return new Dictionary<string, object>()
             {

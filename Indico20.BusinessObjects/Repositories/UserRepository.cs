@@ -1,27 +1,25 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Configuration;
-using System.Data;
-using System.Data.SqlClient;
 using System.Linq;
-using System.Linq.Expressions;
-using System.Text;
-using Dapper;
 using Indico20.BusinessObjects.Base;
-using Indico20.BusinessObjects.Common;
 using Indico20.BusinessObjects.Objects;
-using Indico20CodeBase.Extensions;
-using Indico20CodeBase.Tools;
+using Ninject;
 
 namespace Indico20.BusinessObjects.Repositories
 {
     public class UserRepository :Repository, IRepository<User>
     {
-        public string TableName => "User";
+        [Inject]
+        public new IUnitOfWork UnitOfWork;
+
+        public UserRepository()
+        {
+            TableName = "User";
+        }
 
         public void Add(User entity)
         {
-            Execute(QueryBuilder.Insert(TableName,GetColumnValueMapping(entity)));
+            UnitOfWork.Add(TableName,GetColumnValueMapping(entity));
         }
 
         public void AddRange(IEnumerable<User> entities)
@@ -29,44 +27,56 @@ namespace Indico20.BusinessObjects.Repositories
             var list = entities as List<User> ?? entities.ToList();
             if (list.Count < 1)
                 return;
-            var queryBuilder = new StringBuilder();
-            foreach (var entity in list)
-            {
-                queryBuilder.Append(QueryBuilder.Insert(TableName,GetColumnValueMapping(entity)));
-            }
-            Execute(queryBuilder.ToString());
+            var items = list.Select(GetColumnValueMapping).ToList();
+            UnitOfWork.AddRange(TableName,items);
         }
 
-        public IEnumerable<User> Find(Expression<Func<User, bool>> predicate)
+        public IEnumerable<User> Find(Func<User, bool> predicate)
         {
-            return Find(TableName, predicate);
+            var kernel = new StandardKernel();
+            var items = Find(TableName, predicate).ToList();
+            if (items.Count <= 0)
+                return items;
+            foreach (var item in items)
+            {
+                kernel.Inject(item);
+            }
+            return items;
         }
 
         public User Get(int id)
         {
-            return Get<User>(TableName, id);
+            var kernel = new StandardKernel();
+            var user = Get<User>(TableName, id);
+            kernel.Inject(user);
+            return user;
         }
 
         public IEnumerable<User> GetAll()
         {
-            return GetAll<User>(TableName);
+            var users= GetAll<User>(TableName).ToList();
+            var kernel = new StandardKernel();
+            foreach (var user in users)
+            {
+                kernel.Inject(user);
+            }
+                
+            return users;
         }
 
-        public void Remove(User entity)
+        public void Remove(int id)
         {
-            Remove(TableName,entity);
+            UnitOfWork.Remove(TableName,id);
         }
 
-        public void RemoveRange(IEnumerable<User> entities)
+        public void RemoveRange(IEnumerable<int> ids)
         {
-            RemoveRange(TableName,entities);
+            UnitOfWork.RemoveRange(TableName,ids);
         }
 
         public void Update(User entity)
         {
-            if(entity==null)
-                return;
-            Execute(QueryBuilder.Update(TableName,GetColumnValueMapping(entity), entity.ID ));
+            UnitOfWork.Update(TableName, GetColumnValueMapping(entity), entity.ID);
         }
 
         public Dictionary<string, object> GetColumnValueMapping(User entity)

@@ -28,7 +28,7 @@ namespace Indico20.Controllers
         {
             if (Session["rcp_uid"] != null)
             {
-                var user = new User {ID = Convert.ToUInt16(Session["rcp_uid"].ToString())};
+                //var user = new User {ID = Convert.ToUInt16(Session["rcp_uid"].ToString())};
  //               user = user.Get(user.ID);
 
                 return View("index");

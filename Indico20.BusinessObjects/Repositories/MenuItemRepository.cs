@@ -1,72 +1,81 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Linq.Expressions;
-using System.Text;
 using Indico20.BusinessObjects.Base;
 using Indico20.BusinessObjects.Objects;
 using Indico20.BusinessObjects.Procedures;
 using Indico20CodeBase.Tools;
+using Ninject;
 
 namespace Indico20.BusinessObjects.Repositories
 {
     public class MenuItemRepository : Repository, IRepository<MenuItem>
     {
-        public string TableName => "MenuItem";
+
+        public MenuItemRepository()
+        {
+            TableName = "MenuItem";
+        }
 
         public void Add(MenuItem entity)
         {
-            if(entity==null)
-                return;
-            Execute(QueryBuilder.Insert(TableName,GetColumnValueMapping(entity)));
+            UnitOfWork.Add(TableName, GetColumnValueMapping(entity));
         }
 
         public void AddRange(IEnumerable<MenuItem> entities)
         {
-            if(entities==null)
+            var list = entities as List<MenuItem> ?? entities.ToList();
+            if (list.Count < 1)
                 return;
-            var listOfEntities = entities as IList<MenuItem> ?? entities.ToList();
-            if (!(listOfEntities.Count > 0))
-                return;
-            var stringBuilder = new StringBuilder();
-            foreach (var entity in listOfEntities)
-            {
-                stringBuilder.Append(QueryBuilder.Insert(TableName, GetColumnValueMapping(entity)));
-            }
+            var items = list.Select(GetColumnValueMapping).ToList();
+            UnitOfWork.AddRange(TableName, items);
         }
 
-        public IEnumerable<MenuItem> Find(Expression<Func<MenuItem, bool>> predicate)
+        public IEnumerable<MenuItem> Find(Func<MenuItem, bool> predicate)
         {
-            return Find(TableName, predicate);
+            var kernel = new StandardKernel();
+            var items = Find(TableName, predicate).ToList();
+            if (items.Count <= 0)
+                return items;
+            foreach (var item in items)
+            {
+                kernel.Inject(item);
+            }
+            return items;
         }
 
         public MenuItem Get(int id)
         {
-            return Get<MenuItem>(TableName, id);
+            var kernel = new StandardKernel();
+            var menuItem = Get<MenuItem>(TableName, id);
+            kernel.Inject(menuItem);
+            return menuItem;
         }
 
         public IEnumerable<MenuItem> GetAll()
         {
-            return GetAll<MenuItem>(TableName);
+            var menuItems = GetAll<MenuItem>(TableName).ToList();
+            var kernel = new StandardKernel();
+            foreach (var menuItem in menuItems)
+            {
+                kernel.Inject(menuItem);
+            }
+            return menuItems;
         }
 
-        public void Remove(MenuItem entity)
+        public void Remove(int id)
         {
-            if(entity==null)
-                return;
-            Remove(TableName,entity);
+            UnitOfWork.Remove(TableName, id);
         }
 
-        public void RemoveRange(IEnumerable<MenuItem> entities)
+        public void RemoveRange(IEnumerable<int> entities)
         {
-            if(entities==null)
-                return;
-            RemoveRange(TableName,entities);
+            UnitOfWork.RemoveRange(TableName, entities);
         }
 
         public void Update(MenuItem entity)
         {
-            Execute(QueryBuilder.Update(TableName,GetColumnValueMapping(entity),entity.ID));
+            UnitOfWork.Update(TableName, GetColumnValueMapping(entity), entity.ID);
         }
 
         public Dictionary<string, object> GetColumnValueMapping(MenuItem entity)

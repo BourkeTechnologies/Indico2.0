@@ -1,4 +1,5 @@
-﻿using System.Configuration;
+﻿using System;
+using System.Configuration;
 
 namespace Indico20.BusinessObjects.Common
 {
@@ -18,7 +19,10 @@ namespace Indico20.BusinessObjects.Common
             {
                 if (!string.IsNullOrEmpty(_connectionString))
                     return _connectionString;
-                var fromConfigurationFile = ConfigurationManager.ConnectionStrings["ConnectionString"].ConnectionString;
+
+                string fromConfigurationFile;
+                try{fromConfigurationFile = ConfigurationManager.ConnectionStrings["Connection"].ConnectionString;}
+                catch (Exception){fromConfigurationFile = null;}
                 _connectionString = string.IsNullOrEmpty(fromConfigurationFile) ? 
                     @"Data Source=MUFASA-PC\SQLEXPRESS;initial catalog=Indico2.0;Integrated Security=True" 
                     : fromConfigurationFile;

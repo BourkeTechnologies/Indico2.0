@@ -1,11 +1,21 @@
-﻿using System;
-using Indico20.BusinessObjects.Base;
+﻿using Indico20.BusinessObjects.Base;
+using System;
 
 namespace Indico20.BusinessObjects.Objects
 {
     public class Company : IEntity
     {
-        public int ID { get; set; }
+
+        private UnitOfWork _unitOfWork;
+
+        public Company() { }
+
+        public Company(UnitOfWork unit)
+        {
+            _unitOfWork = unit;
+        }
+
+        public int ID { get;set; }
         public int Type { get; set; }
         public bool IsDistributor { get; set; }
         public string Name { get; set; }
@@ -34,5 +44,30 @@ namespace Indico20.BusinessObjects.Objects
         public int? DistributorType { get; set; }
         public bool IncludeAsMYOBInvoice { get; set; }
         public string JobName { get; set; }
+
+        public void Add(UnitOfWork unit = null)
+        {
+            if (_unitOfWork == null && unit != null)
+                _unitOfWork = unit;
+            if (_unitOfWork != null)
+                _unitOfWork.Companies.Add(this);
+
+        }
+
+        public void Delete(UnitOfWork unit = null)
+        {
+            if (_unitOfWork == null && unit != null)
+                _unitOfWork = unit;
+            if (_unitOfWork != null)
+                _unitOfWork.Companies.Remove(ID);
+        }
+
+        public void Update(UnitOfWork unit = null)
+        {
+            if (_unitOfWork == null && unit != null)
+                _unitOfWork = unit;
+            if (_unitOfWork != null)
+                _unitOfWork.Companies.Update(this);
+        }
     }
 }

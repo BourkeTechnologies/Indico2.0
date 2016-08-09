@@ -2,67 +2,81 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
-using System.Text;
 using Indico20.BusinessObjects.Base;
 using Indico20.BusinessObjects.Objects;
-using Indico20CodeBase.Tools;
+using Ninject;
 
 namespace Indico20.BusinessObjects.Repositories
 {
     public class CompanyRepository : Repository, IRepository<Company>
     {
-        public string TableName => "Company";
+
+        public CompanyRepository()
+        {
+            TableName = "Company";
+        }
 
         public void Add(Company entity)
         {
-            if(entity==null)
-                return;
-            Execute(QueryBuilder.Insert(TableName,GetColumnValueMapping(entity)));
+            UnitOfWork.Add(TableName, GetColumnValueMapping(entity));
         }
 
         public void AddRange(IEnumerable<Company> entities)
         {
-            var listOfEntities = entities as IList<Company> ?? entities.ToList();
-            if(!(listOfEntities.Count>0))
+
+            var list = entities as List<Company> ?? entities.ToList();
+            if (list.Count < 1)
                 return;
-            var stringBuilder = new StringBuilder();
-            foreach (var entity in listOfEntities)
-            {
-                stringBuilder.Append(QueryBuilder.Insert(TableName, GetColumnValueMapping(entity)));
-            }
-            Execute(stringBuilder.ToString());
+            var items = list.Select(GetColumnValueMapping).ToList();
+            UnitOfWork.AddRange(TableName, items);
+            
         }
 
-        public IEnumerable<Company> Find(Expression<Func<Company, bool>> predicate)
+        public IEnumerable<Company> Find(Func<Company, bool> predicate)
         {
-            return Find(TableName, predicate);
+            var kernel = new StandardKernel();
+            var items = Find(TableName, predicate).ToList();
+            if (items.Count <= 0)
+                return items;
+            foreach (var item in items)
+            {
+                kernel.Inject(item);
+            }
+            return items;
         }
 
         public Company Get(int id)
         {
-            return Get<Company>(TableName, id);
+            var kernel = new StandardKernel();
+            var company = Get<Company>(TableName, id);
+            kernel.Inject(company);
+            return company;
         }
 
         public IEnumerable<Company> GetAll()
         {
-            return GetAll<Company>(TableName);
+            var companies = GetAll<Company>(TableName).ToList();
+            var kernel = new StandardKernel();
+            foreach (var company in companies)
+            {
+                kernel.Inject(company);
+            }
+            return companies;
         }
 
-        public void Remove(Company entity)
+        public void Remove(int id)
         {
-            Remove(TableName, entity);
+            UnitOfWork.Remove(TableName, id);
         }
 
-        public void RemoveRange(IEnumerable<Company> entities)
+        public void RemoveRange(IEnumerable<int> entities)
         {
-            RemoveRange(TableName,entities);
+            UnitOfWork.RemoveRange(TableName, entities);
         }
 
         public void Update(Company entity)
         {
-            if(entity==null)
-                return;
-            Execute(QueryBuilder.Update(TableName,GetColumnValueMapping(entity),entity.ID));
+            UnitOfWork.Update(TableName, GetColumnValueMapping(entity), entity.ID);
         }
 
         public Dictionary<string, object> GetColumnValueMapping(Company entity)

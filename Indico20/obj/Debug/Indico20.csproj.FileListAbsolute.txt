@@ -1,4 +1,3 @@
-C:\Projects\Indico20\Indico20\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll
 C:\Projects\Indico20\Indico20\bin\roslyn\csc.exe
 C:\Projects\Indico20\Indico20\bin\roslyn\Microsoft.Build.Tasks.CodeAnalysis.dll
 C:\Projects\Indico20\Indico20\bin\roslyn\Microsoft.CodeAnalysis.CSharp.dll
@@ -16,6 +15,7 @@ C:\Projects\Indico20\Indico20\bin\Indico20.dll
 C:\Projects\Indico20\Indico20\bin\Indico20.pdb
 C:\Projects\Indico20\Indico20\bin\Antlr3.Runtime.dll
 C:\Projects\Indico20\Indico20\bin\Indico20.BusinessObjects.dll
+C:\Projects\Indico20\Indico20\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll
 C:\Projects\Indico20\Indico20\bin\Microsoft.Web.Infrastructure.dll
 C:\Projects\Indico20\Indico20\bin\Newtonsoft.Json.dll
 C:\Projects\Indico20\Indico20\bin\System.Net.Http.Formatting.dll
@@ -28,7 +28,9 @@ C:\Projects\Indico20\Indico20\bin\System.Web.Razor.dll
 C:\Projects\Indico20\Indico20\bin\System.Web.Webpages.Deployment.dll
 C:\Projects\Indico20\Indico20\bin\System.Web.Webpages.dll
 C:\Projects\Indico20\Indico20\bin\System.Web.Webpages.Razor.dll
+C:\Projects\Indico20\Indico20\bin\WebActivatorEx.dll
 C:\Projects\Indico20\Indico20\bin\WebGrease.dll
+C:\Projects\Indico20\Indico20\bin\Ninject.dll
 C:\Projects\Indico20\Indico20\bin\Indico20CodeBase.dll
 C:\Projects\Indico20\Indico20\bin\Dapper.dll
 C:\Projects\Indico20\Indico20\bin\Indico20.BusinessObjects.pdb
@@ -45,6 +47,7 @@ C:\Projects\Indico20\Indico20\bin\Newtonsoft.Json.xml
 C:\Projects\Indico20\Indico20\bin\System.Net.Http.Formatting.xml
 C:\Projects\Indico20\Indico20\bin\System.Web.Http.xml
 C:\Projects\Indico20\Indico20\bin\System.Web.Http.WebHost.xml
+C:\Projects\Indico20\Indico20\bin\Ninject.xml
 C:\Projects\Indico20\Indico20\bin\Indico20CodeBase.pdb
 C:\Projects\Indico20\Indico20\bin\Dapper.pdb
 C:\Projects\Indico20\Indico20\bin\Dapper.xml

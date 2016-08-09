@@ -77,10 +77,10 @@ namespace Indico20CodeBase.Tools
             {
                 var value = values[key];
                 var wrapper = value.IsNumeric()?"": "'";
-                stringBuilder.Append(string.Format("{0}{1} = {2}{3}{4}",!first? ", ":"", string.Format("[{0}]",key), wrapper, value, wrapper));
+                stringBuilder.Append(string.Format("{0}{1} = {2}{3}{4}",!first? ", ":"", string.Format("[{0}]",key), wrapper, (value is bool )?((bool)value).ToOneZero():value, wrapper));
                 first = false;
             }
-            stringBuilder.AppendLine(string.Format("WHERE ID = {0}",id));
+            stringBuilder.AppendLine(string.Format(" WHERE ID = {0}",id));
             return stringBuilder.ToString();
         }
 
@@ -103,10 +103,10 @@ namespace Indico20CodeBase.Tools
                 var value = values[key];
                 columnNames.Add(key);
                 var wrapper = value.IsNumeric() ? "" : "'";
-                valuestrings.Add(string.Format("{0}{1}{2}",wrapper,value,wrapper));
+                valuestrings.Add(string.Format("{0}{1}{2}",wrapper, (value is bool) ? ((bool)value).ToOneZero() : value, wrapper));
             }
            
-            stringBuilder.Append(string.Format("({0}) VALUES({1});", columnNames.Aggregate((c, n)=>c+","+string.Format("[{0}]",n)), valuestrings.Aggregate((c, n) => c + "," + n)));
+            stringBuilder.Append(string.Format("({0}) VALUES({1});", GenerateColumnNameList(columnNames), valuestrings.Aggregate((c, n) => c + "," + n)));
             return stringBuilder.ToString();
         }
 
@@ -121,9 +121,19 @@ namespace Indico20CodeBase.Tools
             if (string.IsNullOrWhiteSpace(spName))
                 return "";
             var builder = new StringBuilder();
-            var valuestrings = (from item in parameters let wrapper = item.IsNumeric() ? "" : "'" select string.Format("{0}{1}{2}", wrapper, item, wrapper)).ToList();
+            var valuestrings = (from item in parameters let wrapper = item.IsNumeric() ? "" : "'" select string.Format("{0}{1}{2}", wrapper, (item is bool) ? ((bool)item).ToOneZero() : item, wrapper)).ToList();
             builder.Append(string.Format("EXEC [dbo].[{0}] {1}", spName, valuestrings.Aggregate((c, n) => c + "," + n)));
             return builder.ToString();
+        }
+
+        private static string GenerateColumnNameList(IEnumerable<string> columnNames)
+        {
+            var stringBuilder = new StringBuilder();
+            foreach (var column in columnNames)
+            {
+                stringBuilder.AppendFormat("[{0}] ,", column);
+            }
+            return stringBuilder.ToString().TrimEnd(',');
         }
     }
 }

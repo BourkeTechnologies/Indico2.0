@@ -55,7 +55,7 @@ namespace RemoteConsolePortal.Controllers
         [ChildActionOnly]
         public PartialViewResult Navigation()
         {
-            var menuItems = RepositoryStore.MenuItems.GetMenuItemsForUserRole(1);
+            var menuItems = new UnitOfWork().MenuItems.GetMenuItemsForUserRole(1);
             var getMenuItemses = menuItems as IList<GetMenuItemsForUserRoleResult> ?? menuItems.ToList();
             var models = new List<NavigationModel>();
             if (getMenuItemses.Any())
