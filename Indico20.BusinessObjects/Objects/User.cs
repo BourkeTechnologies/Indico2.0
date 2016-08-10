@@ -1,81 +1,121 @@
-﻿using Indico20.BusinessObjects.Base;
+﻿using Indico20.BusinessObjects.Base.Core;
 using System;
+using System.Collections.Generic;
+using System.ComponentModel;
 
 namespace Indico20.BusinessObjects.Objects
 {
     public class User : IEntity
     {
-        private UnitOfWork _unitOfWork;
-        public User() { }
 
-        public User(UnitOfWork unit)
+        #region Fields
+
+        private int _iD;
+        private int _company;
+        private bool _isDistributor;
+        private int _status;
+        private string _username;
+        private string _password;
+        private string _givenName;
+        private string _familyName;
+        private string _emailAddress;
+        private string _photoPath;
+        private int _creator;
+        private DateTime _createdDate;
+        private int _modifier;
+        private DateTime _modifiedDate;
+        private bool _isActive;
+        private bool _isDeleted;
+        private string _guid;
+        private string _officeTelephoneNumber;
+        private string _mobileTelephoneNumber;
+        private string _homeTelephoneNumber;
+        private DateTime? _dateLastLogin;
+        private bool? _haveAccessForHTTPPost;
+        private string _designation;
+        private bool _isDirectSalesPerson;
+
+        #endregion
+
+
+        #region PropertyChange
+
+        public event PropertyChangedEventHandler PropertyChanged;
+        public void NotifyPropertyChanged(string propertyName)
         {
-            _unitOfWork = unit;
+            if (PropertyChanged != null)
+                PropertyChanged.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
-        private Company _company;
-        public int ID { get; set; }
-        public int Company { get; set; }
+        #endregion
 
-        public Company ObjCompany
+
+        #region Properties
+
+        public string TableName => "User";
+
+        public int ID { get { return _iD; } set { _iD = value; NotifyPropertyChanged("ID"); } }
+        public int Company { get { return _company; } set { _company = value; NotifyPropertyChanged("Company"); } }
+        public bool IsDistributor { get { return _isDistributor; } set { _isDistributor = value; NotifyPropertyChanged("IsDistributor"); } }
+        public int Status { get { return _status; } set { _status = value; NotifyPropertyChanged("Status"); } }
+        public string Username { get { return _username; } set { _username = value; NotifyPropertyChanged("Username"); } }
+        public string Password { get { return _password; } set { _password = value; NotifyPropertyChanged("Password"); } }
+        public string GivenName { get { return _givenName; } set { _givenName = value; NotifyPropertyChanged("GivenName"); } }
+        public string FamilyName { get { return _familyName; } set { _familyName = value; NotifyPropertyChanged("FamilyName"); } }
+        public string EmailAddress { get { return _emailAddress; } set { _emailAddress = value; NotifyPropertyChanged("EmailAddress"); } }
+        public string PhotoPath { get { return _photoPath; } set { _photoPath = value; NotifyPropertyChanged("PhotoPath"); } }
+        public int Creator { get { return _creator; } set { _creator = value; NotifyPropertyChanged("Creator"); } }
+        public DateTime CreatedDate { get { return _createdDate; } set { _createdDate = value; NotifyPropertyChanged("CreatedDate"); } }
+        public int Modifier { get { return _modifier; } set { _modifier = value; NotifyPropertyChanged("Modifier"); } }
+        public DateTime ModifiedDate { get { return _modifiedDate; } set { _modifiedDate = value; NotifyPropertyChanged("ModifiedDate"); } }
+        public bool IsActive { get { return _isActive; } set { _isActive = value; NotifyPropertyChanged("IsActive"); } }
+        public bool IsDeleted { get { return _isDeleted; } set { _isDeleted = value; NotifyPropertyChanged("IsDeleted"); } }
+        public string Guid { get { return _guid; } set { _guid = value; NotifyPropertyChanged("Guid"); } }
+        public string OfficeTelephoneNumber { get { return _officeTelephoneNumber; } set { _officeTelephoneNumber = value; NotifyPropertyChanged("OfficeTelephoneNumber"); } }
+        public string MobileTelephoneNumber { get { return _mobileTelephoneNumber; } set { _mobileTelephoneNumber = value; NotifyPropertyChanged("MobileTelephoneNumber"); } }
+        public string HomeTelephoneNumber { get { return _homeTelephoneNumber; } set { _homeTelephoneNumber = value; NotifyPropertyChanged("HomeTelephoneNumber"); } }
+        public DateTime? DateLastLogin { get { return _dateLastLogin; } set { _dateLastLogin = value; NotifyPropertyChanged("DateLastLogin"); } }
+        public bool? HaveAccessForHTTPPost { get { return _haveAccessForHTTPPost; } set { _haveAccessForHTTPPost = value; NotifyPropertyChanged("HaveAccessForHTTPPost"); } }
+        public string Designation { get { return _designation; } set { _designation = value; NotifyPropertyChanged("Designation"); } }
+        public bool IsDirectSalesPerson { get { return _isDirectSalesPerson; } set { _isDirectSalesPerson = value; NotifyPropertyChanged("IsDirectSalesPerson"); } }
+
+        #endregion
+
+
+        #region Methods
+
+        public Dictionary<string, object> GetColumnValueMapping()
         {
-            get { return _company ?? _unitOfWork.Companies.Get(ID); }
-            set
+            return new Dictionary<string, object>()
             {
-                if(value==null)
-                    return;
-                _company = value;
-                Company = _company.ID;
-            }
+                {"Company",Company},
+                {"IsDistributor",IsDistributor},
+                {"Status",Status},
+                {"Username",Username},
+                {"Password",Password},
+                {"GivenName",GivenName},
+                {"FamilyName",FamilyName},
+                {"EmailAddress",EmailAddress},
+                {"PhotoPath",PhotoPath},
+                {"Creator",Creator},
+                {"CreatedDate",CreatedDate},
+                {"Modifier",Modifier},
+                {"ModifiedDate",ModifiedDate},
+                {"IsActive",IsActive},
+                {"IsDeleted",IsDeleted},
+                {"Guid",Guid},
+                {"OfficeTelephoneNumber",OfficeTelephoneNumber},
+                {"MobileTelephoneNumber",MobileTelephoneNumber},
+                {"HomeTelephoneNumber",HomeTelephoneNumber},
+                {"DateLastLogin",DateLastLogin},
+                {"HaveAccessForHTTPPost",HaveAccessForHTTPPost},
+                {"Designation",Designation},
+                {"IsDirectSalesPerson",IsDirectSalesPerson},
+            };
         }
 
-        public bool IsDistributor { get; set; }
-        public int Status { get; set; }
-        public string Username { get; set; }
-        public string Password { get; set; }
-        public string GivenName { get; set; }
-        public string FamilyName { get; set; }
-        public string EmailAddress { get; set; }
-        public string PhotoPath { get; set; }
-        public int Creator { get; set; }
-        public DateTime CreatedDate { get; set; }
-        public int Modifier { get; set; }
-        public DateTime ModifiedDate { get; set; }
-        public bool IsActive { get; set; }
-        public bool IsDeleted { get; set; }
-        public string Guid { get; set; }
-        public string OfficeTelephoneNumber { get; set; }
-        public string MobileTelephoneNumber { get; set; }
-        public string HomeTelephoneNumber { get; set; }
-        public DateTime? DateLastLogin { get; set; }
-        public bool? HaveAccessForHTTPPost { get; set; }
-        public string Designation { get; set; }
-        public bool IsDirectSalesPerson { get; set; }
-        public bool Changed { get; set; }
+        #endregion
 
-        public void Add(UnitOfWork unit = null)
-        {
-            if (_unitOfWork == null && unit != null)
-                _unitOfWork = unit;
-            if(_unitOfWork!=null)
-                _unitOfWork.Users.Add(this);
-
-        }
-
-        public void Delete(UnitOfWork unit = null)
-        {
-            if (_unitOfWork == null && unit != null)
-                _unitOfWork = unit;
-            if (_unitOfWork != null)
-                _unitOfWork.Users.Remove(ID);
-        }
-
-        public void Update(UnitOfWork unit = null)
-        {
-            if (_unitOfWork == null && unit != null)
-                _unitOfWork = unit;
-            if (_unitOfWork != null)
-                _unitOfWork.Users.Update(this);
-        }
     }
+
 }

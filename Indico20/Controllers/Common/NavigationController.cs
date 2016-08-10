@@ -1,14 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
-using System.Web.UI;
-using Indico20.BusinessObjects.Base;
+﻿using Indico20.BusinessObjects.Base.Implementation;
 using Indico20.BusinessObjects.Procedures;
-using RemoteConsolePortal.Common;
 using Indico20.Controllers.Common;
 using Indico20.Models;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web.Mvc;
 
 namespace RemoteConsolePortal.Controllers
 {
@@ -55,25 +52,36 @@ namespace RemoteConsolePortal.Controllers
         [ChildActionOnly]
         public PartialViewResult Navigation()
         {
-            var menuItems = new UnitOfWork().MenuItems.GetMenuItemsForUserRole(1);
-            var getMenuItemses = menuItems as IList<GetMenuItemsForUserRoleResult> ?? menuItems.ToList();
-            var models = new List<NavigationModel>();
-            if (getMenuItemses.Any())
+            using (var unit = new UnitOfWork())
             {
-                models.AddRange(from menuItem in getMenuItemses
-                    where menuItem.IsVisible
-                    select new NavigationModel
-                    {
-                        ID = menuItem.ID, Action = menuItem.Action, Controller = menuItem.Controller, IsLeftAligned = menuItem.IsAlignedLeft, Name = menuItem.MenuName, Parameters = menuItem.Parameters, Position = menuItem.Position, Title = menuItem.Title,Parent = menuItem.Parent
-                    });
-
-                foreach (var mi in models)
+                var menuItems = unit.MenuItems.ForUserRole(1);
+                var getMenuItemses = menuItems as IList<GetMenuItemsForUserRoleResult> ?? menuItems.ToList();
+                var models = new List<NavigationModel>();
+                if (getMenuItemses.Any())
                 {
-                    mi.SubMenus = models.Where(m => m.Parent == mi.ID).ToList();
+                    models.AddRange(from menuItem in getMenuItemses
+                                    where menuItem.IsVisible
+                                    select new NavigationModel
+                                    {
+                                        ID = menuItem.ID,
+                                        Action = menuItem.Action,
+                                        Controller = menuItem.Controller,
+                                        IsLeftAligned = menuItem.IsAlignedLeft,
+                                        Name = menuItem.MenuName,
+                                        Parameters = menuItem.Parameters,
+                                        Position = menuItem.Position,
+                                        Title = menuItem.Title,
+                                        Parent = menuItem.Parent
+                                    });
+
+                    foreach (var mi in models)
+                    {
+                        mi.SubMenus = models.Where(m => m.Parent == mi.ID).ToList();
+                    }
                 }
+                ViewBag.Items = models;
+                return PartialView();
             }
-            ViewBag.Items = models;
-            return PartialView();
         }
 
         //[OutputCache(Duration = 3600, VaryByParam = "none", Location = OutputCacheLocation.Client, NoStore = true)]

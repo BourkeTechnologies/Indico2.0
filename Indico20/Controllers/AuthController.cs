@@ -195,7 +195,7 @@ namespace Indico20.Controllers
         //                destinationUrl = Server.UrlDecode(destinationUrl);
 
         //                Uri destUri = new Uri(Server.UrlDecode(destinationUrl));
-        //                destinationUrl = destUri.AbsolutePath.Remove(0, 1);
+        //                destinationUrl = destUri.AbsolutePath.Delete(0, 1);
 
         //                List<string> ControlActionParameters = destinationUrl.Split('/').ToList();
         //                List<UserMenuItemRoleViewBO> authorizedControllerAction = (from o in AuthorizedControllerActions
@@ -220,7 +220,7 @@ namespace Indico20.Controllers
         //            {
         //                string destinationUrl = model.LoginDoUrl;
         //                Uri destUri = new Uri(Server.UrlDecode(destinationUrl));
-        //                destinationUrl = destUri.AbsolutePath.Remove(0, 1);
+        //                destinationUrl = destUri.AbsolutePath.Delete(0, 1);
 
         //                redirectResult = new RedirectResult(destinationUrl);
         //            }
@@ -273,7 +273,7 @@ namespace Indico20.Controllers
         //        destinationUrl = Server.UrlDecode(destinationUrl);
 
         //        Uri destUri = new Uri(Server.UrlDecode(destinationUrl));
-        //        destinationUrl = destUri.AbsolutePath.Remove(0, 1);
+        //        destinationUrl = destUri.AbsolutePath.Delete(0, 1);
 
         //        List<string> ControlActionParameters = destinationUrl.Split('/').ToList();
         //        List<UserMenuItemRoleViewBO> authorizedControllerAction = (from o in AuthorizedControllerActions
@@ -298,7 +298,7 @@ namespace Indico20.Controllers
         //    {
         //        string destinationUrl = model.LoginDoUrl;
         //        Uri destUri = new Uri(Server.UrlDecode(destinationUrl));
-        //        destinationUrl = destUri.AbsolutePath.Remove(0, 1);
+        //        destinationUrl = destUri.AbsolutePath.Delete(0, 1);
 
         //        redirectResult = new RedirectResult(destinationUrl);
         //    }

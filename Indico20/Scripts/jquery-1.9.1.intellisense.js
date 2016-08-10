@@ -369,7 +369,7 @@
   },
   'removeData': function() {
     /// <signature>
-    ///   <summary>Remove a previously-stored piece of data.</summary>
+    ///   <summary>Delete a previously-stored piece of data.</summary>
     ///   <param name="element" type="Element">A DOM element from which to remove data.</param>
     ///   <param name="name" type="String">A string naming the piece of data to remove.</param>
     ///   <returns type="jQuery" />
@@ -385,7 +385,7 @@
   },
   'trim': function() {
     /// <signature>
-    ///   <summary>Remove the whitespace from the beginning and end of a string.</summary>
+    ///   <summary>Delete the whitespace from the beginning and end of a string.</summary>
     ///   <param name="str" type="String">The string to trim.</param>
     ///   <returns type="String" />
     /// </signature>
@@ -433,7 +433,7 @@ intellisense.annotate(_object, {
     /// <returns type="Boolean" />
   },
   'empty': function() {
-    /// <summary>Remove all of the callbacks from a list.</summary>
+    /// <summary>Delete all of the callbacks from a list.</summary>
     /// <returns type="Callbacks" />
   },
   'fire': function() {
@@ -472,7 +472,7 @@ intellisense.annotate(_object, {
   },
   'remove': function() {
     /// <signature>
-    ///   <summary>Remove a callback or a collection of callbacks from a callback list.</summary>
+    ///   <summary>Delete a callback or a collection of callbacks from a callback list.</summary>
     ///   <param name="callbacks" type="Array">A function, or array of functions, that are to be removed from the callback list.</param>
     ///   <returns type="Callbacks" />
     /// </signature>
@@ -1023,7 +1023,7 @@ intellisense.annotate(jQuery.fn, {
   },
   'clearQueue': function() {
     /// <signature>
-    ///   <summary>Remove from the queue all items that have not yet been run.</summary>
+    ///   <summary>Delete from the queue all items that have not yet been run.</summary>
     ///   <param name="queueName" type="String">A string containing the name of the queue. Defaults to fx, the standard effects queue.</param>
     ///   <returns type="jQuery" />
     /// </signature>
@@ -1183,20 +1183,20 @@ intellisense.annotate(jQuery.fn, {
   },
   'detach': function() {
     /// <signature>
-    ///   <summary>Remove the set of matched elements from the DOM.</summary>
+    ///   <summary>Delete the set of matched elements from the DOM.</summary>
     ///   <param name="selector" type="String">A selector expression that filters the set of matched elements to be removed.</param>
     ///   <returns type="jQuery" />
     /// </signature>
   },
   'die': function() {
     /// <signature>
-    ///   <summary>Remove event handlers previously attached using .live() from the elements.</summary>
+    ///   <summary>Delete event handlers previously attached using .live() from the elements.</summary>
     ///   <param name="eventType" type="String">A string containing a JavaScript event type, such as click or keydown.</param>
     ///   <param name="handler" type="String">The function that is no longer to be executed.</param>
     ///   <returns type="jQuery" />
     /// </signature>
     /// <signature>
-    ///   <summary>Remove event handlers previously attached using .live() from the elements.</summary>
+    ///   <summary>Delete event handlers previously attached using .live() from the elements.</summary>
     ///   <param name="events" type="PlainObject">A plain object of one or more event types, such as click or keydown and their corresponding functions that are no longer to be executed.</param>
     ///   <returns type="jQuery" />
     /// </signature>
@@ -1858,22 +1858,22 @@ intellisense.annotate(jQuery.fn, {
   },
   'not': function() {
     /// <signature>
-    ///   <summary>Remove elements from the set of matched elements.</summary>
+    ///   <summary>Delete elements from the set of matched elements.</summary>
     ///   <param name="selector" type="String">A string containing a selector expression to match elements against.</param>
     ///   <returns type="jQuery" />
     /// </signature>
     /// <signature>
-    ///   <summary>Remove elements from the set of matched elements.</summary>
+    ///   <summary>Delete elements from the set of matched elements.</summary>
     ///   <param name="elements" type="Array">One or more DOM elements to remove from the matched set.</param>
     ///   <returns type="jQuery" />
     /// </signature>
     /// <signature>
-    ///   <summary>Remove elements from the set of matched elements.</summary>
+    ///   <summary>Delete elements from the set of matched elements.</summary>
     ///   <param name="function(index)" type="Function">A function used as a test for each element in the set. this is the current DOM element.</param>
     ///   <returns type="jQuery" />
     /// </signature>
     /// <signature>
-    ///   <summary>Remove elements from the set of matched elements.</summary>
+    ///   <summary>Delete elements from the set of matched elements.</summary>
     ///   <param name="jQuery object" type="PlainObject">An existing jQuery object to match the current set of elements against.</param>
     ///   <returns type="jQuery" />
     /// </signature>
@@ -1907,14 +1907,14 @@ intellisense.annotate(jQuery.fn, {
   },
   'off': function() {
     /// <signature>
-    ///   <summary>Remove an event handler.</summary>
+    ///   <summary>Delete an event handler.</summary>
     ///   <param name="events" type="String">One or more space-separated event types and optional namespaces, or just namespaces, such as "click", "keydown.myPlugin", or ".myPlugin".</param>
     ///   <param name="selector" type="String">A selector which should match the one originally passed to .on() when attaching event handlers.</param>
     ///   <param name="handler(eventObject)" type="Function">A handler function previously attached for the event(s), or the special value false.</param>
     ///   <returns type="jQuery" />
     /// </signature>
     /// <signature>
-    ///   <summary>Remove an event handler.</summary>
+    ///   <summary>Delete an event handler.</summary>
     ///   <param name="events" type="PlainObject">An object where the string keys represent one or more space-separated event types and optional namespaces, and the values represent handler functions previously attached for the event(s).</param>
     ///   <param name="selector" type="String">A selector which should match the one originally passed to .on() when attaching event handlers.</param>
     ///   <returns type="jQuery" />
@@ -2147,45 +2147,45 @@ intellisense.annotate(jQuery.fn, {
   },
   'remove': function() {
     /// <signature>
-    ///   <summary>Remove the set of matched elements from the DOM.</summary>
+    ///   <summary>Delete the set of matched elements from the DOM.</summary>
     ///   <param name="selector" type="String">A selector expression that filters the set of matched elements to be removed.</param>
     ///   <returns type="jQuery" />
     /// </signature>
   },
   'removeAttr': function() {
     /// <signature>
-    ///   <summary>Remove an attribute from each element in the set of matched elements.</summary>
+    ///   <summary>Delete an attribute from each element in the set of matched elements.</summary>
     ///   <param name="attributeName" type="String">An attribute to remove; as of version 1.7, it can be a space-separated list of attributes.</param>
     ///   <returns type="jQuery" />
     /// </signature>
   },
   'removeClass': function() {
     /// <signature>
-    ///   <summary>Remove a single class, multiple classes, or all classes from each element in the set of matched elements.</summary>
+    ///   <summary>Delete a single class, multiple classes, or all classes from each element in the set of matched elements.</summary>
     ///   <param name="className" type="String">One or more space-separated classes to be removed from the class attribute of each matched element.</param>
     ///   <returns type="jQuery" />
     /// </signature>
     /// <signature>
-    ///   <summary>Remove a single class, multiple classes, or all classes from each element in the set of matched elements.</summary>
+    ///   <summary>Delete a single class, multiple classes, or all classes from each element in the set of matched elements.</summary>
     ///   <param name="function(index, class)" type="Function">A function returning one or more space-separated class names to be removed. Receives the index position of the element in the set and the old class value as arguments.</param>
     ///   <returns type="jQuery" />
     /// </signature>
   },
   'removeData': function() {
     /// <signature>
-    ///   <summary>Remove a previously-stored piece of data.</summary>
+    ///   <summary>Delete a previously-stored piece of data.</summary>
     ///   <param name="name" type="String">A string naming the piece of data to delete.</param>
     ///   <returns type="jQuery" />
     /// </signature>
     /// <signature>
-    ///   <summary>Remove a previously-stored piece of data.</summary>
+    ///   <summary>Delete a previously-stored piece of data.</summary>
     ///   <param name="list" type="String">An array or space-separated string naming the pieces of data to delete.</param>
     ///   <returns type="jQuery" />
     /// </signature>
   },
   'removeProp': function() {
     /// <signature>
-    ///   <summary>Remove a property for the set of matched elements.</summary>
+    ///   <summary>Delete a property for the set of matched elements.</summary>
     ///   <param name="propertyName" type="String">The name of the property to remove.</param>
     ///   <returns type="jQuery" />
     /// </signature>
@@ -2504,45 +2504,45 @@ intellisense.annotate(jQuery.fn, {
   },
   'unbind': function() {
     /// <signature>
-    ///   <summary>Remove a previously-attached event handler from the elements.</summary>
+    ///   <summary>Delete a previously-attached event handler from the elements.</summary>
     ///   <param name="eventType" type="String">A string containing a JavaScript event type, such as click or submit.</param>
     ///   <param name="handler(eventObject)" type="Function">The function that is to be no longer executed.</param>
     ///   <returns type="jQuery" />
     /// </signature>
     /// <signature>
-    ///   <summary>Remove a previously-attached event handler from the elements.</summary>
+    ///   <summary>Delete a previously-attached event handler from the elements.</summary>
     ///   <param name="eventType" type="String">A string containing a JavaScript event type, such as click or submit.</param>
     ///   <param name="false" type="Boolean">Unbinds the corresponding 'return false' function that was bound using .bind( eventType, false ).</param>
     ///   <returns type="jQuery" />
     /// </signature>
     /// <signature>
-    ///   <summary>Remove a previously-attached event handler from the elements.</summary>
+    ///   <summary>Delete a previously-attached event handler from the elements.</summary>
     ///   <param name="event" type="Object">A JavaScript event object as passed to an event handler.</param>
     ///   <returns type="jQuery" />
     /// </signature>
   },
   'undelegate': function() {
     /// <signature>
-    ///   <summary>Remove a handler from the event for all elements which match the current selector, based upon a specific set of root elements.</summary>
+    ///   <summary>Delete a handler from the event for all elements which match the current selector, based upon a specific set of root elements.</summary>
     ///   <param name="selector" type="String">A selector which will be used to filter the event results.</param>
     ///   <param name="eventType" type="String">A string containing a JavaScript event type, such as "click" or "keydown"</param>
     ///   <returns type="jQuery" />
     /// </signature>
     /// <signature>
-    ///   <summary>Remove a handler from the event for all elements which match the current selector, based upon a specific set of root elements.</summary>
+    ///   <summary>Delete a handler from the event for all elements which match the current selector, based upon a specific set of root elements.</summary>
     ///   <param name="selector" type="String">A selector which will be used to filter the event results.</param>
     ///   <param name="eventType" type="String">A string containing a JavaScript event type, such as "click" or "keydown"</param>
     ///   <param name="handler(eventObject)" type="Function">A function to execute at the time the event is triggered.</param>
     ///   <returns type="jQuery" />
     /// </signature>
     /// <signature>
-    ///   <summary>Remove a handler from the event for all elements which match the current selector, based upon a specific set of root elements.</summary>
+    ///   <summary>Delete a handler from the event for all elements which match the current selector, based upon a specific set of root elements.</summary>
     ///   <param name="selector" type="String">A selector which will be used to filter the event results.</param>
     ///   <param name="events" type="PlainObject">An object of one or more event types and previously bound functions to unbind from them.</param>
     ///   <returns type="jQuery" />
     /// </signature>
     /// <signature>
-    ///   <summary>Remove a handler from the event for all elements which match the current selector, based upon a specific set of root elements.</summary>
+    ///   <summary>Delete a handler from the event for all elements which match the current selector, based upon a specific set of root elements.</summary>
     ///   <param name="namespace" type="String">A string containing a namespace to unbind all events from.</param>
     ///   <returns type="jQuery" />
     /// </signature>
@@ -2561,7 +2561,7 @@ intellisense.annotate(jQuery.fn, {
     /// </signature>
   },
   'unwrap': function() {
-    /// <summary>Remove the parents of the set of matched elements from the DOM, leaving the matched elements in their place.</summary>
+    /// <summary>Delete the parents of the set of matched elements from the DOM, leaving the matched elements in their place.</summary>
     /// <returns type="jQuery" />
   },
   'val': function() {

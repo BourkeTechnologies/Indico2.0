@@ -1,4 +1,5 @@
 ﻿using Indico20.BusinessObjects.Base;
+using Indico20.BusinessObjects.Base.Core;
 
 namespace Indico20.BusinessObjects.Procedures
 {

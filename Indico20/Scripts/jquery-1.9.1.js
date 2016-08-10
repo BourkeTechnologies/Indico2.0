@@ -1085,7 +1085,7 @@ jQuery.Callbacks = function( options ) {
 				}
 				return this;
 			},
-			// Remove a callback from the list
+			// Delete a callback from the list
 			remove: function() {
 				if ( list ) {
 					jQuery.each( arguments, function( _, arg ) {
@@ -1111,7 +1111,7 @@ jQuery.Callbacks = function( options ) {
 			has: function( fn ) {
 				return fn ? jQuery.inArray( fn, list ) > -1 : !!( list && list.length );
 			},
-			// Remove all callbacks from the list
+			// Delete all callbacks from the list
 			empty: function() {
 				list = [];
 				return this;
@@ -2132,7 +2132,7 @@ jQuery.fn.extend({
 				if ( cur ) {
 					j = 0;
 					while ( (clazz = classes[j++]) ) {
-						// Remove *all* instances
+						// Delete *all* instances
 						while ( cur.indexOf( " " + clazz + " " ) >= 0 ) {
 							cur = cur.replace( " " + clazz + " ", " " );
 						}
@@ -2519,7 +2519,7 @@ boolHook = {
 	},
 	set: function( elem, value, name ) {
 		if ( value === false ) {
-			// Remove boolean attributes when set to false
+			// Delete boolean attributes when set to false
 			jQuery.removeAttr( elem, name );
 		} else if ( getSetInput && getSetAttribute || !ruseDefault.test( name ) ) {
 			// IE<8 needs the *property* name
@@ -2857,7 +2857,7 @@ jQuery.event = {
 			handlers = events[ type ] || [];
 			tmp = tmp[2] && new RegExp( "(^|\\.)" + namespaces.join("\\.(?:.*\\.|)") + "(\\.|$)" );
 
-			// Remove matching events
+			// Delete matching events
 			origCount = j = handlers.length;
 			while ( j-- ) {
 				handleObj = handlers[ j ];
@@ -2877,7 +2877,7 @@ jQuery.event = {
 				}
 			}
 
-			// Remove generic event handler if we removed something and no more handlers exist
+			// Delete generic event handler if we removed something and no more handlers exist
 			// (avoids potential for endless recursion during removal of special event handlers)
 			if ( origCount && !handlers.length ) {
 				if ( !special.teardown || special.teardown.call( elem, namespaces, elemData.handle ) === false ) {
@@ -2888,7 +2888,7 @@ jQuery.event = {
 			}
 		}
 
-		// Remove the expando if it's no longer used
+		// Delete the expando if it's no longer used
 		if ( jQuery.isEmptyObject( events ) ) {
 			delete elemData.handle;
 
@@ -3477,7 +3477,7 @@ if ( !jQuery.support.submitBubbles ) {
 				return false;
 			}
 
-			// Remove delegated handlers; cleanData eventually reaps submit handlers attached above
+			// Delete delegated handlers; cleanData eventually reaps submit handlers attached above
 			jQuery.event.remove( this, "._submit" );
 		}
 	};
@@ -6005,12 +6005,12 @@ jQuery.fn.extend({
 			i = 0;
 
 		for ( ; (elem = this[i]) != null; i++ ) {
-			// Remove element nodes and prevent memory leaks
+			// Delete element nodes and prevent memory leaks
 			if ( elem.nodeType === 1 ) {
 				jQuery.cleanData( getAll( elem, false ) );
 			}
 
-			// Remove any remaining nodes
+			// Delete any remaining nodes
 			while ( elem.firstChild ) {
 				elem.removeChild( elem.firstChild );
 			}
@@ -6056,7 +6056,7 @@ jQuery.fn.extend({
 
 				try {
 					for (; i < l; i++ ) {
-						// Remove element nodes and prevent memory leaks
+						// Delete element nodes and prevent memory leaks
 						elem = this[i] || {};
 						if ( elem.nodeType === 1 ) {
 							jQuery.cleanData( getAll( elem, false ) );
@@ -6479,7 +6479,7 @@ jQuery.extend({
 						nodes.push( context.createTextNode( rleadingWhitespace.exec( elem )[0] ) );
 					}
 
-					// Remove IE's autoinserted <tbody> from table fragments
+					// Delete IE's autoinserted <tbody> from table fragments
 					if ( !jQuery.support.tbody ) {
 
 						// String was a <table>, *may* have spurious <tbody>
@@ -6589,7 +6589,7 @@ jQuery.extend({
 						}
 					}
 
-					// Remove cache only if it was not already removed by jQuery.event.remove
+					// Delete cache only if it was not already removed by jQuery.event.remove
 					if ( cache[ id ] ) {
 
 						delete cache[ id ];
@@ -7836,7 +7836,7 @@ jQuery.extend({
 		jqXHR.success = jqXHR.done;
 		jqXHR.error = jqXHR.fail;
 
-		// Remove hash character (#7531: and string promotion)
+		// Delete hash character (#7531: and string promotion)
 		// Add protocol if not provided (#5866: IE7 issue with protocol-less urls)
 		// Handle falsy url in the settings object (#10093: consistency with old signature)
 		// We also use the url parameter if available
@@ -8127,7 +8127,7 @@ function ajaxHandleResponses( s, jqXHR, responses ) {
 		}
 	}
 
-	// Remove auto dataType and get content-type in the process
+	// Delete auto dataType and get content-type in the process
 	while( dataTypes[ 0 ] === "*" ) {
 		dataTypes.shift();
 		if ( ct === undefined ) {
@@ -8316,7 +8316,7 @@ jQuery.ajaxTransport( "script", function(s) {
 						// Handle memory leak in IE
 						script.onload = script.onreadystatechange = null;
 
-						// Remove the script
+						// Delete the script
 						if ( script.parentNode ) {
 							script.parentNode.removeChild( script );
 						}
@@ -9084,7 +9084,7 @@ Tween.propHooks = {
 	}
 };
 
-// Remove in 2.0 - this supports IE8's panic based approach
+// Delete in 2.0 - this supports IE8's panic based approach
 // to setting things on disconnected nodes
 
 Tween.propHooks.scrollTop = Tween.propHooks.scrollLeft = {

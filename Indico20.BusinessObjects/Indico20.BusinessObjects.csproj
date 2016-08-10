@@ -58,11 +58,13 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Base\IEntity.cs" />
-    <Compile Include="Base\IRepository.cs" />
-    <Compile Include="Base\ISpResult.cs" />
-    <Compile Include="Base\IUnitOfWork.cs" />
-    <Compile Include="Base\UnitOfWork.cs" />
+    <Compile Include="Base\Core\IEntity.cs" />
+    <Compile Include="Base\Core\IRepository.cs" />
+    <Compile Include="Base\Core\ISPResult.cs" />
+    <Compile Include="Base\Core\IUnitOfWork.cs" />
+    <Compile Include="Base\DBContext\IDbContext.cs" />
+    <Compile Include="Base\DBContext\IndicoContext.cs" />
+    <Compile Include="Base\Implementation\UnitOfWork.cs" />
     <Compile Include="Common\Indico20Configuration.cs" />
     <Compile Include="Objects\Company.cs" />
     <Compile Include="Objects\MenuItem.cs" />
@@ -75,11 +77,15 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
-    <Compile Include="Repositories\CompanyRepository.cs" />
-    <Compile Include="Repositories\MenuItemRepository.cs" />
-    <Compile Include="Repositories\Repository.cs" />
-    <Compile Include="Repositories\UserRepository.cs" />
-    <Compile Include="Repositories\UserStatusRepository.cs" />
+    <Compile Include="Repositories\Core\ICompanyRepository.cs" />
+    <Compile Include="Repositories\Core\IMenuItemRepository.cs" />
+    <Compile Include="Repositories\Core\IUserRepository.cs" />
+    <Compile Include="Repositories\Core\IUserStatusRepository.cs" />
+    <Compile Include="Repositories\Implementation\CompanyRepository.cs" />
+    <Compile Include="Repositories\Implementation\MenuItemRepository.cs" />
+    <Compile Include="Repositories\Implementation\Repository.cs" />
+    <Compile Include="Repositories\Implementation\UserRepository.cs" />
+    <Compile Include="Repositories\Implementation\UserStatusRepository.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

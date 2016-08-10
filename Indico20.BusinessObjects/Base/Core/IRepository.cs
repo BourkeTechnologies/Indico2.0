@@ -1,19 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Indico20.BusinessObjects.Base
+namespace Indico20.BusinessObjects.Base.Core
 {
     public interface IRepository<T> where T : IEntity
     {
         T Get(int id);
-        IEnumerable<T> GetAll();
+        IEnumerable<T> Get();
         IEnumerable<T> Find(Func<T, bool> predicate);
-        void Update(T entity);
         void AddRange(IEnumerable<T> entities);
         void Add(T entity);
-        void Remove(int id);
-        void RemoveRange(IEnumerable<int> ids);
+        void Delete(T entity);
+        void DeleteRange(IEnumerable<T> ids);
         string TableName { get; }
-        Dictionary<string, object> GetColumnValueMapping(T entity);
+        
     }
 }

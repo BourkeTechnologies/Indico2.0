@@ -1,7 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using Indico20CodeBase.Extensions;
+using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Indico20CodeBase.Extensions;
 
 namespace Indico20CodeBase.Tools
 {
@@ -80,7 +80,7 @@ namespace Indico20CodeBase.Tools
                 stringBuilder.Append(string.Format("{0}{1} = {2}{3}{4}",!first? ", ":"", string.Format("[{0}]",key), wrapper, (value is bool )?((bool)value).ToOneZero():value, wrapper));
                 first = false;
             }
-            stringBuilder.AppendLine(string.Format(" WHERE ID = {0}",id));
+            stringBuilder.AppendLine(string.Format(" WHERE ID = {0};",id));
             return stringBuilder.ToString();
         }
 
