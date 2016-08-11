@@ -54,29 +54,29 @@ namespace RemoteConsolePortal.Controllers
         {
             using (var unit = new UnitOfWork())
             {
-                var menuItems = unit.MenuItems.ForUserRole(1);
-                var getMenuItemses = menuItems as IList<GetMenuItemsForUserRoleResult> ?? menuItems.ToList();
+                var menuItems = unit.MenuItems.ForUserRole(4);
+                var menuItemList = menuItems as IList<GetMenuItemsForUserRoleResult> ?? menuItems.ToList();
                 var models = new List<NavigationModel>();
-                if (getMenuItemses.Any())
+                if (menuItemList.Any())
                 {
-                    models.AddRange(from menuItem in getMenuItemses
-                                    where menuItem.IsVisible
-                                    select new NavigationModel
-                                    {
-                                        ID = menuItem.ID,
-                                        Action = menuItem.Action,
-                                        Controller = menuItem.Controller,
-                                        IsLeftAligned = menuItem.IsAlignedLeft,
-                                        Name = menuItem.MenuName,
-                                        Parameters = menuItem.Parameters,
-                                        Position = menuItem.Position,
-                                        Title = menuItem.Title,
-                                        Parent = menuItem.Parent
-                                    });
+                    models.AddRange((from menuItem in menuItemList
+                                     where menuItem.IsVisible
+                                     select new NavigationModel
+                                     {
+                                         ID = menuItem.ID,
+                                         Action = menuItem.Action,
+                                         Controller = menuItem.Controller,
+                                         IsLeftAligned = menuItem.IsAlignedLeft,
+                                         Name = menuItem.MenuName,
+                                         Parameters = menuItem.Parameters,
+                                         Position = menuItem.Position,
+                                         Title = menuItem.Title,
+                                         Parent = menuItem.Parent
+                                     }).OrderBy(mi => mi.Name));
 
                     foreach (var mi in models)
                     {
-                        mi.SubMenus = models.Where(m => m.Parent == mi.ID).ToList();
+                        mi.SubMenus = models.Where(m => m.Parent == mi.ID).OrderBy(m => m.Name).ToList();
                     }
                 }
                 ViewBag.Items = models;

@@ -53,3 +53,6 @@ Indico20/bin/
 Indico20.BusinessObjects/bin/
 Indico20.Tests/bin/
 Indico20CodeBase/bin/
+*.cache
+*.dll
+*.dll

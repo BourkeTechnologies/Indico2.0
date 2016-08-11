@@ -44,19 +44,18 @@ namespace Indico20.BusinessObjects.Objects
 
         #region PropertyChange
         public event PropertyChangedEventHandler PropertyChanged;
-                public void NotifyPropertyChanged(string propertyName)
-                {
-                    if (PropertyChanged != null)
-                        PropertyChanged.Invoke(this, new PropertyChangedEventArgs(propertyName));
-                }
+        public void NotifyPropertyChanged(string propertyName)
+        {
+            if (PropertyChanged != null)
+                PropertyChanged.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
         #endregion
-
 
         #region Properties
 
         public string TableName => "Company";
 
-        public int ID { get { return _iD; } }
+        public int ID { get { return _iD; } set { _iD = value; } }
         public int Type { get { return _type; } set { _type = value; NotifyPropertyChanged("Type"); } }
         public bool IsDistributor { get { return _isDistributor; } set { _isDistributor = value; NotifyPropertyChanged("IsDistributor"); } }
         public string Name { get { return _name; } set { _name = value; NotifyPropertyChanged("Name"); } }
@@ -87,7 +86,6 @@ namespace Indico20.BusinessObjects.Objects
         public string JobName { get { return _jobName; } set { _jobName = value; NotifyPropertyChanged("JobName"); } }
 
         #endregion
-
 
         #region Methods
 
