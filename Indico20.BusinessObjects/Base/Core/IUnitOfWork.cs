@@ -10,5 +10,6 @@ namespace Indico20.BusinessObjects.Base.Core
         IUserStatusRepository UserStatusRepository { get; }
         IMenuItemRepository MenuItemRepository { get; }
         IUserRepository UserRepository { get; }
+        IRoleRepository RoleRepository { get; }
     }
 }

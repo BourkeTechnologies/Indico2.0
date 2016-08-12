@@ -18,7 +18,6 @@ namespace Indico20.BusinessObjects.Base.Implementation
         private readonly List<IEntity> _dirtyEntities;
         private readonly HashSet<IEntity> _deletedEntities;
         private readonly HashSet<IEntity> _addedEntities;
-
         private readonly IDbConnection _connection;
 
 

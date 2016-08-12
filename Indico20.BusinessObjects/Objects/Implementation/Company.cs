@@ -10,7 +10,6 @@ namespace Indico20.BusinessObjects.Objects.Implementation
     {
 
         #region Fields
-
         private int _type;
         private bool _isDistributor;
         private string _name;
