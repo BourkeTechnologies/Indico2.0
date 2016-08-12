@@ -1,0 +1,23 @@
+﻿@using Indico20.BusinessObjects
+@using Indico20.BusinessObjects.Objects
+@{
+    Layout = "~/Views/Shared/IndicoLayout.cshtml";
+}
+
+<html>
+    <head>
+        <title>order details</title>
+    </head>
+    <body>
+        <div style="margin: 30px">
+            <h2>@ViewBag.Header</h2>
+            @foreach (BasicOrderDetailBO orderDetail in ViewBag.OrderDetails)
+            {
+                <div class="well" style="background-color: rgba(245, 245, 245, 0.4);">
+                    <label>Visual Layout : @orderDetail.VisualLayout</label><br/>
+                    <label>Pattern : @orderDetail.Pattern</label>
+                </div>
+            }
+        </div>
+    </body>
+</html>
