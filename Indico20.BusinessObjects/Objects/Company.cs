@@ -11,7 +11,6 @@ namespace Indico20.BusinessObjects.Objects
 
         #region Fields
 
-        private int _iD;
         private int _type;
         private bool _isDistributor;
         private string _name;
@@ -54,11 +53,10 @@ namespace Indico20.BusinessObjects.Objects
 
         #region Properties
 
-        public string TableName => "Company";
-
         public IDbContext _Context { get; set; }
 
-        public int ID { get { return _iD; } set { _iD = value; } }
+        public int ID { get; set; }
+
         public int Type { get { return _type; } set { _type = value; NotifyPropertyChanged("Type"); } }
         public bool IsDistributor { get { return _isDistributor; } set { _isDistributor = value; NotifyPropertyChanged("IsDistributor"); } }
         public string Name { get { return _name; } set { _name = value; NotifyPropertyChanged("Name"); } }

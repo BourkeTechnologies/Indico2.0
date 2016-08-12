@@ -10,7 +10,6 @@ namespace Indico20.BusinessObjects.Objects
 
         #region Fields
 
-        private int _iD;
         private int _controllerAction;
         private int? _parent;
         private int _position;
@@ -39,11 +38,10 @@ namespace Indico20.BusinessObjects.Objects
 
         #region Properties
 
-        public string TableName => "MenuItem";
-
         public IDbContext _Context { get; set; }
 
-        public int ID { get { return _iD; } set { _iD = value; NotifyPropertyChanged("ID"); } }
+        public int ID { get; set; }
+
         public int ControllerAction { get { return _controllerAction; } set { _controllerAction = value; NotifyPropertyChanged("ControllerAction"); } }
         public int? Parent { get { return _parent; } set { _parent = value; NotifyPropertyChanged("Parent"); } }
         public int Position { get { return _position; } set { _position = value; NotifyPropertyChanged("Position"); } }

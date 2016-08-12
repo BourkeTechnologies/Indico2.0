@@ -12,7 +12,6 @@ namespace Indico20.BusinessObjects.Base.Core
         void Add(T entity);
         void Delete(T entity);
         void DeleteRange(IEnumerable<T> ids);
-        string TableName { get; }
-        
+
     }
 }

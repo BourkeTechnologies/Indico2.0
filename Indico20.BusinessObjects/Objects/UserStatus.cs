@@ -10,7 +10,6 @@ namespace Indico20.BusinessObjects.Objects
 
         #region Fields
 
-        private int _iD;
         private string _key;
         private string _name;
 
@@ -31,11 +30,10 @@ namespace Indico20.BusinessObjects.Objects
 
         #region Properties
 
-        public string TableName => "UserStatus";
-
         public IDbContext _Context { get; set; }
 
-        public int ID { get { return _iD; } set { _iD = value; NotifyPropertyChanged("ID"); } }
+        public int ID { get; set; }
+
         public string Key { get { return _key; } set { _key = value; NotifyPropertyChanged("Key"); } }
         public string Name { get { return _name; } set { _name = value; NotifyPropertyChanged("Name"); } }
 

@@ -8,8 +8,6 @@ namespace Indico20.BusinessObjects.Repositories.Implementation
 {
     public class MenuItemRepository : Repository<MenuItem>, IMenuItemRepository
     {
-        public override string TableName => "MenuItem";
-
         public MenuItemRepository(IDbContext context) : base(context)
         {
         }

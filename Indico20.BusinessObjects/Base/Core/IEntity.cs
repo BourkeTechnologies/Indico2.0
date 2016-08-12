@@ -9,7 +9,6 @@ namespace Indico20.BusinessObjects.Base.Core
     {
         int ID { get; }
         Dictionary<string, object> GetColumnValueMapping();
-        string TableName { get; }
 
         [SuppressMessage("ReSharper", "InconsistentNaming")]
         IDbContext _Context { get; set; }

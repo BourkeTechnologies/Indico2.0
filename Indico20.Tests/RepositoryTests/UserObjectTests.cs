@@ -13,9 +13,9 @@ namespace Indico20.Tests.RepositoryTests
         {
             using (var unit = new UnitOfWork())
             {
-                var company =unit.Companies.Get(4);
-                Assert.IsTrue(company!=null);
-                Assert.IsTrue(company.Name== "Indico");
+                var company = unit.Companies.Get(4);
+                Assert.IsTrue(company != null);
+                Assert.IsTrue(company.Name == "Indico");
             }
         }
 
@@ -26,7 +26,7 @@ namespace Indico20.Tests.RepositoryTests
             {
                 var companies = unit.Companies.Get().ToList();
                 Assert.IsTrue(companies != null);
-                Assert.AreEqual(companies.Count , 1177);
+                Assert.AreEqual(companies.Count, 1177);
             }
         }
 
@@ -39,14 +39,14 @@ namespace Indico20.Tests.RepositoryTests
                 var count = statuss.Count;
                 var status = new UserStatus
                 {
-                   Name = "NewStatus",
-                   Key = "NS"
+                    Name = "NewStatus",
+                    Key = "NS"
                 };
                 unit.UserStatus.Add(status);
                 unit.Complete();
                 statuss = unit.UserStatus.Get().ToList();
                 Assert.IsTrue(statuss != null);
-                Assert.AreEqual(statuss.Count, count+1);
+                Assert.AreEqual(statuss.Count, count + 1);
             }
         }
 
@@ -55,7 +55,7 @@ namespace Indico20.Tests.RepositoryTests
         {
             using (var unit = new UnitOfWork())
             {
-                var statuss = unit.UserStatus.Get().Where(us=>us.Key=="NS").ToList();
+                var statuss = unit.UserStatus.Get().Where(us => us.Key == "NS").ToList();
                 foreach (var st in statuss)
                 {
                     st.Key = "NEW";
@@ -63,7 +63,7 @@ namespace Indico20.Tests.RepositoryTests
 
                 unit.Complete();
                 statuss = unit.UserStatus.Get().Where(us => us.Key == "NS").ToList();
-                Assert.AreEqual(statuss.Count,0);
+                Assert.AreEqual(statuss.Count, 0);
             }
         }
 
@@ -88,12 +88,29 @@ namespace Indico20.Tests.RepositoryTests
             using (var unit = new UnitOfWork())
             {
                 var obj = unit.UserStatus.Get().Where(us => us.Key == "NEW").ToList();
-                if (obj.Count>0)
+                if (obj.Count > 0)
                 {
                     unit.UserStatus.DeleteRange(obj);
                 }
                 unit.Complete();
                 Assert.IsNull(unit.UserStatus.Get().FirstOrDefault(us => us.Key == "TK"));
+            }
+        }
+
+        [TestMethod]
+        public void GetObjectInsideObject()
+        {
+            using (var unit = new UnitOfWork())
+            {
+                var user = unit.Users.Get(30);
+                Assert.IsNotNull(user);
+                Assert.IsNotNull(user.ObjCompany);
+                Assert.IsNotNull(user.ObjCompany);
+                user.Company = 526;
+                var company = user.ObjCompany;
+                Assert.IsNotNull(company);
+                Assert.AreEqual(526, company.ID);
+                Assert.IsNotNull(user.ObjCompany);
             }
         }
 

@@ -17,12 +17,12 @@ namespace Indico20.BusinessObjects.Repositories.Implementation
 
         public T Get(int id)
         {
-            return Context.Get<T>(TableName, id);
+            return Context.Get<T>( id);
         }
 
         public IEnumerable<T> Get()
         {
-            return Context.Get<T>(TableName);
+            return Context.Get<T>();
         }
 
         public void Add(T entity)
@@ -47,7 +47,7 @@ namespace Indico20.BusinessObjects.Repositories.Implementation
 
         public IEnumerable<T> Find(Func<T, bool> predicate)
         {
-            return Context.Find(TableName, predicate);
+            return Context.Find( predicate);
         }
     }
 }

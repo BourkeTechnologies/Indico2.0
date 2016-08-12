@@ -6,7 +6,6 @@ namespace Indico20.BusinessObjects.Repositories.Implementation
 {
     public class UserRepository : Repository<User>, IUserRepository
     {
-        public override string TableName => "User";
         public UserRepository(IDbContext context) : base(context)
         {
         }

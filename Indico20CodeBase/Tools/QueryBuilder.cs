@@ -19,7 +19,7 @@ namespace Indico20CodeBase.Tools
         /// <returns>generated query</returns>
         public static string DeleteFromTable(string tableName, int id)
         {
-            return string.Format("DELETE FROM [dbo].[{0}] WHERE ID = {1}",tableName,id);
+            return string.Format("DELETE FROM [dbo].[{0}] WHERE ID = {1}", tableName, id);
         }
 
         /// <summary>
@@ -45,7 +45,7 @@ namespace Indico20CodeBase.Tools
         /// <returns>generated query</returns>
         public static string SelectAll(string tableName)
         {
-            return string.Format("SELECT * FROM [dbo].[{0}]",tableName);
+            return string.Format("SELECT * FROM [dbo].[{0}]", tableName);
         }
 
         /// <summary>
@@ -66,7 +66,7 @@ namespace Indico20CodeBase.Tools
         /// <param name="values">dictionary that contains column name and value</param>
         /// <param name="id">id of the item to update</param>
         /// <returns>generated query</returns>
-        public static string Update(string tableName, Dictionary<string, object> values,int id)
+        public static string Update(string tableName, Dictionary<string, object> values, int id)
         {
             if (values == null || values.Count < 1)
                 return "";
@@ -76,11 +76,11 @@ namespace Indico20CodeBase.Tools
             foreach (var key in values.Keys)
             {
                 var value = values[key];
-                var wrapper = value.IsNumeric()?"": "'";
-                stringBuilder.Append(string.Format("{0}{1} = {2}{3}{4}",!first? ", ":"", string.Format("[{0}]",key), wrapper, (value is bool )?((bool)value).ToOneZero():value, wrapper));
+                var wrapper = value.IsNumeric() ? "" : "'";
+                stringBuilder.Append(string.Format("{0}{1} = {2}{3}{4}", !first ? ", " : "", string.Format("[{0}]", key), wrapper, (value is bool) ? ((bool)value).ToOneZero() : value, wrapper));
                 first = false;
             }
-            stringBuilder.AppendLine(string.Format(" WHERE ID = {0};",id));
+            stringBuilder.AppendLine(string.Format(" WHERE ID = {0};", id));
             return stringBuilder.ToString();
         }
 
@@ -103,9 +103,9 @@ namespace Indico20CodeBase.Tools
                 var value = values[key];
                 columnNames.Add(key);
                 var wrapper = value.IsNumeric() ? "" : "'";
-                valuestrings.Add(string.Format("{0}{1}{2}",wrapper, (value is bool) ? ((bool)value).ToOneZero() : value, wrapper));
+                valuestrings.Add(string.Format("{0}{1}{2}", wrapper, (value is bool) ? ((bool)value).ToOneZero() : value, wrapper));
             }
-           
+
             stringBuilder.Append(string.Format("({0}) VALUES({1});", GenerateColumnNameList(columnNames), valuestrings.Aggregate((c, n) => c + "," + n)));
             return stringBuilder.ToString();
         }

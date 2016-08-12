@@ -2,6 +2,5 @@ C:\Projects\Indico20\Indico20CodeBase\bin\Debug\Indico20CodeBase.dll
 C:\Projects\Indico20\Indico20CodeBase\bin\Debug\Indico20CodeBase.pdb
 C:\Projects\Indico20\Indico20CodeBase\bin\Debug\Ninject.dll
 C:\Projects\Indico20\Indico20CodeBase\bin\Debug\Ninject.xml
-C:\Projects\Indico20\Indico20CodeBase\obj\Debug\Indico20CodeBase.csprojResolveAssemblyReference.cache
 C:\Projects\Indico20\Indico20CodeBase\obj\Debug\Indico20CodeBase.dll
 C:\Projects\Indico20\Indico20CodeBase\obj\Debug\Indico20CodeBase.pdb

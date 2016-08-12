@@ -30,22 +30,26 @@ namespace Indico20.BusinessObjects.Base.DBContext
             _addedEntities = new HashSet<IEntity>();
         }
 
-        public T Get<T>(string tableName, int id) where T : class, IEntity
+        public T Get<T>(int id) where T : class, IEntity
         {
-            var entity = _connection.Query<T>(QueryBuilder.Select(tableName, id)).FirstOrDefault();
+            var entity = _connection.Query<T>(QueryBuilder.Select(typeof(T).Name, id)).FirstOrDefault();
             if (entity == null)
                 return null;
             entity.PropertyChanged += EntityPropertyChanged;
+            entity._Context = this;
             return entity;
         }
 
-        public IEnumerable<T> Get<T>(string tableName) where T : class, IEntity
+        public IEnumerable<T> Get<T>() where T : class, IEntity
         {
-            var entities = _connection.Query<T>(QueryBuilder.SelectAll(tableName)).ToList();
+            var entities = _connection.Query<T>(QueryBuilder.SelectAll(typeof(T).Name)).ToList();
             if (entities.Count <= 0)
                 return entities;
             foreach (var entity in entities)
+            {
                 entity.PropertyChanged += EntityPropertyChanged;
+                entity._Context = this;
+            }
             return entities;
         }
 
@@ -87,7 +91,7 @@ namespace Indico20.BusinessObjects.Base.DBContext
             {
                 foreach (var entity in _addedEntities.Where(entity => !_deletedEntities.Contains(entity)))
                 {
-                    builder.AppendLine(QueryBuilder.Insert(entity.TableName, entity.GetColumnValueMapping()));
+                    builder.AppendLine(QueryBuilder.Insert(entity.GetType().Name, entity.GetColumnValueMapping()));
                 }
                 _connection.Execute(builder.ToString());
                 builder.Clear();
@@ -98,7 +102,7 @@ namespace Indico20.BusinessObjects.Base.DBContext
             {
                 foreach (var entity in _deletedEntities)
                 {
-                    builder.AppendLine(QueryBuilder.DeleteFromTable(entity.TableName, entity.ID));
+                    builder.AppendLine(QueryBuilder.DeleteFromTable(entity.GetType().Name, entity.ID));
                 }
 
                 _connection.Execute(builder.ToString());
@@ -110,7 +114,7 @@ namespace Indico20.BusinessObjects.Base.DBContext
             {
                 foreach (var entity in _dirtyEntities.Where(entity => !_deletedEntities.Contains(entity)))
                 {
-                    builder.AppendLine(QueryBuilder.Update(entity.TableName, entity.GetColumnValueMapping(), entity.ID));
+                    builder.AppendLine(QueryBuilder.Update(entity.GetType().Name, entity.GetColumnValueMapping(), entity.ID));
                 }
                 _connection.Execute(builder.ToString());
                 builder.Clear();
@@ -134,9 +138,9 @@ namespace Indico20.BusinessObjects.Base.DBContext
                 Delete(entity);
         }
 
-        IEnumerable<T> IDbContext.Find<T>(string tableName, Func<T, bool> predicate)
+        IEnumerable<T> IDbContext.Find<T>(Func<T, bool> predicate)
         {
-            return Get<T>(tableName).Where(predicate);
+            return Get<T>().Where(predicate);
         }
 
         public IEnumerable<GetMenuItemsForUserRoleResult> GetMenuItemsForUserRole(int userRole)
