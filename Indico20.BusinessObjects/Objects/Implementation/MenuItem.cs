@@ -1,8 +1,9 @@
 ﻿using Indico20.BusinessObjects.Base.Core;
+using Indico20.BusinessObjects.Objects.Core;
 using System.Collections.Generic;
 using System.ComponentModel;
 
-namespace Indico20.BusinessObjects.Objects
+namespace Indico20.BusinessObjects.Objects.Implementation
 {
     public class MenuItem : IEntity
     {

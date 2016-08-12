@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using Indico20.BusinessObjects.Objects.Core;
 
-namespace Indico20.BusinessObjects.Base.Core
+namespace Indico20.BusinessObjects.Repositories.Core
 {
     public interface IRepository<T> where T : IEntity
     {

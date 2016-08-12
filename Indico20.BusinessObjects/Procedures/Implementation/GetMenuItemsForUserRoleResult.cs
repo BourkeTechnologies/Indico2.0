@@ -1,9 +1,8 @@
-﻿using Indico20.BusinessObjects.Base;
-using Indico20.BusinessObjects.Base.Core;
+﻿using Indico20.BusinessObjects.Procedures.Core;
 
-namespace Indico20.BusinessObjects.Procedures
+namespace Indico20.BusinessObjects.Procedures.Implementation
 {
-    public class GetMenuItemsForUserRoleResult :ISpResult
+    public class GetMenuItemsForUserRoleResult : ISpResult
     {
         public int ID { get; set; }
         public string MenuName { get; set; }

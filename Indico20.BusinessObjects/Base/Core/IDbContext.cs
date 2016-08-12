@@ -1,6 +1,7 @@
-﻿using System;
+﻿using Indico20.BusinessObjects.Objects.Core;
+using Indico20.BusinessObjects.Procedures.Implementation;
+using System;
 using System.Collections.Generic;
-using Indico20.BusinessObjects.Procedures;
 
 namespace Indico20.BusinessObjects.Base.Core
 {

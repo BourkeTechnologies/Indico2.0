@@ -1,5 +1,5 @@
 ﻿using Indico20.BusinessObjects.Base.Implementation;
-using Indico20.BusinessObjects.Objects;
+using Indico20.BusinessObjects.Objects.Implementation;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Linq;
 

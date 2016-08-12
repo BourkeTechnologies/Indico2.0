@@ -1,10 +1,12 @@
-﻿using System;
+﻿using Indico20.BusinessObjects.Base.Core;
+using Indico20.BusinessObjects.Objects.Core;
+using Indico20.BusinessObjects.Repositories.Core;
+using System;
 using System.Collections.Generic;
-using Indico20.BusinessObjects.Base.Core;
 
 namespace Indico20.BusinessObjects.Repositories.Implementation
 {
-    public class Repository<T> : IRepository<T> where T : class , IEntity
+    public class Repository<T> : IRepository<T> where T : class, IEntity
     {
         protected IDbContext Context;
         public virtual string TableName { get; set; }
@@ -16,7 +18,7 @@ namespace Indico20.BusinessObjects.Repositories.Implementation
 
         public T Get(int id)
         {
-            return Context.Get<T>( id);
+            return Context.Get<T>(id);
         }
 
         public IEnumerable<T> Get()
@@ -46,7 +48,7 @@ namespace Indico20.BusinessObjects.Repositories.Implementation
 
         public IEnumerable<T> Find(Func<T, bool> predicate)
         {
-            return Context.Find( predicate);
+            return Context.Find(predicate);
         }
     }
 }

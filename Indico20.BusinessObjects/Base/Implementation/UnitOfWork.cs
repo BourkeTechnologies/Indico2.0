@@ -8,12 +8,12 @@ namespace Indico20.BusinessObjects.Base.Implementation
     {
         private readonly IDbContext _context;
 
-        public ICompanyRepository CompanyRepository { get; private set; }
-        public IUserStatusRepository UserStatusRepository { get; private set; }
+        public ICompanyRepository CompanyRepository { get; }
+        public IUserStatusRepository UserStatusRepository { get; }
 
-        public IMenuItemRepository MenuItemRepository { get; private set; }
+        public IMenuItemRepository MenuItemRepository { get; }
 
-        public IUserRepository UserRepository { get; private set; }
+        public IUserRepository UserRepository { get; }
 
         public UnitOfWork()
         {

@@ -1,5 +1,5 @@
 ﻿using Indico20.BusinessObjects.Base.Implementation;
-using Indico20.BusinessObjects.Procedures;
+using Indico20.BusinessObjects.Procedures.Implementation;
 using Indico20.Models;
 using System.Collections.Generic;
 using System.Linq;
