@@ -1,4 +1,5 @@
 ﻿using Indico20.BusinessObjects.Base.Core;
+using Indico20.BusinessObjects.Base.DBContext;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -54,6 +55,8 @@ namespace Indico20.BusinessObjects.Objects
         #region Properties
 
         public string TableName => "Company";
+
+        public IDbContext _Context { get; set; }
 
         public int ID { get { return _iD; } set { _iD = value; } }
         public int Type { get { return _type; } set { _type = value; NotifyPropertyChanged("Type"); } }

@@ -1,4 +1,5 @@
 ﻿using Indico20.BusinessObjects.Base.Core;
+using Indico20.BusinessObjects.Base.DBContext;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -12,6 +13,7 @@ namespace Indico20.BusinessObjects.Objects
 
         private int _iD;
         private int _company;
+        private Company _objCompany;
         private bool _isDistributor;
         private int _status;
         private string _username;
@@ -53,9 +55,11 @@ namespace Indico20.BusinessObjects.Objects
         #region Properties
 
         public string TableName => "User";
+        public IDbContext _Context { get; set; }
 
         public int ID { get { return _iD; } set { _iD = value; NotifyPropertyChanged("ID"); } }
         public int Company { get { return _company; } set { _company = value; NotifyPropertyChanged("Company"); } }
+        //public Company ObjCompany { get { return _objCompany??_Context.Get<Company>(Company,"Name")} }
         public bool IsDistributor { get { return _isDistributor; } set { _isDistributor = value; NotifyPropertyChanged("IsDistributor"); } }
         public int Status { get { return _status; } set { _status = value; NotifyPropertyChanged("Status"); } }
         public string Username { get { return _username; } set { _username = value; NotifyPropertyChanged("Username"); } }

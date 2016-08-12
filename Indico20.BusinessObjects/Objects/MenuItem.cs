@@ -1,4 +1,5 @@
 ﻿using Indico20.BusinessObjects.Base.Core;
+using Indico20.BusinessObjects.Base.DBContext;
 using System.Collections.Generic;
 using System.ComponentModel;
 
@@ -39,6 +40,8 @@ namespace Indico20.BusinessObjects.Objects
         #region Properties
 
         public string TableName => "MenuItem";
+
+        public IDbContext _Context { get; set; }
 
         public int ID { get { return _iD; } set { _iD = value; NotifyPropertyChanged("ID"); } }
         public int ControllerAction { get { return _controllerAction; } set { _controllerAction = value; NotifyPropertyChanged("ControllerAction"); } }

@@ -1,12 +1,17 @@
-﻿using System.Collections.Generic;
+﻿using Indico20.BusinessObjects.Base.DBContext;
+using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Indico20.BusinessObjects.Base.Core
 {
-    public interface IEntity:INotifyPropertyChanged
+    public interface IEntity : INotifyPropertyChanged
     {
         int ID { get; }
         Dictionary<string, object> GetColumnValueMapping();
         string TableName { get; }
+
+        [SuppressMessage("ReSharper", "InconsistentNaming")]
+        IDbContext _Context { get; set; }
     }
 }
