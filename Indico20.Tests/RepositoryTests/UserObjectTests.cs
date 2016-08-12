@@ -111,9 +111,6 @@ namespace Indico20.Tests.RepositoryTests
                 Assert.IsNotNull(company);
                 Assert.AreEqual(526, company.ID);
                 Assert.IsNotNull(user.ObjCompany);
-
-
-
             }
         }
 
