@@ -6,9 +6,9 @@ namespace Indico20.BusinessObjects.Base.Core
     public interface IUnitOfWork : IDisposable
     {
         void Complete();
-        ICompanyRepository Companies { get; }
-        IUserStatusRepository UserStatus { get; }
-        IMenuItemRepository MenuItems { get; }
-        IUserRepository Users { get; }
+        ICompanyRepository CompanyRepository { get; }
+        IUserStatusRepository UserStatusRepository { get; }
+        IMenuItemRepository MenuItemRepository { get; }
+        IUserRepository UserRepository { get; }
     }
 }

@@ -1,9 +1,8 @@
-﻿using Indico20.BusinessObjects.Base.Core;
-using Indico20.BusinessObjects.Procedures;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using Indico20.BusinessObjects.Procedures;
 
-namespace Indico20.BusinessObjects.Base.DBContext
+namespace Indico20.BusinessObjects.Base.Core
 {
     public interface IDbContext : IDisposable
     {

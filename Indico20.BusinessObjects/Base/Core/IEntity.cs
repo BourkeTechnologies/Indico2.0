@@ -1,5 +1,4 @@
-﻿using Indico20.BusinessObjects.Base.DBContext;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
 

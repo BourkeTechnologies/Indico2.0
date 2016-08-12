@@ -1,8 +1,8 @@
-﻿using Indico20.BusinessObjects.Base.DBContext;
-using Indico20.BusinessObjects.Objects;
+﻿using Indico20.BusinessObjects.Objects;
 using Indico20.BusinessObjects.Procedures;
 using Indico20.BusinessObjects.Repositories.Core;
 using System.Collections.Generic;
+using Indico20.BusinessObjects.Base.Core;
 
 namespace Indico20.BusinessObjects.Repositories.Implementation
 {

@@ -13,7 +13,7 @@ namespace Indico20.Tests.RepositoryTests
         {
             using (var unit = new UnitOfWork())
             {
-                var company = unit.Companies.Get(4);
+                var company = unit.CompanyRepository.Get(4);
                 Assert.IsTrue(company != null);
                 Assert.IsTrue(company.Name == "Indico");
             }
@@ -24,7 +24,7 @@ namespace Indico20.Tests.RepositoryTests
         {
             using (var unit = new UnitOfWork())
             {
-                var companies = unit.Companies.Get().ToList();
+                var companies = unit.CompanyRepository.Get().ToList();
                 Assert.IsTrue(companies != null);
                 Assert.AreEqual(companies.Count, 1177);
             }
@@ -35,16 +35,16 @@ namespace Indico20.Tests.RepositoryTests
         {
             using (var unit = new UnitOfWork())
             {
-                var statuss = unit.UserStatus.Get().ToList();
+                var statuss = unit.UserStatusRepository.Get().ToList();
                 var count = statuss.Count;
                 var status = new UserStatus
                 {
                     Name = "NewStatus",
                     Key = "NS"
                 };
-                unit.UserStatus.Add(status);
+                unit.UserStatusRepository.Add(status);
                 unit.Complete();
-                statuss = unit.UserStatus.Get().ToList();
+                statuss = unit.UserStatusRepository.Get().ToList();
                 Assert.IsTrue(statuss != null);
                 Assert.AreEqual(statuss.Count, count + 1);
             }
@@ -55,14 +55,14 @@ namespace Indico20.Tests.RepositoryTests
         {
             using (var unit = new UnitOfWork())
             {
-                var statuss = unit.UserStatus.Get().Where(us => us.Key == "NS").ToList();
+                var statuss = unit.UserStatusRepository.Get().Where(us => us.Key == "NS").ToList();
                 foreach (var st in statuss)
                 {
                     st.Key = "NEW";
                 }
 
                 unit.Complete();
-                statuss = unit.UserStatus.Get().Where(us => us.Key == "NS").ToList();
+                statuss = unit.UserStatusRepository.Get().Where(us => us.Key == "NS").ToList();
                 Assert.AreEqual(statuss.Count, 0);
             }
         }
@@ -72,13 +72,13 @@ namespace Indico20.Tests.RepositoryTests
         {
             using (var unit = new UnitOfWork())
             {
-                var obj = unit.UserStatus.Get().FirstOrDefault(us => us.Key == "TK");
+                var obj = unit.UserStatusRepository.Get().FirstOrDefault(us => us.Key == "TK");
                 if (obj != null)
                 {
-                    unit.UserStatus.Delete(obj);
+                    unit.UserStatusRepository.Delete(obj);
                 }
                 unit.Complete();
-                Assert.IsNull(unit.UserStatus.Get().FirstOrDefault(us => us.Key == "TK"));
+                Assert.IsNull(unit.UserStatusRepository.Get().FirstOrDefault(us => us.Key == "TK"));
             }
         }
 
@@ -87,13 +87,13 @@ namespace Indico20.Tests.RepositoryTests
         {
             using (var unit = new UnitOfWork())
             {
-                var obj = unit.UserStatus.Get().Where(us => us.Key == "NEW").ToList();
+                var obj = unit.UserStatusRepository.Get().Where(us => us.Key == "NEW").ToList();
                 if (obj.Count > 0)
                 {
-                    unit.UserStatus.DeleteRange(obj);
+                    unit.UserStatusRepository.DeleteRange(obj);
                 }
                 unit.Complete();
-                Assert.IsNull(unit.UserStatus.Get().FirstOrDefault(us => us.Key == "TK"));
+                Assert.IsNull(unit.UserStatusRepository.Get().FirstOrDefault(us => us.Key == "TK"));
             }
         }
 
@@ -102,7 +102,7 @@ namespace Indico20.Tests.RepositoryTests
         {
             using (var unit = new UnitOfWork())
             {
-                var user = unit.Users.Get(30);
+                var user = unit.UserRepository.Get(30);
                 Assert.IsNotNull(user);
                 Assert.IsNotNull(user.ObjCompany);
                 Assert.IsNotNull(user.ObjCompany);

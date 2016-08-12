@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using Indico20.BusinessObjects.Base.Core;
-using Indico20.BusinessObjects.Base.DBContext;
 
 namespace Indico20.BusinessObjects.Repositories.Implementation
 {

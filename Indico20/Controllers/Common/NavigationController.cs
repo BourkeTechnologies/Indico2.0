@@ -16,7 +16,7 @@ namespace Indico20.Controllers.Common
         {
             using (var unit = new UnitOfWork())
             {
-                var menuItems = unit.MenuItems.ForUserRole(4);
+                var menuItems = unit.MenuItemRepository.ForUserRole(4);
                 var menuItemList = menuItems as IList<GetMenuItemsForUserRoleResult> ?? menuItems.ToList();
                 var models = new List<NavigationModel>();
                 if (menuItemList.Any())

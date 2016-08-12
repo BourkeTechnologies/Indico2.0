@@ -1,26 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using Indico20.Controllers.Common;
 using System.Security;
-using System.Web;
 using System.Web.Mvc;
-using System.Web.SessionState;
-using Indico20.BusinessObjects.Objects;
-using Indico20.Controllers.Common;
 
 namespace Indico20.Controllers
 {
     public class AuthController : BaseController
     {
-
         public ActionResult Index()
         {
-            if (Session["rcp_uid"] != null)
-            {
-                return RedirectToAction("Index", "Console");
-            }
-
-            return RedirectToAction("Login", "Auth");
+            return Session["indico20id"] != null ? RedirectToAction("Index", "Home") : RedirectToAction("Login", "Auth");
         }
 
         [HttpGet]
@@ -29,20 +17,20 @@ namespace Indico20.Controllers
             if (Session["rcp_uid"] != null)
             {
                 //var user = new User {ID = Convert.ToUInt16(Session["rcp_uid"].ToString())};
- //               user = user.Get(user.ID);
+                //               user = user.Get(user.ID);
 
                 return View("index");
-             }
-             else
-             {
+            }
+            else
+            {
                 //AuthModel model = new AuthModel();
                 //model.IsShowLogin = true;
                 //model.objUser = new UserBO();
 
                 return View("Login");
 
-               // return this.ProcessLogin(model);
-            }            
+                // return this.ProcessLogin(model);
+            }
         }
 
         [HttpPost]
@@ -63,7 +51,7 @@ namespace Indico20.Controllers
         //{
         //    var objUser = new UserBO();
         //    Enums.ErrorCode code = Enums.ErrorCode.NoError;
-            
+
         //    Dictionary<int, string> companies = new Dictionary<int, string>();
 
         //    if (model.objUser.Username == null && model.objUser.Password == null || model.objUser.Username == string.Empty && model.objUser.Password == string.Empty)
@@ -312,7 +300,7 @@ namespace Indico20.Controllers
         //        return RedirectToAction("Index", "Console", new { area = "" });
         //    }
         //}
-        
+
         //#endregion
 
         //#region Logout
