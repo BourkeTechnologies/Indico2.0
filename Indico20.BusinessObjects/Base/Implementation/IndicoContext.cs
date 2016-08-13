@@ -1,4 +1,4 @@
-﻿using Dapper;
+using Dapper;
 using Indico20.BusinessObjects.Base.Core;
 using Indico20.BusinessObjects.Common;
 using Indico20.BusinessObjects.Objects.Core;
@@ -19,7 +19,7 @@ namespace Indico20.BusinessObjects.Base.Implementation
         private readonly HashSet<IEntity> _deletedEntities;
         private readonly HashSet<IEntity> _addedEntities;
         private readonly IDbConnection _connection;
-
+        private readonly HashSet<IEntity> _releasedEntities; 
 
         public IndicoContext()
         {
@@ -28,6 +28,7 @@ namespace Indico20.BusinessObjects.Base.Implementation
             _dirtyEntities = new List<IEntity>();
             _deletedEntities = new HashSet<IEntity>();
             _addedEntities = new HashSet<IEntity>();
+            _releasedEntities=new HashSet<IEntity>();
         }
 
         public T Get<T>(int id) where T : class, IEntity
@@ -35,6 +36,7 @@ namespace Indico20.BusinessObjects.Base.Implementation
             var entity = _connection.Query<T>(QueryBuilder.Select(typeof(T).Name, id)).FirstOrDefault();
             if (entity == null)
                 return null;
+            _releasedEntities.Add(entity);
             entity.PropertyChanged += EntityPropertyChanged;
             entity._Context = this;
             return entity;
@@ -47,6 +49,7 @@ namespace Indico20.BusinessObjects.Base.Implementation
                 return entities;
             foreach (var entity in entities)
             {
+                _releasedEntities.Add(entity);
                 entity.PropertyChanged += EntityPropertyChanged;
                 entity._Context = this;
             }
@@ -82,6 +85,9 @@ namespace Indico20.BusinessObjects.Base.Implementation
             _dirtyEntities.Clear();
             _addedEntities.Clear();
             _deletedEntities.Clear();
+            foreach (var entity in _releasedEntities)
+                entity.PropertyChanged -= EntityPropertyChanged;
+            _releasedEntities.Clear();
         }
 
         public void SaveChanges()
