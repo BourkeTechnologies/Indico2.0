@@ -2,7 +2,7 @@ using Dapper;
 using Indico20.BusinessObjects.Base.Core;
 using Indico20.BusinessObjects.Common;
 using Indico20.BusinessObjects.Objects.Core;
-using Indico20.BusinessObjects.Procedures.Implementation;
+using Indico20.BusinessObjects.Procedures.Core;
 using Indico20CodeBase.Tools;
 using System;
 using System.Collections.Generic;
@@ -61,6 +61,11 @@ namespace Indico20.BusinessObjects.Base.Implementation
                 entity._Context = this;
             }
             return entities;
+        }
+
+        public IEnumerable<T> GetFromStoredProcedure<T>(params object[] parameters) where T : class, ISpResult
+        {
+            return _connection.Query<T>(QueryBuilder.ExecuteStoredProcedure(typeof(T).Name, parameters));
         }
 
         public void Add(IEntity entity)
@@ -133,7 +138,7 @@ namespace Indico20.BusinessObjects.Base.Implementation
                 builder.Clear();
                 _dirtyEntities.Clear();
             }
-
+            _releasedEntities.Clear();
         }
 
         public void Delete(IEntity entity)
@@ -156,9 +161,18 @@ namespace Indico20.BusinessObjects.Base.Implementation
             return Get<T>().Where(predicate);
         }
 
-        public IEnumerable<GetMenuItemsForUserRoleResult> GetMenuItemsForUserRole(int userRole)
+        IEnumerable<T> IDbContext.Where<T>(IDictionary<string, object> values)
         {
-            return _connection.Query<GetMenuItemsForUserRoleResult>(QueryBuilder.ExecuteStoredProcedure("SPC_GetMenuItemsForUserRole", userRole));
+            var result = _connection.Query<T>(QueryBuilder.Where(typeof(T).Name, values)).ToList();
+            if (result.Count <= 0)
+                return result;
+            foreach (var item in result)
+            {
+                _releasedEntities.Add(item);
+                item.PropertyChanged += EntityPropertyChanged;
+                item._Context = this;
+            }
+            return result;
         }
     }
 }

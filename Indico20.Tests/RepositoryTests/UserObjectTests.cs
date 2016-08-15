@@ -24,9 +24,9 @@ namespace Indico20.Tests.RepositoryTests
         {
             using (var unit = new UnitOfWork())
             {
-                var companies = unit.CompanyRepository.Get().ToList();
-                Assert.IsTrue(companies != null);
-                Assert.AreEqual(companies.Count, 1177);
+                var orders = unit.OrderRepository.Get().ToList();
+                Assert.IsTrue(orders != null);
+                Assert.AreEqual(orders.Count, 44632);
             }
         }
 
@@ -126,6 +126,26 @@ namespace Indico20.Tests.RepositoryTests
             }
         }
 
-
+        [TestMethod]
+        public void WhereTest()
+        {
+            using (var unit = new UnitOfWork())
+            {
+                var order = unit.OrderRepository.Get(53517);
+                Assert.IsNotNull(order);
+                var orderDetails = order.OrderDetailsWhereThisIsOrder().ToList();
+                Assert.IsNotNull(orderDetails);
+                Assert.AreEqual(orderDetails.Count, 1);
+                var od = orderDetails.FirstOrDefault();
+                if (od == null)
+                {
+                    Assert.IsNotNull(od);
+                }
+                od.EditedPrice = 50;
+                unit.Complete();
+                od = unit.OrderDetailRepository.Get(od.ID);
+                Assert.AreEqual(od.EditedPrice, 50);
+            }
+        }
     }
 }
