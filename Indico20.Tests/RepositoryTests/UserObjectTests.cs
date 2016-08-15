@@ -1,6 +1,7 @@
 ﻿using Indico20.BusinessObjects.Base.Implementation;
 using Indico20.BusinessObjects.Objects.Implementation;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace Indico20.Tests.RepositoryTests
@@ -145,6 +146,21 @@ namespace Indico20.Tests.RepositoryTests
                 unit.Complete();
                 od = unit.OrderDetailRepository.Get(od.ID);
                 Assert.AreEqual(od.EditedPrice, 50);
+            }
+        }
+
+
+        [TestMethod]
+        public void SaveChangesDeletedObjects()
+        {
+            using (var unit = new UnitOfWork())
+            {
+                unit.UserStatusRepository.Add(new UserStatus { Key = "TNK", Name = "TheNewKey" });
+                unit.Complete();
+                var st = unit.UserStatusRepository.Where(new Dictionary<string, object>() { { "Key", "TNK" }, { "Name", "TheNewKey" } }).FirstOrDefault();
+                unit.UserStatusRepository.Delete(st);
+                st.Name = "changedName";
+                unit.Complete();
             }
         }
     }

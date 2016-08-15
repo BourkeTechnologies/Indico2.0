@@ -15,7 +15,7 @@ namespace Indico20.BusinessObjects.Base.Implementation
 {
     public class IndicoContext : IDbContext
     {
-        private readonly List<IEntity> _dirtyEntities;
+        private readonly HashSet<IEntity> _dirtyEntities;
         private readonly HashSet<IEntity> _deletedEntities;
         private readonly HashSet<IEntity> _addedEntities;
         private readonly IDbConnection _connection;
@@ -25,7 +25,7 @@ namespace Indico20.BusinessObjects.Base.Implementation
         {
             _connection = new SqlConnection(Indico20Configuration.AppSettings.ConnectionString);
             _connection.Open();
-            _dirtyEntities = new List<IEntity>();
+            _dirtyEntities = new HashSet<IEntity>();
             _deletedEntities = new HashSet<IEntity>();
             _addedEntities = new HashSet<IEntity>();
             _releasedEntities = new HashSet<IEntity>();
@@ -40,32 +40,55 @@ namespace Indico20.BusinessObjects.Base.Implementation
                     return ent.FirstOrDefault();
             }
 
-            var entity = _connection.Query<T>(QueryBuilder.Select(typeof(T).Name, id)).FirstOrDefault();
+            T entity;
+            try
+            {
+                entity = _connection.Query<T>(QueryBuilder.Select(typeof(T).Name, id)).FirstOrDefault();
+            }
+            catch (Exception e)
+            {
+                throw new Exception("cannot retrieve data from the database", e);
+            }
             if (entity == null)
                 return null;
-            _releasedEntities.Add(entity);
             entity.PropertyChanged += EntityPropertyChanged;
             entity._Context = this;
+            _releasedEntities.Add(entity);
             return entity;
         }
 
         public IEnumerable<T> Get<T>() where T : class, IEntity
         {
-            var entities = _connection.Query<T>(QueryBuilder.SelectAll(typeof(T).Name)).ToList();
+            List<T> entities;
+            try
+            {
+                entities = _connection.Query<T>(QueryBuilder.SelectAll(typeof(T).Name)).ToList();
+            }
+            catch (Exception e)
+            {
+                throw new Exception("cannot retrieve data from the database", e);
+            }
             if (entities.Count <= 0)
                 return entities;
             foreach (var entity in entities)
             {
-                _releasedEntities.Add(entity);
                 entity.PropertyChanged += EntityPropertyChanged;
                 entity._Context = this;
+                _releasedEntities.Add(entity);
             }
             return entities;
         }
 
         public IEnumerable<T> GetFromStoredProcedure<T>(params object[] parameters) where T : class, ISpResult
         {
-            return _connection.Query<T>(QueryBuilder.ExecuteStoredProcedure(typeof(T).Name, parameters));
+            try
+            {
+                return _connection.Query<T>(QueryBuilder.ExecuteStoredProcedure(typeof(T).Name, parameters));
+            }
+            catch (Exception e)
+            {
+                throw new Exception("Cannot retrieve data from the database.", e);
+            }
         }
 
         public void Add(IEntity entity)
@@ -78,15 +101,11 @@ namespace Indico20.BusinessObjects.Base.Implementation
         public void AddRange(IEnumerable<IEntity> entities)
         {
             foreach (var entity in entities.Where(entity => entity != null))
-            {
                 _addedEntities.Add(entity);
-            }
         }
 
         private void EntityPropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
         {
-            if (_dirtyEntities.Contains(sender))
-                _dirtyEntities.Remove((IEntity)sender);
             _dirtyEntities.Add((IEntity)sender);
         }
 
@@ -105,40 +124,35 @@ namespace Indico20.BusinessObjects.Base.Implementation
         public void SaveChanges()
         {
             var builder = new StringBuilder();
-            if (_addedEntities.Count > 0)
+            var added = _addedEntities.Where(entity => !_deletedEntities.Contains(entity)).ToList();
+            _addedEntities.Clear();
+            if (added.Count > 0)
             {
-                foreach (var entity in _addedEntities.Where(entity => !_deletedEntities.Contains(entity)))
-                {
+                foreach (var entity in added)
                     builder.AppendLine(QueryBuilder.Insert(entity.GetType().Name, entity.GetColumnValueMapping()));
-                }
                 _connection.Execute(builder.ToString());
                 builder.Clear();
-                _addedEntities.Clear();
+            }
+
+            var dirty = _dirtyEntities.Where(entity => !_deletedEntities.Contains(entity)).ToList();
+            _dirtyEntities.Clear();
+            if (dirty.Count > 0)
+            {
+                foreach (var entity in dirty)
+                    builder.AppendLine(QueryBuilder.Update(entity.GetType().Name, entity.GetColumnValueMapping(), entity.ID));
+                _connection.Execute(builder.ToString());
+                builder.Clear();
             }
 
             if (_deletedEntities.Count > 0)
             {
                 foreach (var entity in _deletedEntities)
-                {
                     builder.AppendLine(QueryBuilder.DeleteFromTable(entity.GetType().Name, entity.ID));
-                }
 
                 _connection.Execute(builder.ToString());
                 builder.Clear();
                 _deletedEntities.Clear();
             }
-
-            if (_dirtyEntities.Count > 0)
-            {
-                foreach (var entity in _dirtyEntities.Where(entity => !_deletedEntities.Contains(entity)))
-                {
-                    builder.AppendLine(QueryBuilder.Update(entity.GetType().Name, entity.GetColumnValueMapping(), entity.ID));
-                }
-                _connection.Execute(builder.ToString());
-                builder.Clear();
-                _dirtyEntities.Clear();
-            }
-            _releasedEntities.Clear();
         }
 
         public void Delete(IEntity entity)

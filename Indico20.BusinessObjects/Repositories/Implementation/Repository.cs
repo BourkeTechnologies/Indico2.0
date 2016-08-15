@@ -6,12 +6,16 @@ using System.Collections.Generic;
 
 namespace Indico20.BusinessObjects.Repositories.Implementation
 {
-    public class Repository<T> : IRepository<T> where T : class, IEntity
+    /// <summary>
+    /// the base class for all Repositories . this contains generic functionalities of all repositories
+    /// like Get,Add etc..
+    /// </summary>
+    /// <typeparam name="T">the type of the Entity</typeparam>
+    public abstract class Repository<T> : IRepository<T> where T : class, IEntity
     {
         protected IDbContext Context;
-        public virtual string TableName { get; set; }
 
-        public Repository(IDbContext context)
+        protected Repository(IDbContext context)
         {
             Context = context;
         }
