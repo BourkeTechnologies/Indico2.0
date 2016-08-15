@@ -151,6 +151,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AuthController.cs" />
+    <Compile Include="Controllers\Base\IndicoController.cs" />
     <Compile Include="Controllers\Common\BaseController.cs" />
     <Compile Include="Controllers\Common\ErrorController.cs" />
     <Compile Include="Controllers\Common\NavigationController.cs" />
@@ -186,11 +187,17 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\Base\" />
+    <Folder Include="Views\Indico\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Indico20.BusinessObjects\Indico20.BusinessObjects.csproj">
       <Project>{2dd2f3c0-9515-4323-9bae-2538c9284a7b}</Project>
       <Name>Indico20.BusinessObjects</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Indico20CodeBase\Indico20CodeBase.csproj">
+      <Project>{4c971a0c-c1e3-45ae-b63a-baee4f42146d}</Project>
+      <Name>Indico20CodeBase</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>

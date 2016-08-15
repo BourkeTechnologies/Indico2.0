@@ -1,5 +1,5 @@
 ﻿using Indico20.BusinessObjects.Objects.Implementation;
-using Indico20.BusinessObjects.Procedures.Implementation;
+using Indico20.BusinessObjects.Objects.Procedures.Implementation;
 using System.Collections.Generic;
 
 namespace Indico20.BusinessObjects.Repositories.Core
@@ -11,6 +11,6 @@ namespace Indico20.BusinessObjects.Repositories.Core
         /// </summary>
         /// <param name="userRole"></param>
         /// <returns></returns>
-        IEnumerable<GetMenuItemsForUserRoleResult> GetUserRolesForThisMenuItem(int userRole);
+        IEnumerable<GetMenuItemsForUserRole> GetUserRolesForThisMenuItem(int userRole);
     }
 }

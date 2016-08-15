@@ -1,5 +1,5 @@
 ﻿using Indico20.BusinessObjects.Base.Implementation;
-using Indico20.BusinessObjects.Procedures.Implementation;
+using Indico20.BusinessObjects.Objects.Procedures.Implementation;
 using Indico20.Models;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,7 +17,7 @@ namespace Indico20.Controllers.Common
             using (var unit = new UnitOfWork())
             {
                 var menuItems = unit.MenuItemRepository.GetUserRolesForThisMenuItem(4);
-                var menuItemList = menuItems as IList<GetMenuItemsForUserRoleResult> ?? menuItems.ToList();
+                var menuItemList = menuItems as IList<GetMenuItemsForUserRole> ?? menuItems.ToList();
                 var models = new List<NavigationModel>();
                 if (menuItemList.Any())
                 {

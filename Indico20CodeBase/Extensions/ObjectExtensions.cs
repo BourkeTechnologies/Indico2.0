@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Globalization;
+using System.Linq.Expressions;
 
 namespace Indico20CodeBase.Extensions
 {
@@ -19,6 +20,20 @@ namespace Indico20CodeBase.Extensions
                 return false;
             double number;
             return double.TryParse(Convert.ToString(obj, CultureInfo.InvariantCulture), NumberStyles.Any, NumberFormatInfo.InvariantInfo, out number);
+        }
+
+        /// <summary>
+        /// Get the name of a static or instance property from a property access lambda.
+        /// </summary>
+        /// <typeparam name="T">Type of the property</typeparam>
+        /// <param name="propertyLambda">lambda expression of the form: '() => Class.Property' or '() => object.Property'</param>
+        /// <returns>The name of the property</returns>
+        public static string GetPropertyName<T>(this object obj, Expression<Func<T>> propertyLambda) where T : class
+        {
+            var me = propertyLambda.Body as MemberExpression;
+            if (me == null)
+                throw new ArgumentException("must pass a lambda of the form () => object.Property'");
+            return me.Member.Name;
         }
     }
 }

@@ -1,10 +1,19 @@
-﻿using System.Web.Mvc;
+﻿using Indico20.BusinessObjects.Base.Core;
+using Indico20.BusinessObjects.Base.Implementation;
+using System.Web.Mvc;
 
 
 namespace Indico20.Controllers.Common
 {
     public class BaseController : Controller
     {
+
+        protected IDbContext Context { get; }
+
+        public BaseController()
+        {
+            Context = new IndicoContext();
+        }
 
         //#region Fields
 

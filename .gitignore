@@ -57,7 +57,3 @@ Indico20/obj/
 Indico20.BusinessObjects/obj/
 Indico20.Tests/obj/
 Indico20CodeBase/obj/
-*.cache
-*.dll
-*.dll
-*.pdb

@@ -50,5 +50,10 @@ namespace Indico20.BusinessObjects.Repositories.Implementation
         {
             return Context.Find(predicate);
         }
+
+        public IEnumerable<T> Where(IDictionary<string, object> propertyValues)
+        {
+            return Context.Where<T>(propertyValues);
+        }
     }
 }

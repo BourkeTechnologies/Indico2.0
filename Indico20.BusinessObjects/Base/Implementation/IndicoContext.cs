@@ -2,7 +2,7 @@ using Dapper;
 using Indico20.BusinessObjects.Base.Core;
 using Indico20.BusinessObjects.Common;
 using Indico20.BusinessObjects.Objects.Core;
-using Indico20.BusinessObjects.Procedures.Core;
+using Indico20.BusinessObjects.Objects.Procedures.Core;
 using Indico20CodeBase.Tools;
 using System;
 using System.Collections.Generic;

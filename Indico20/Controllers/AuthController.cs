@@ -1,42 +1,43 @@
-﻿using Indico20.Controllers.Common;
-using System.Security;
+﻿using Indico20.Controllers.Base;
+using System.Collections.Generic;
+using System.Linq;
 using System.Web.Mvc;
 
 namespace Indico20.Controllers
 {
-    public class AuthController : BaseController
+    public class AuthController : IndicoController
     {
-        public ActionResult Index()
-        {
-            return Session["indico20id"] != null ? RedirectToAction("Index", "Home") : RedirectToAction("Login", "Auth");
-        }
+
 
         [HttpGet]
         public ActionResult Login()
         {
-            if (Session["rcp_uid"] != null)
-            {
-                //var user = new User {ID = Convert.ToUInt16(Session["rcp_uid"].ToString())};
-                //               user = user.Get(user.ID);
-
-                return View("index");
-            }
-            else
-            {
-                //AuthModel model = new AuthModel();
-                //model.IsShowLogin = true;
-                //model.objUser = new UserBO();
-
-                return View("Login");
-
-                // return this.ProcessLogin(model);
-            }
+            return View();
         }
 
         [HttpPost]
-        public string TryLogin(string userName, SecureString password)
+        public ActionResult TryLogin()
         {
-            return "F";
+            var userName = Request["userName"];
+            var password = Request["password"];
+            var user = Context.UserRepository.Where(new Dictionary<string, object> { { "Username", userName } }).FirstOrDefault();
+            if (user != null)
+            {
+                Session["indico20uid"] = user.ID;
+                // Session["loggedUserRole"] = user.Role;
+                return RedirectToAction("Index", "Home");
+                //EncryptionTool.EncryptPassword(password, user.pa)
+                // var pass = Extensions.EncryptPassword(password, user.PasswordSalt);
+            }
+            TempData["LoginFaild"] = true;
+            return RedirectToAction("Login", "Auth");
+        }
+
+        [HttpGet]
+        public ActionResult LogOut()
+        {
+            Session["indico20uid"] = null;
+            return RedirectToAction("Login", "Auth");
         }
 
         // [HttpPost]

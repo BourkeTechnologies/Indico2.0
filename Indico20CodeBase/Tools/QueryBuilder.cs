@@ -132,7 +132,7 @@ namespace Indico20CodeBase.Tools
                 return "";
             var builder = new StringBuilder();
             var valuestrings = (from item in parameters let wrapper = item.IsNumeric() ? "" : "'" select string.Format("{0}{1}{2}", wrapper, (item is bool) ? ((bool)item).ToOneZero() : item, wrapper)).ToList();
-            builder.Append(string.Format("EXEC [dbo].[{0}] {1}", spName, valuestrings.Aggregate((c, n) => c + "," + n)));
+            builder.Append(string.Format("EXEC [dbo].[SPC_{0}] {1}", spName, valuestrings.Aggregate((c, n) => c + "," + n)));
             return builder.ToString();
         }
 

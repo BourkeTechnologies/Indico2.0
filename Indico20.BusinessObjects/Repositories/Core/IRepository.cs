@@ -1,6 +1,6 @@
-﻿using System;
+﻿using Indico20.BusinessObjects.Objects.Core;
+using System;
 using System.Collections.Generic;
-using Indico20.BusinessObjects.Objects.Core;
 
 namespace Indico20.BusinessObjects.Repositories.Core
 {
@@ -13,6 +13,7 @@ namespace Indico20.BusinessObjects.Repositories.Core
         void Add(T entity);
         void Delete(T entity);
         void DeleteRange(IEnumerable<T> ids);
+        IEnumerable<T> Where(IDictionary<string, object> propertyValues);
 
     }
 }
