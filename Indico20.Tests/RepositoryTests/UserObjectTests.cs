@@ -159,7 +159,7 @@ namespace Indico20.Tests.RepositoryTests
                 unit.Complete();
                 var st = unit.UserStatusRepository.Where(new Dictionary<string, object>() { { "Key", "TNK" }, { "Name", "TheNewKey" } }).FirstOrDefault();
                 unit.UserStatusRepository.Delete(st);
-                st.Name = "changedName";
+                if (st != null) st.Name = "changedName";
                 unit.Complete();
             }
         }

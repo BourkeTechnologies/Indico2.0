@@ -130,7 +130,15 @@ namespace Indico20.BusinessObjects.Base.Implementation
             {
                 foreach (var entity in added)
                     builder.AppendLine(QueryBuilder.Insert(entity.GetType().Name, entity.GetColumnValueMapping()));
-                _connection.Execute(builder.ToString());
+                try
+                {
+                    _connection.Execute(builder.ToString());
+                }
+                catch (Exception e)
+                {
+                    throw new Exception("Unable to add new items to the database", e);
+                }
+
                 builder.Clear();
             }
 
@@ -140,7 +148,14 @@ namespace Indico20.BusinessObjects.Base.Implementation
             {
                 foreach (var entity in dirty)
                     builder.AppendLine(QueryBuilder.Update(entity.GetType().Name, entity.GetColumnValueMapping(), entity.ID));
-                _connection.Execute(builder.ToString());
+                try
+                {
+                    _connection.Execute(builder.ToString());
+                }
+                catch (Exception e)
+                {
+                    throw new Exception("Unable to save changes in the database", e);
+                }
                 builder.Clear();
             }
 
@@ -148,8 +163,14 @@ namespace Indico20.BusinessObjects.Base.Implementation
             {
                 foreach (var entity in _deletedEntities)
                     builder.AppendLine(QueryBuilder.DeleteFromTable(entity.GetType().Name, entity.ID));
-
-                _connection.Execute(builder.ToString());
+                try
+                {
+                    _connection.Execute(builder.ToString());
+                }
+                catch (Exception e)
+                {
+                    throw new Exception("Unable to delete items from the database", e);
+                }
                 builder.Clear();
                 _deletedEntities.Clear();
             }
