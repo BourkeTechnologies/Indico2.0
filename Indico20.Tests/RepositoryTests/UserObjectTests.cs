@@ -114,6 +114,18 @@ namespace Indico20.Tests.RepositoryTests
             }
         }
 
+        [TestMethod]
+        public void SimpleCacheTest()
+        {
+            using (var unit = new UnitOfWork())
+            {
+                var company = unit.CompanyRepository.Get(795);
+                Assert.IsNotNull(company);
+                company = unit.CompanyRepository.Get(795);
+                Assert.IsNotNull(company);
+            }
+        }
+
 
     }
 }

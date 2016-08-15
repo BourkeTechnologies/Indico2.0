@@ -19,7 +19,7 @@ namespace Indico20.BusinessObjects.Base.Implementation
         private readonly HashSet<IEntity> _deletedEntities;
         private readonly HashSet<IEntity> _addedEntities;
         private readonly IDbConnection _connection;
-        private readonly HashSet<IEntity> _releasedEntities; 
+        private readonly HashSet<IEntity> _releasedEntities;
 
         public IndicoContext()
         {
@@ -28,11 +28,18 @@ namespace Indico20.BusinessObjects.Base.Implementation
             _dirtyEntities = new List<IEntity>();
             _deletedEntities = new HashSet<IEntity>();
             _addedEntities = new HashSet<IEntity>();
-            _releasedEntities=new HashSet<IEntity>();
+            _releasedEntities = new HashSet<IEntity>();
         }
 
         public T Get<T>(int id) where T : class, IEntity
         {
+            if (_releasedEntities.Count > 0)
+            {
+                var ent = _releasedEntities.OfType<T>().Where(e => e.ID == id).ToList();
+                if (ent.Count > 0)
+                    return ent.FirstOrDefault();
+            }
+
             var entity = _connection.Query<T>(QueryBuilder.Select(typeof(T).Name, id)).FirstOrDefault();
             if (entity == null)
                 return null;
