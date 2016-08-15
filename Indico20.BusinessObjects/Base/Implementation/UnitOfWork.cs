@@ -17,6 +17,10 @@ namespace Indico20.BusinessObjects.Base.Implementation
 
         public IRoleRepository RoleRepository { get; }
 
+        public IOrderRepository OrderRepository { get; }
+
+        public IOrderDetailRepository OrderDetailRepository { get; }
+
         public UnitOfWork()
         {
             _context = new IndicoContext();
@@ -25,6 +29,8 @@ namespace Indico20.BusinessObjects.Base.Implementation
             MenuItemRepository = new MenuItemRepository(_context);
             UserRepository = new UserRepository(_context);
             RoleRepository = new RoleRepository(_context);
+            OrderRepository = new OrderRepository(_context);
+            OrderDetailRepository = new OrderDetailRepository(_context);
         }
 
         public void Complete()

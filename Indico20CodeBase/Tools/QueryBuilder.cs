@@ -76,6 +76,11 @@ namespace Indico20CodeBase.Tools
             foreach (var key in values.Keys)
             {
                 var value = values[key];
+                if (value == null)
+                {
+                    stringBuilder.Append(string.Format("{1}[{0}] = NULL", key, !first ? "," : ""));
+                    continue;
+                }
                 var wrapper = value.IsNumeric() ? "" : "'";
                 stringBuilder.Append(string.Format("{0}{1} = {2}{3}{4}", !first ? ", " : "", string.Format("[{0}]", key), wrapper, (value is bool) ? ((bool)value).ToOneZero() : value, wrapper));
                 first = false;
@@ -103,6 +108,11 @@ namespace Indico20CodeBase.Tools
                 var value = values[key];
                 columnNames.Add(key);
                 var wrapper = value.IsNumeric() ? "" : "'";
+                if (value == null)
+                {
+                    valuestrings.Add("NULL");
+                    continue;
+                }
                 valuestrings.Add(string.Format("{0}{1}{2}", wrapper, (value is bool) ? ((bool)value).ToOneZero() : value, wrapper));
             }
 
@@ -124,6 +134,33 @@ namespace Indico20CodeBase.Tools
             var valuestrings = (from item in parameters let wrapper = item.IsNumeric() ? "" : "'" select string.Format("{0}{1}{2}", wrapper, (item is bool) ? ((bool)item).ToOneZero() : item, wrapper)).ToList();
             builder.Append(string.Format("EXEC [dbo].[{0}] {1}", spName, valuestrings.Aggregate((c, n) => c + "," + n)));
             return builder.ToString();
+        }
+
+        /// <summary>
+        /// Create query for get objects from a table using where conditions
+        /// </summary>
+        /// <param name="tableName">name of the target table or view</param>
+        /// <param name="values">values for where clause</param>
+        /// <returns></returns>
+        public static string Where(string tableName, IDictionary<string, object> values)
+        {
+            if (string.IsNullOrWhiteSpace(tableName))
+                return null;
+            var stringBuilder = new StringBuilder(string.Format("SELECT * FROM [dbo].[{0}]", tableName));
+            if (values == null || values.Count < 1)
+                return stringBuilder.ToString();
+            var wherestrings = new List<string>();
+            foreach (var item in values)
+            {
+                var value = item.Value;
+                var wrapper = value.IsNumeric() ? "" : "'";
+                if (string.IsNullOrWhiteSpace(item.Key))
+                    continue;
+                if (value == null)
+                    wherestrings.Add(string.Format("[{0}] IS NULL", item.Key));
+                wherestrings.Add(string.Format("[{3}] = {0}{1}{2}", wrapper, (value is bool) ? ((bool)value).ToOneZero() : value, wrapper, item.Key));
+            }
+            return string.Format(stringBuilder + " WHERE " + wherestrings.Aggregate((c, n) => n + " AND " + c));
         }
 
         private static string GenerateColumnNameList(IEnumerable<string> columnNames)

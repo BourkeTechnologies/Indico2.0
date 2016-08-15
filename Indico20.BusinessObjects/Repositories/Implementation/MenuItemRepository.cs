@@ -12,9 +12,9 @@ namespace Indico20.BusinessObjects.Repositories.Implementation
         {
         }
 
-        public IEnumerable<GetMenuItemsForUserRoleResult> ForUserRole(int userRole)
+        public IEnumerable<GetMenuItemsForUserRoleResult> GetUserRolesForThisMenuItem(int userRole)
         {
-            return Context.GetMenuItemsForUserRole(userRole);
+            return Context.GetFromStoredProcedure<GetMenuItemsForUserRoleResult>(userRole);
         }
     }
 }

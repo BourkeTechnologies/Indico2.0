@@ -66,6 +66,8 @@
     <Compile Include="Objects\Core\IEntity.cs" />
     <Compile Include="Objects\Implementation\Company.cs" />
     <Compile Include="Objects\Implementation\MenuItem.cs" />
+    <Compile Include="Objects\Implementation\Order.cs" />
+    <Compile Include="Objects\Implementation\OrderDetail.cs" />
     <Compile Include="Objects\Implementation\Role.cs" />
     <Compile Include="Objects\Implementation\User.cs" />
     <Compile Include="Objects\Implementation\UserStatus.cs" />
@@ -79,12 +81,16 @@
     </Compile>
     <Compile Include="Repositories\Core\ICompanyRepository.cs" />
     <Compile Include="Repositories\Core\IMenuItemRepository.cs" />
+    <Compile Include="Repositories\Core\IOrderDetailRepository.cs" />
+    <Compile Include="Repositories\Core\IOrderRepository.cs" />
     <Compile Include="Repositories\Core\IRepository.cs" />
     <Compile Include="Repositories\Core\IRoleRepository.cs" />
     <Compile Include="Repositories\Core\IUserRepository.cs" />
     <Compile Include="Repositories\Core\IUserStatusRepository.cs" />
     <Compile Include="Repositories\Implementation\CompanyRepository.cs" />
     <Compile Include="Repositories\Implementation\MenuItemRepository.cs" />
+    <Compile Include="Repositories\Implementation\OrderDetailRepository.cs" />
+    <Compile Include="Repositories\Implementation\OrderRepository.cs" />
     <Compile Include="Repositories\Implementation\Repository.cs" />
     <Compile Include="Repositories\Implementation\RoleRepository.cs" />
     <Compile Include="Repositories\Implementation\UserRepository.cs" />

@@ -11,6 +11,6 @@ namespace Indico20.BusinessObjects.Repositories.Core
         /// </summary>
         /// <param name="userRole"></param>
         /// <returns></returns>
-        IEnumerable<GetMenuItemsForUserRoleResult> ForUserRole(int userRole);
+        IEnumerable<GetMenuItemsForUserRoleResult> GetUserRolesForThisMenuItem(int userRole);
     }
 }
