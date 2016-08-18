@@ -1,0 +1,52 @@
+﻿@using System.Web.Optimization
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Indico Order Processing System 2.0</title>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE-edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!--This CSS entry was added by the Telerik VS Extensions for compatibility reasons-->
+    <link href="@Url.Content("~/Content/bootstrap.min.css")" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/Content/kendo.compatibility.css")" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/Content/kendo/2016.2.714/kendo.common-bootstrap.min.css")" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/Content/kendo/2016.2.714/kendo.mobile.all.min.css")" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/Content/kendo/2016.2.714/kendo.dataviz.min.css")" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/Content/kendo/2016.2.714/kendo.bootstrap.min.css")" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/Content/kendo/2016.2.714/kendo.dataviz.bootstrap.min.css")" rel="stylesheet" type="text/css" />
+    <script src="@Url.Content("~/Scripts/kendo/2016.2.714/jquery.min.js")"></script>
+    <script src="@Url.Content("~/Scripts/kendo/2016.2.714/jszip.min.js")"></script>
+    <script src="@Url.Content("~/Scripts/kendo/2016.2.714/kendo.all.min.js")"></script>
+    <script src="@Url.Content("~/Scripts/kendo/2016.2.714/kendo.aspnetmvc.min.js")"></script>
+    <script src="@Url.Content("~/Scripts/kendo.modernizr.custom.js")"></script>
+
+    <script src="@Url.Content("~/Scripts/bootstrap.min.js")"></script>
+
+    <style type="text/css">
+        .rootContainer {
+            margin-top: 2px;
+            margin-bottom: 2px;
+            margin-left: 10px;
+            margin-right: 10px;
+            width: 99%;
+        }
+
+        .page-header {
+            margin-top: 5px;
+            margin-bottom: 5px;
+        }
+    </style>
+    @*@Styles.Render("~/bundles/css")
+    @Styles.Render("~/bundles/js")*@
+</head>
+<body>
+    <div class="wrapper">
+        @{Html.RenderAction("Navigation", "Navigation");}
+        <div class="container rootContainer">
+            @RenderBody()
+        </div>
+    </div>
+
+</body>
+</html>

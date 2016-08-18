@@ -21,6 +21,8 @@ namespace Indico20.BusinessObjects.Base.Implementation
 
         public IOrderDetailRepository OrderDetailRepository { get; }
 
+        public IAgeGroupRepository AgeGroupRepository { get; }
+
         public UnitOfWork()
         {
             _context = new IndicoContext();
@@ -31,6 +33,7 @@ namespace Indico20.BusinessObjects.Base.Implementation
             RoleRepository = new RoleRepository(_context);
             OrderRepository = new OrderRepository(_context);
             OrderDetailRepository = new OrderDetailRepository(_context);
+            AgeGroupRepository = new AgeGroupRepository(_context);
         }
 
         public void Complete()

@@ -13,5 +13,6 @@ namespace Indico20.BusinessObjects.Base.Core
         IRoleRepository RoleRepository { get; }
         IOrderRepository OrderRepository { get; }
         IOrderDetailRepository OrderDetailRepository { get; }
+        IAgeGroupRepository AgeGroupRepository { get; }
     }
 }

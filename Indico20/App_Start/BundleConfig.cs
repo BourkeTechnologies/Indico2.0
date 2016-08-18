@@ -1,36 +1,31 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Optimization;
+﻿using System.Web.Optimization;
 
-// ReSharper disable once CheckNamespace
-namespace Indico20.App_Start
+namespace Indico20
 {
     public class BundleConfig
     {
+        // For more information on bundling, visit http://go.microsoft.com/fwlink/?LinkId=301862
         public static void RegisterBundles(BundleCollection bundles)
         {
-            //bundles.Add(new ScriptBundle("~/bundles/js_dev").Include(
-            //    "~/Scripts/jquery-{version}.js",
-            //    "~/Scripts/jquery-{version}.intellisense.js",
-            //    "~/Scripts/bootstrap.js"
-            //));
+            bundles.Add(new StyleBundle("~/bundles/css").Include(
+                "~/Content/bootstrap.min.css",
+                "~/Content/kendo.compatibility.css",
+                "~/Content/kendo/2016.2.714/kendo.common-bootstrap.min.css",
+                "~/Content/kendo/2016.2.714/kendo.mobile.all.min.css",
+                "~/Content/kendo/2016.2.714/kendo.dataviz.min.css",
+                "~/Content/kendo/2016.2.714/kendo.bootstrap.min.css",
+                "~/Content/kendo/2016.2.714/kendo.dataviz.bootstrap.min.css"));
 
             bundles.Add(new ScriptBundle("~/bundles/js").Include(
-                "~/Scripts/jquery-{version}.min.js",
+                "~/Scripts/kendo/2016.2.714/jquery.min.js",
+                "~/Scripts/kendo/2016.2.714/jszip.min.js",
+                "~/Scripts/kendo/2016.2.714/kendo.all.min.js",
+                "~/Scripts/kendo/2016.2.714/kendo.aspnetmvc.min.js",
+                "~/Scripts/kendo.modernizr.custom.js",
                 "~/Scripts/bootstrap.min.js"
-            ));
+                ));
 
-            //bundles.Add(new StyleBundle("~/Content/themes/css_dev").Include(
-            //    "~/Content/bootstrap/bootstrap.css",
-            //    "~/Content/bootstrap/bootstrap-theme.css"
-            //));
-
-            bundles.Add(new StyleBundle("~/Content/css").Include(
-                "~/Content/bootstrap/bootstrap.min.css",
-                "~/Content/Styles/Indic20Styles.css"
-            ));
+            bundles.IgnoreList.Clear();
         }
     }
 }

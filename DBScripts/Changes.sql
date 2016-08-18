@@ -209,7 +209,7 @@ INSERT INTO [dbo].[MenuItemRole] (MenuItem,Role) VALUES(@MenuItemId,8);
 INSERT INTO [dbo].[MenuItemRole] (MenuItem,Role) VALUES(@MenuItemId,9);
 
 
-  INSERT INTO [dbo].[MenuItem] (ControllerAction,Parent,Position,IsAlignedLeft,IsSubNav,IsTopNav,IsVisible,[Key],Name,Title) VALUES(1,@ParentMenuItemId,1,0,1,0,1,'ORD','Orders','Orders');
+INSERT INTO [dbo].[MenuItem] (ControllerAction,Parent,Position,IsAlignedLeft,IsSubNav,IsTopNav,IsVisible,[Key],Name,Title) VALUES(1,@ParentMenuItemId,1,0,1,0,1,'ORD','Orders','Orders');
 SET @MenuItemId = SCOPE_IDENTITY()
 
 INSERT INTO [dbo].[MenuItemRole] (MenuItem,Role) VALUES(@MenuItemId,2);
@@ -222,7 +222,7 @@ INSERT INTO [dbo].[MenuItemRole] (MenuItem,Role) VALUES(@MenuItemId,8);
 INSERT INTO [dbo].[MenuItemRole] (MenuItem,Role) VALUES(@MenuItemId,9);
 
 
-  INSERT INTO [dbo].[MenuItem] (ControllerAction,Parent,Position,IsAlignedLeft,IsSubNav,IsTopNav,IsVisible,[Key],Name,Title) VALUES(1,@ParentMenuItemId,2,0,1,0,1,'ORD','Order Types','Order Types');
+INSERT INTO [dbo].[MenuItem] (ControllerAction,Parent,Position,IsAlignedLeft,IsSubNav,IsTopNav,IsVisible,[Key],Name,Title) VALUES(1,@ParentMenuItemId,2,0,1,0,1,'ORD','Order Types','Order Types');
 SET @MenuItemId = SCOPE_IDENTITY()
 
 INSERT INTO [dbo].[MenuItemRole] (MenuItem,Role) VALUES(@MenuItemId,2);
@@ -235,7 +235,7 @@ INSERT INTO [dbo].[MenuItemRole] (MenuItem,Role) VALUES(@MenuItemId,8);
 INSERT INTO [dbo].[MenuItemRole] (MenuItem,Role) VALUES(@MenuItemId,9);
 
 
-  INSERT INTO [dbo].[MenuItem] (ControllerAction,Parent,Position,IsAlignedLeft,IsSubNav,IsTopNav,IsVisible,[Key],Name,Title) VALUES(1,@ParentMenuItemId,5,0,1,0,1,'LAB','Labels','Labels');
+INSERT INTO [dbo].[MenuItem] (ControllerAction,Parent,Position,IsAlignedLeft,IsSubNav,IsTopNav,IsVisible,[Key],Name,Title) VALUES(1,@ParentMenuItemId,5,0,1,0,1,'LAB','Labels','Labels');
 SET @MenuItemId = SCOPE_IDENTITY()
 
 INSERT INTO [dbo].[MenuItemRole] (MenuItem,Role) VALUES(@MenuItemId,2);
@@ -248,7 +248,7 @@ INSERT INTO [dbo].[MenuItemRole] (MenuItem,Role) VALUES(@MenuItemId,8);
 INSERT INTO [dbo].[MenuItemRole] (MenuItem,Role) VALUES(@MenuItemId,9);
 
 
-  INSERT INTO [dbo].[MenuItem] (ControllerAction,Parent,Position,IsAlignedLeft,IsSubNav,IsTopNav,IsVisible,[Key],Name,Title) VALUES(1,@ParentMenuItemId,6,0,1,0,1,'DES','Destination Ports','Destination Ports');
+INSERT INTO [dbo].[MenuItem] (ControllerAction,Parent,Position,IsAlignedLeft,IsSubNav,IsTopNav,IsVisible,[Key],Name,Title) VALUES(1,@ParentMenuItemId,6,0,1,0,1,'DES','Destination Ports','Destination Ports');
 SET @MenuItemId = SCOPE_IDENTITY()
 
 INSERT INTO [dbo].[MenuItemRole] (MenuItem,Role) VALUES(@MenuItemId,2);
@@ -261,7 +261,7 @@ INSERT INTO [dbo].[MenuItemRole] (MenuItem,Role) VALUES(@MenuItemId,8);
 INSERT INTO [dbo].[MenuItemRole] (MenuItem,Role) VALUES(@MenuItemId,9);
 
 
-  INSERT INTO [dbo].[MenuItem] (ControllerAction,Parent,Position,IsAlignedLeft,IsSubNav,IsTopNav,IsVisible,[Key],Name,Title) VALUES(1,@ParentMenuItemId,7,0,1,0,1,'PAY','Payment Terms','Payment Terms');
+INSERT INTO [dbo].[MenuItem] (ControllerAction,Parent,Position,IsAlignedLeft,IsSubNav,IsTopNav,IsVisible,[Key],Name,Title) VALUES(1,@ParentMenuItemId,7,0,1,0,1,'PAY','Payment Terms','Payment Terms');
 SET @MenuItemId = SCOPE_IDENTITY()
 
 INSERT INTO [dbo].[MenuItemRole] (MenuItem,Role) VALUES(@MenuItemId,2);
@@ -1392,3 +1392,12 @@ SET @MenuItemId = SCOPE_IDENTITY()
 INSERT INTO [dbo].[MenuItemRole] (MenuItem,Role) VALUES(@MenuItemId,4);
 INSERT INTO [dbo].[MenuItemRole] (MenuItem,Role) VALUES(@MenuItemId,6);
 INSERT INTO [dbo].[MenuItemRole] (MenuItem,Role) VALUES(@MenuItemId,7);
+
+GO
+
+--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**
+
+DECLARE @ID int
+INSERT INTO [dbo].[ControllerAction] (Controller,[Action]) VALUES('AgeGroup','Index')
+SET @ID = SCOPE_IDENTITY()
+UPDATE [dbo].[MenuItem] SET ControllerAction = @ID  WHERE Name = 'Age Groups'

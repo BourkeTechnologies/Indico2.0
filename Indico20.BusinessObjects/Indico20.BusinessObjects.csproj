@@ -64,6 +64,7 @@
     <Compile Include="Base\Implementation\UnitOfWork.cs" />
     <Compile Include="Common\Indico20Configuration.cs" />
     <Compile Include="Objects\Core\IEntity.cs" />
+    <Compile Include="Objects\Implementation\AgeGroup.cs" />
     <Compile Include="Objects\Implementation\Company.cs" />
     <Compile Include="Objects\Implementation\MenuItem.cs" />
     <Compile Include="Objects\Implementation\Order.cs" />
@@ -79,6 +80,7 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
+    <Compile Include="Repositories\Core\IAgeGroupRepository.cs" />
     <Compile Include="Repositories\Core\ICompanyRepository.cs" />
     <Compile Include="Repositories\Core\IMenuItemRepository.cs" />
     <Compile Include="Repositories\Core\IOrderDetailRepository.cs" />
@@ -87,6 +89,7 @@
     <Compile Include="Repositories\Core\IRoleRepository.cs" />
     <Compile Include="Repositories\Core\IUserRepository.cs" />
     <Compile Include="Repositories\Core\IUserStatusRepository.cs" />
+    <Compile Include="Repositories\Implementation\AgeGroupRepository.cs" />
     <Compile Include="Repositories\Implementation\CompanyRepository.cs" />
     <Compile Include="Repositories\Implementation\MenuItemRepository.cs" />
     <Compile Include="Repositories\Implementation\OrderDetailRepository.cs" />

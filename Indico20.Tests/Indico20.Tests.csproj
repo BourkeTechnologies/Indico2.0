@@ -63,10 +63,6 @@
       <Project>{2dd2f3c0-9515-4323-9bae-2538c9284a7b}</Project>
       <Name>Indico20.BusinessObjects</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Indico20\Indico20.csproj">
-      <Project>{1389C126-5973-4AF6-A315-05D3968E9253}</Project>
-      <Name>Indico20</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
