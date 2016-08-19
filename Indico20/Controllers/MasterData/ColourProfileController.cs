@@ -88,5 +88,19 @@ namespace Indico20.Controllers.MasterData
                 return cp != null ? Json(new { cp.Name, cp.Description }) : null;
             }
         }
+
+        [HttpPost]
+        public ActionResult Delete(int id)
+        {
+            if (id <= 0)
+                return new EmptyResult();
+            using (var unit = new UnitOfWork())
+            {
+                unit.ColourProfileRepository.Delete(new ColourProfile() { ID = id });
+                unit.Complete();
+                ListChanged = true;
+            }
+            return new EmptyResult();
+        }
     }
 }

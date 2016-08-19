@@ -7,7 +7,7 @@ namespace Indico20.BusinessObjects.Objects.Core
 {
     public interface IEntity : INotifyPropertyChanged
     {
-        int ID { get; }
+        int ID { get; set; }
 
         [Browsable(false), EditorBrowsable(EditorBrowsableState.Never)]
         Dictionary<string, object> GetColumnValueMapping();

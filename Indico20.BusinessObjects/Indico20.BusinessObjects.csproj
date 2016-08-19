@@ -71,6 +71,9 @@
     <Compile Include="Objects\Implementation\MenuItem.cs" />
     <Compile Include="Objects\Implementation\Order.cs" />
     <Compile Include="Objects\Implementation\OrderDetail.cs" />
+    <Compile Include="Objects\Implementation\Printer.cs" />
+    <Compile Include="Objects\Implementation\PrinterType.cs" />
+    <Compile Include="Objects\Implementation\ProductionLine.cs" />
     <Compile Include="Objects\Implementation\Role.cs" />
     <Compile Include="Objects\Implementation\User.cs" />
     <Compile Include="Objects\Implementation\UserStatus.cs" />
@@ -89,6 +92,9 @@
     <Compile Include="Repositories\Core\IMenuItemRepository.cs" />
     <Compile Include="Repositories\Core\IOrderDetailRepository.cs" />
     <Compile Include="Repositories\Core\IOrderRepository.cs" />
+    <Compile Include="Repositories\Core\IPrinterRepository.cs" />
+    <Compile Include="Repositories\Core\IPrinterTypeRepository.cs" />
+    <Compile Include="Repositories\Core\IProductionLineRepository.cs" />
     <Compile Include="Repositories\Core\IRepository.cs" />
     <Compile Include="Repositories\Core\IRoleRepository.cs" />
     <Compile Include="Repositories\Core\IUserRepository.cs" />
@@ -100,6 +106,9 @@
     <Compile Include="Repositories\Implementation\MenuItemRepository.cs" />
     <Compile Include="Repositories\Implementation\OrderDetailRepository.cs" />
     <Compile Include="Repositories\Implementation\OrderRepository.cs" />
+    <Compile Include="Repositories\Implementation\PrinterRepository.cs" />
+    <Compile Include="Repositories\Implementation\PrinterTypeRepository.cs" />
+    <Compile Include="Repositories\Implementation\ProductionLineRepository.cs" />
     <Compile Include="Repositories\Implementation\Repository.cs" />
     <Compile Include="Repositories\Implementation\RoleRepository.cs" />
     <Compile Include="Repositories\Implementation\UserRepository.cs" />

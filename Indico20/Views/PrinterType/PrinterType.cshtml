@@ -1,0 +1,107 @@
+﻿@using Indico20.BusinessObjects.Objects.Implementation
+
+@{
+    ViewBag.Title = "PrinterType";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<div class="row">
+    <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12">
+        <div class="page-header">
+            <div class="header-actions">
+                <button class="btn btn-primary iadd pull-right" id="addNewButton">New printer type</button>
+            </div>
+            <h3>
+               Printer Types
+            </h3>
+        </div>
+    </div>
+</div>
+<div class="row" style="margin-top: 20px;">
+    @(Html.Kendo().Window()
+            .Name("editWindow")
+            .Title("Edit printer type")
+            .Content(@<div style="margin-left: 20px;">
+                <form action="@Url.Action("Edit", "PrinterType")" method="POST" id="editWindow-form">
+                    <input type="text" name="id" style="display: none;" id="editWindow-id" />
+                    <div class="form-group">
+                        <label class="control-label">Name</label>
+                        <input type="text" name="name" required class="form-control form-group-sm" id="editWindow-name" style="width: 250px" />
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label">Prefix</label>
+                        <input type="text" name="prefix" class="form-control" id="editWindow-prefix" style="width: 200px" />
+                    </div>
+                    <div class="form-group">
+                        <div>
+                            <button class="form-control btn btn-primary pull-right" type="submit" style="width: 50px; height: 25px;" id="editWindow-submit">Save</button>
+                        </div>
+                    </div>
+                </form>
+            </div>)
+            .Width(500)
+            .Height(300)
+            .Visible(false)
+            .Draggable()
+    )
+
+
+
+    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+        @(Html.Kendo().Grid<PrinterType>()
+              .Name("printerTypes")
+              .Columns(columns =>
+              {
+                  columns.Bound(c => c.Name);
+                  columns.Bound(c => c.Prefix);
+                  columns.Bound(o => o.ID).ClientTemplate(@"<div><button onClick='editItem(#:data.ID#)' class='btn btn-info btn-sm pull-right editButton' data-id=' #:data.ID# ' type='button'>Edit</button></div>")
+                      .Width(70)
+                      .Title("")
+                      .Filterable(fa => fa.Enabled(false));
+              })
+              .Scrollable()
+              .Sortable()
+              .Filterable(filterable => filterable
+                   .Extra(false))
+              .Pageable(pageable => pageable.Refresh(true)
+                  .PageSizes(true)
+                  .ButtonCount(5))
+              .DataSource(dataSource => dataSource
+                  .Ajax()
+                  .Read(read => read.Action("GetAll", "PrinterType"))
+                  .PageSize(20)).HtmlAttributes(new { style = "height: 450px;" })
+        )
+    </div>
+    <script type="text/javascript">
+        function editItem(id) {
+            var myWindow = $("#editWindow");
+            $.post("@Url.Action("Get","PrinterType")", { "id": id })
+                .done(function(data) {
+                    if (data != null) {
+                        $("#editWindow-id").val(id);
+                        $("#editWindow-name").val(data.Name);
+                        $("#editWindow-prefix").val(data.Prefix);
+                        myWindow = myWindow.data("kendoWindow");
+                        myWindow.title("Edit printer type");
+                        $("#editWindow-form").attr("action", '@Url.Action("Edit", "PrinterType")');
+                        myWindow.center().open();
+                    }
+                });
+        }
+
+        $(document).ready(function() {
+            $("#addNewButton").click(function() {
+                var myWindow = $("#editWindow").data("kendoWindow");
+                $("#editWindow-id").val("");
+                $("#editWindow-name").val("");
+                $("#editWindow-prefix").val("");
+                myWindow.title("Add new printer type");
+                $("#editWindow-form").attr("action", '@Url.Action("Add", "PrinterType")');
+                myWindow.center().open();
+            });
+        });
+    </script>
+</div>
+
+

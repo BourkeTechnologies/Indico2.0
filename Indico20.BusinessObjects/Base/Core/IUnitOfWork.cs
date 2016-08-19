@@ -16,5 +16,8 @@ namespace Indico20.BusinessObjects.Base.Core
         IAgeGroupRepository AgeGroupRepository { get; }
         IColourProfileRepository ColourProfileRepository { get; }
         IGenderRepository GenderRepository { get; }
+        IPrinterRepository PrinterRepository { get; }
+        IPrinterTypeRepository PrinterTypeRepository { get; }
+        IProductionLineRepository ProductionLineRepository { get; }
     }
 }

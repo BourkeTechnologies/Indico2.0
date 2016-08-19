@@ -10,22 +10,17 @@ namespace Indico20.BusinessObjects.Base.Implementation
 
         public ICompanyRepository CompanyRepository { get; }
         public IUserStatusRepository UserStatusRepository { get; }
-
         public IMenuItemRepository MenuItemRepository { get; }
-
         public IUserRepository UserRepository { get; }
-
         public IRoleRepository RoleRepository { get; }
-
         public IOrderRepository OrderRepository { get; }
-
         public IOrderDetailRepository OrderDetailRepository { get; }
-
         public IAgeGroupRepository AgeGroupRepository { get; }
-
         public IColourProfileRepository ColourProfileRepository { get; }
-
         public IGenderRepository GenderRepository { get; }
+        public IPrinterRepository PrinterRepository { get; }
+        public IPrinterTypeRepository PrinterTypeRepository { get; }
+        public IProductionLineRepository ProductionLineRepository { get; }
 
         public UnitOfWork()
         {
@@ -40,6 +35,9 @@ namespace Indico20.BusinessObjects.Base.Implementation
             AgeGroupRepository = new AgeGroupRepository(_context);
             ColourProfileRepository = new ColourProfileRepository(_context);
             GenderRepository = new GenderRepository(_context);
+            PrinterRepository = new PrinterRepository(_context);
+            PrinterTypeRepository = new PrinterTypeRepository(_context);
+            ProductionLineRepository = new ProductionLineRepository(_context);
         }
 
         public void Complete()
