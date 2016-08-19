@@ -1405,3 +1405,18 @@ GO
 
 --**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**
 
+DECLARE @ID int
+INSERT INTO [dbo].[ControllerAction] (Controller,[Action]) VALUES('ColourProfile','Index')
+SET @ID = SCOPE_IDENTITY()
+UPDATE [dbo].[MenuItem] SET ControllerAction = @ID  WHERE Name = 'Color Profiles'
+GO
+
+--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**
+
+DECLARE @ID int
+INSERT INTO [dbo].[ControllerAction] (Controller,[Action]) VALUES('Gender','Index')
+SET @ID = SCOPE_IDENTITY()
+UPDATE [dbo].[MenuItem] SET ControllerAction = @ID  WHERE Name = 'Gender'
+GO
+
+--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**
