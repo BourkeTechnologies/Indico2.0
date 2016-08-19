@@ -17,5 +17,6 @@ namespace Indico20.BusinessObjects.Base.Core
         IEnumerable<T> Find<T>(Func<T, bool> predicate) where T : class, IEntity;
         IEnumerable<T> GetFromStoredProcedure<T>(params object[] parameters) where T : class, ISpResult;
         IEnumerable<T> Where<T>(IDictionary<string, object> values) where T : class, IEntity;
+        int Count<T>();
     }
 }

@@ -209,5 +209,10 @@ namespace Indico20.BusinessObjects.Base.Implementation
             }
             return result;
         }
+
+        public int Count<T>()
+        {
+            return _connection.ExecuteScalar<int>(QueryBuilder.Count(typeof(T).Name));
+        }
     }
 }

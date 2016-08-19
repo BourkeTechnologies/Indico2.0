@@ -15,6 +15,8 @@ namespace Indico20.BusinessObjects.Repositories.Implementation
     {
         protected IDbContext Context;
 
+        public int Count { get { return Context.Count<T>(); } }
+
         protected Repository(IDbContext context)
         {
             Context = context;
@@ -59,5 +61,7 @@ namespace Indico20.BusinessObjects.Repositories.Implementation
         {
             return Context.Where<T>(propertyValues);
         }
+
+
     }
 }

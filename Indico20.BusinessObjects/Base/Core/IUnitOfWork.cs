@@ -14,5 +14,7 @@ namespace Indico20.BusinessObjects.Base.Core
         IOrderRepository OrderRepository { get; }
         IOrderDetailRepository OrderDetailRepository { get; }
         IAgeGroupRepository AgeGroupRepository { get; }
+        IColourProfileRepository ColourProfileRepository { get; }
+        IGenderRepository GenderRepository { get; }
     }
 }

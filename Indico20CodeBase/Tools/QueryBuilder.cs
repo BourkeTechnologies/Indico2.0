@@ -163,6 +163,16 @@ namespace Indico20CodeBase.Tools
             return string.Format(stringBuilder + " WHERE " + wherestrings.Aggregate((c, n) => n + " AND " + c));
         }
 
+        /// <summary>
+        /// Create query for get total count of a table
+        /// </summary>
+        /// <param name="tableName">name of the table</param>
+        /// <returns></returns>
+        public static string Count(string tableName)
+        {
+            return string.IsNullOrWhiteSpace(tableName) ? null : string.Format("SELECT COUNT(*) FROM [dbo].[{0}]");
+        }
+
         private static string GenerateColumnNameList(IEnumerable<string> columnNames)
         {
             var stringBuilder = new StringBuilder();

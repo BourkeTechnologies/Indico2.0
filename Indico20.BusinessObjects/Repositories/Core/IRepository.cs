@@ -6,6 +6,7 @@ namespace Indico20.BusinessObjects.Repositories.Core
 {
     public interface IRepository<T> where T : IEntity
     {
+        int Count { get; }
         T Get(int id);
         IEnumerable<T> Get();
         IEnumerable<T> Find(Func<T, bool> predicate);
@@ -14,6 +15,5 @@ namespace Indico20.BusinessObjects.Repositories.Core
         void Delete(T entity);
         void DeleteRange(IEnumerable<T> ids);
         IEnumerable<T> Where(IDictionary<string, object> propertyValues);
-
     }
 }

@@ -1,20 +1,19 @@
-﻿
+﻿@using Indico20.BusinessObjects.Objects.Implementation
+
 @{
-    ViewBag.Title = "AgeGroup";
+    ViewBag.Title = "Gender";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-@using Indico20.BusinessObjects.Objects.Implementation
-@model AgeGroup
 
 <div class="row">
     <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12">
         <div class="page-header">
             <div class="header-actions">
-                <button class="btn btn-primary iadd pull-right" id="addNewButton">New Age Group</button>
+                <button class="btn btn-primary iadd pull-right" id="addNewButton">New Gender</button>
             </div>
             <h3>
-                Age Groups
+                Genders
             </h3>
         </div>
     </div>
@@ -22,18 +21,13 @@
 <div class="row" style="margin-top: 20px;">
     @(Html.Kendo().Window()
             .Name("editWindow")
-            .Title("Edit Age Group")
+            .Title("Edit Gender")
             .Content(@<div style="margin-left: 20px;">
-
-                <form action="@Url.Action("EditAgeGroup", "AgeGroup")" method="POST" id="editWindow-form">
+                <form action="@Url.Action("Edit", "Gender")" method="POST" id="editWindow-form">
                     <input type="text" name="id" style="display: none;" id="editWindow-id" />
                     <div class="form-group">
                         <label class="control-label">Name</label>
-                        <input type="text" name="name" required class="form-control form-group-sm" id="editWindow-name" style="width: 100px;" />
-                    </div>
-                    <div class="form-group">
-                        <label class="control-label">Description</label>
-                        <textarea name="description" class="form-control" style="width: 300px;" rows="3" id="editWindow-description" placeholder="Description of the Age Group"></textarea>
+                        <input type="text" name="name" required class="form-control form-group-sm" id="editWindow-name" style="width: 250px" />
                     </div>
                     <div class="form-group">
                         <div>
@@ -42,8 +36,8 @@
                     </div>
                 </form>
             </div>)
-            .Width(400)
-            .Height(280)
+            .Width(700)
+            .Height(150)
             .Visible(false)
             .Draggable()
     )
@@ -51,16 +45,15 @@
 
 
     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-        @(Html.Kendo().Grid<AgeGroup>()
-              .Name("AgeGroups")
+        @(Html.Kendo().Grid<Gender>()
+              .Name("colourProfiles")
               .Columns(columns =>
               {
-                  columns.Bound(c => c.Name);
-                  columns.Bound(c => c.Description);
+                  columns.Bound(c => c.Name).Title("");
                   columns.Bound(o => o.ID).ClientTemplate(@"<div><button onClick='editItem(#:data.ID#)' class='btn btn-info btn-sm pull-right editButton' data-id=' #:data.ID# ' type='button'>Edit</button></div>")
                       .Width(70)
                       .Title("")
-                      .Filterable(fa => fa.Enabled(false)); ;
+                      .Filterable(fa => fa.Enabled(false));
               })
               .Scrollable()
               .Groupable()
@@ -72,22 +65,21 @@
                   .ButtonCount(5))
               .DataSource(dataSource => dataSource
                   .Ajax()
-                  .Read(read => read.Action("GetAgeGroups", "AgeGroup"))
+                  .Read(read => read.Action("GetAll", "Gender"))
                   .PageSize(20)).HtmlAttributes(new { style = "height: 450px;" })
         )
     </div>
     <script type="text/javascript">
         function editItem(id) {
             var myWindow = $("#editWindow");
-            $.post("@Url.Action("GetAgeGroup","AgeGroup")", { "id": id })
+            $.post("@Url.Action("Get","Gender")", { "id": id })
                 .done(function(data) {
                     if (data != null) {
                         $("#editWindow-id").val(id);
                         $("#editWindow-name").val(data.Name);
-                        $("#editWindow-description").val(data.Description);
                         myWindow = myWindow.data("kendoWindow");
-                        myWindow.title("Edit age group");
-                        $("#editWindow-form").attr("action", '@Url.Action("EditAgeGroup", "AgeGroup")');
+                        myWindow.title("Edit Gender");
+                        $("#editWindow-form").attr("action", '@Url.Action("Edit", "Gender")');
                         myWindow.center().open();
                     }
                 });
@@ -96,13 +88,13 @@
         $(document).ready(function() {
             $("#addNewButton").click(function() {
                 var myWindow = $("#editWindow").data("kendoWindow");
-                myWindow.title("Add new age group");
                 $("#editWindow-id").val("");
                 $("#editWindow-name").val("");
-                $("#editWindow-description").val("");
-                $("#editWindow-form").attr("action", '@Url.Action("AddAgeGroup","AgeGroup")');
+                myWindow.title("Add new Gender");
+                $("#editWindow-form").attr("action", '@Url.Action("Add","Gender")');
                 myWindow.center().open();
             });
         });
     </script>
 </div>
+

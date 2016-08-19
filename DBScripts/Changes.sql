@@ -1401,3 +1401,7 @@ DECLARE @ID int
 INSERT INTO [dbo].[ControllerAction] (Controller,[Action]) VALUES('AgeGroup','Index')
 SET @ID = SCOPE_IDENTITY()
 UPDATE [dbo].[MenuItem] SET ControllerAction = @ID  WHERE Name = 'Age Groups'
+GO
+
+--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**
+

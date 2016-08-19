@@ -23,6 +23,10 @@ namespace Indico20.BusinessObjects.Base.Implementation
 
         public IAgeGroupRepository AgeGroupRepository { get; }
 
+        public IColourProfileRepository ColourProfileRepository { get; }
+
+        public IGenderRepository GenderRepository { get; }
+
         public UnitOfWork()
         {
             _context = new IndicoContext();
@@ -34,6 +38,8 @@ namespace Indico20.BusinessObjects.Base.Implementation
             OrderRepository = new OrderRepository(_context);
             OrderDetailRepository = new OrderDetailRepository(_context);
             AgeGroupRepository = new AgeGroupRepository(_context);
+            ColourProfileRepository = new ColourProfileRepository(_context);
+            GenderRepository = new GenderRepository(_context);
         }
 
         public void Complete()
