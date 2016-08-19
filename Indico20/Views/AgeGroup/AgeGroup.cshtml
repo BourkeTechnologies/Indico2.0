@@ -29,11 +29,11 @@
                     <input type="text" name="id" style="display: none;" id="editWindow-id" />
                     <div class="form-group">
                         <label class="control-label">Name</label>
-                        <input type="text" name="name" required class="form-control form-group-sm" id="editWindow-name" style="width: 100px;" />
+                        <input type="text" name="name" required class="form-control form-group-sm" id="editWindow-name" style="width: 250px;" />
                     </div>
                     <div class="form-group">
                         <label class="control-label">Description</label>
-                        <textarea name="description" class="form-control" style="width: 300px;" rows="3" id="editWindow-description" placeholder="Description of the Age Group"></textarea>
+                        <textarea name="description" class="form-control" style="width: 450px;" rows="3" id="editWindow-description" placeholder="Description of the Age Group"></textarea>
                     </div>
                     <div class="form-group">
                         <div>
@@ -42,8 +42,8 @@
                     </div>
                 </form>
             </div>)
-            .Width(400)
-            .Height(280)
+            .Width(700)
+            .Height(320)
             .Visible(false)
             .Draggable()
     )
@@ -63,7 +63,6 @@
                       .Filterable(fa => fa.Enabled(false)); ;
               })
               .Scrollable()
-              .Groupable()
               .Sortable()
               .Filterable(filterable => filterable
                    .Extra(false))
