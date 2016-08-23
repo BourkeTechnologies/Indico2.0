@@ -1428,3 +1428,11 @@ UPDATE [dbo].[MenuItem] SET ControllerAction = @ID  WHERE Name = 'Print Types'
 GO
 
 --**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**
+
+DECLARE @ID int
+INSERT INTO [dbo].[ControllerAction] (Controller,[Action]) VALUES('Printer','Index')
+SET @ID = SCOPE_IDENTITY()
+UPDATE [dbo].[MenuItem] SET ControllerAction = @ID  WHERE Name = 'Printers'
+GO
+
+--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**

@@ -95,10 +95,15 @@
         )
     </div>
     <script type="text/javascript">
+
+        $(document).ready(function() {
+            $('#editWindow-form').validator();
+        });
+
         function editItem(id) {
             var myWindow = $("#editWindow");
             $.post("@Url.Action("Get", "ColourProfile")", { "id": id })
-                .done(function (data) {
+                .done(function(data) {
                     if (data != null) {
                         $("#editWindow-id").val(id);
                         $("#editWindow-name").val(data.Name);
@@ -107,14 +112,21 @@
                         myWindow.title("Edit colour profile");
                         myWindow.center().open();
                         $("#editWindow-submit").off('click');
-                        $("#editWindow-submit").on('click', function () {
-                            $.post("@Url.Action("Edit", "ColourProfile")", $('#editWindow-form').serializeObject()).done(function () {
-                                myWindow.close();
-                                RefreshKendoGrid("colourProfiles");
-                            });
+                        $("#editWindow-submit").on('click', function() {
+                            if (isFormValid("editWindow-form")) {
+                                $.post("@Url.Action("Edit", "ColourProfile")", $('#editWindow-form').serializeObject()).done(function (d) {
+                                    if (d === 1) {
+                                        displayNotification("Successfully edited the colour profile!", "info");
+                                    } else {
+                                        displayNotification("Unable to edit the colour profile!", "error");
+                                    }
+                                    myWindow.close();
+                                    RefreshKendoGrid("colourProfiles");
+                                });
+                            }
                         });
                     }
-                });
+             });
         }
 
         function deleteItem(id) {
@@ -123,22 +135,27 @@
             var confirm = $("#deleteConfirm");
             confirm = confirm.data("kendoWindow");
             $("#deleteConfirm-yesButton").off('click');
-            $("#deleteConfirm-yesButton").on('click',function() {
-                $.post("@Url.Action("Delete", "ColourProfile")", { "id": id }).done(function () {
+            $("#deleteConfirm-yesButton").on('click', function() {
+                $.post("@Url.Action("Delete", "ColourProfile")", { "id": id }).done(function (d) {
+                    if (d === 1) {
+                        displayNotification("Successfully deleted the colour profile!", "info");
+                    } else {
+                        displayNotification("Unable to delete the colour profile!", "error");
+                    }
                     confirm.close();
                     RefreshKendoGrid("colourProfiles");
                 });
             });
             $("#deleteConfirm-noButton").off('click');
-            $("#deleteConfirm-noButton").on('click', function () {
+            $("#deleteConfirm-noButton").on('click', function() {
                 confirm.close();
             });
             confirm.center().open();
 
         }
 
-        $(document).ready(function () {
-            $("#addNewButton").click(function () {
+        $(document).ready(function() {
+            $("#addNewButton").click(function() {
                 var myWindow = $("#editWindow").data("kendoWindow");
                 $("#editWindow-id").val("");
                 $("#editWindow-name").val("");
@@ -146,11 +163,18 @@
                 myWindow.title("Add new colour profile");
                 myWindow.center().open();
                 $("#editWindow-submit").off('click');
-                $("#editWindow-submit").on('click', function () {
-                    $.post("@Url.Action("Add", "ColourProfile")", $('#editWindow-form').serializeObject()).done(function () {
-                        myWindow.close();
-                        RefreshKendoGrid("colourProfiles");
-                    });
+                $("#editWindow-submit").on('click', function() {
+                    if (isFormValid("editWindow-form")) {
+                        $.post("@Url.Action("Add", "ColourProfile")", $('#editWindow-form').serializeObject()).done(function (d) {
+                            if (d === 1) {
+                                displayNotification("Successfully added the colour profile!", "info");
+                            } else {
+                                displayNotification("Unable to add the colour profile!", "error");
+                            }
+                            myWindow.close();
+                            RefreshKendoGrid("colourProfiles");
+                        });
+                    }
                 });
             });
         });

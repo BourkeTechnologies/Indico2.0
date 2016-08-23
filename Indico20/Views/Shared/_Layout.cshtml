@@ -24,6 +24,7 @@
 
     <script src="@Url.Content("~/Scripts/bootstrap.min.js")"></script>
     <script src="@Url.Content("~/Scripts/IndicoScripts.js")"></script>
+    <script src="@Url.Content("~/Scripts/validator.min.js")"></script>
 
     <style type="text/css">
         .rootContainer {
@@ -46,7 +47,11 @@
 <body>
     <div class="wrapper">
         @{Html.RenderAction("Navigation", "Navigation");}
+
         <div class="container rootContainer">
+            @(Html.Kendo().Notification()
+            .Name("notification")
+            )
             @RenderBody()
         </div>
     </div>

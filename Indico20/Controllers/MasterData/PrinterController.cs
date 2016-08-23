@@ -2,7 +2,7 @@
 using Indico20.BusinessObjects.Objects.Implementation;
 using Kendo.Mvc.Extensions;
 using Kendo.Mvc.UI;
-using System.Collections.Generic;
+using System;
 using System.Linq;
 using System.Web.Mvc;
 
@@ -10,28 +10,6 @@ namespace Indico20.Controllers.MasterData
 {
     public class PrinterController : Controller
     {
-        private List<Printer> Printers
-        {
-            get
-            {
-                if (!ListChanged) return Session["Printers"] == null ? null : (List<Printer>)Session["Printers"];
-                Session["Printers"] = null;
-                return null;
-            }
-            set
-            {
-                if (value != null) Session["Printers"] = value;
-                ListChanged = false;
-            }
-        }
-
-        private bool ListChanged
-        {
-            get { return Session["PrinterListChanged"] != null && (bool)Session["PrinterListChanged"]; }
-            set { Session["PrinterListChanged"] = value; }
-        }
-
-
         public ActionResult Index()
         {
             return View("Printer");
@@ -39,12 +17,10 @@ namespace Indico20.Controllers.MasterData
 
         public ActionResult GetAll([DataSourceRequest] DataSourceRequest request)
         {
-            if (Printers != null)
-                return Json(Printers.ToDataSourceResult(request));
             using (var unit = new UnitOfWork())
             {
-                Printers = unit.PrinterRepository.Get().ToList();
-                return Json(Printers.ToDataSourceResult(request));
+                var printers = unit.PrinterRepository.Get().ToList();
+                return Json(printers.ToDataSourceResult(request));
             }
         }
 
@@ -52,31 +28,43 @@ namespace Indico20.Controllers.MasterData
         public ActionResult Edit(string name, string description, int id)
         {
             if (id <= 0 || string.IsNullOrWhiteSpace(name))
-                return RedirectToAction("Index");
+                return Json(0);
             using (var unit = new UnitOfWork())
             {
                 var printer = unit.PrinterRepository.Get(id);
                 if (printer == null)
-                    return RedirectToAction("Index");
+                    return Json(0);
                 printer.Name = name;
                 printer.Description = description;
-                unit.Complete();
-                ListChanged = true;
+                try
+                {
+                    unit.Complete();
+                    return Json(1);
+                }
+                catch (Exception)
+                {
+                    return Json(0);
+                }
             }
-            return RedirectToAction("Index");
         }
 
         [HttpPost]
         public ActionResult Add(string name, string description)
         {
             if (string.IsNullOrEmpty(name))
-                return RedirectToAction("Index");
+                return Json(0);
             using (var unit = new UnitOfWork())
             {
                 unit.PrinterRepository.Add(new Printer { Description = description, Name = name });
-                unit.Complete();
-                ListChanged = true;
-                return RedirectToAction("Index");
+                try
+                {
+                    unit.Complete();
+                    return Json(1);
+                }
+                catch (Exception)
+                {
+                    return Json(0);
+                }
             }
         }
 
@@ -87,6 +75,26 @@ namespace Indico20.Controllers.MasterData
             {
                 var printer = unit.PrinterRepository.Get(id);
                 return printer != null ? Json(new { printer.Name, printer.Description }) : null;
+            }
+        }
+
+        [HttpPost]
+        public ActionResult Delete(int id)
+        {
+            if (id < 1)
+                return Json(0);
+            using (var unit = new UnitOfWork())
+            {
+                unit.PrinterRepository.Delete(new Printer { ID = id });
+                try
+                {
+                    unit.Complete();
+                    return Json(1);
+                }
+                catch (Exception)
+                {
+                    return Json(0);
+                }
             }
         }
     }

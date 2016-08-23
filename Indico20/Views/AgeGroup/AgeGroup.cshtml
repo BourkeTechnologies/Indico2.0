@@ -25,19 +25,19 @@
             .Title("Edit Age Group")
             .Content(@<div style="margin-left: 20px;">
 
-                <form action="@Url.Action("EditAgeGroup", "AgeGroup")" method="POST" id="editWindow-form">
+                <form action="@Url.Action("Edit", "AgeGroup")" method="POST" id="editWindow-form">
                     <input type="text" name="id" style="display: none;" id="editWindow-id" />
                     <div class="form-group">
                         <label class="control-label">Name</label>
-                        <input type="text" name="name" required class="form-control form-group-sm" id="editWindow-name" style="width: 250px;" />
+                        <input type="text" name="name" required class="form-control form-group-sm" id="editWindow-name" style="width: 250px" />
                     </div>
                     <div class="form-group">
                         <label class="control-label">Description</label>
-                        <textarea name="description" class="form-control" style="width: 450px;" rows="3" id="editWindow-description" placeholder="Description of the Age Group"></textarea>
+                        <textarea name="description" class="form-control" style="width: 450px;" rows="3" id="editWindow-description" placeholder="Description of the age group"></textarea>
                     </div>
                     <div class="form-group">
                         <div>
-                            <button class="form-control btn btn-primary pull-right" type="submit" style="width: 50px; height: 25px;" id="editWindow-submit">Save</button>
+                            <button class="form-control btn btn-primary pull-right" type="button" style="width: 50px; height: 25px;" id="editWindow-submit">Save</button>
                         </div>
                     </div>
                 </form>
@@ -48,17 +48,36 @@
             .Draggable()
     )
 
+    @(Html.Kendo().Window()
+    .Name("deleteConfirm")
+    .Title("Delete Age group")
+          .Content(@<div style="margin-left: 20px;">
+        <p>Are you sure you wish to delete this Age Group? </p>
+        <div class="window-footer">
+            <button class="btn btn-primary" id="deleteConfirm-yesButton">Yes</button>
+            <button class="btn btn-info" id="deleteConfirm-noButton">No</button>
+        </div>
+    </div>)
+            .Width(450)
+            .Height(100)
+            .Visible(false)
+            .Draggable()
+          )
+
 
 
     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
         @(Html.Kendo().Grid<AgeGroup>()
-              .Name("AgeGroups")
+              .Name("ageGroups")
               .Columns(columns =>
               {
                   columns.Bound(c => c.Name);
                   columns.Bound(c => c.Description);
-                  columns.Bound(o => o.ID).ClientTemplate(@"<div><button onClick='editItem(#:data.ID#)' class='btn btn-info btn-sm pull-right editButton' data-id=' #:data.ID# ' type='button'>Edit</button></div>")
-                      .Width(70)
+                  columns.Bound(o => o.ID).ClientTemplate(@"<div>
+                                                                <button onClick='editItem(#:data.ID#)' class='btn btn-info btn-sm pull-right editButton' data-id=' #:data.ID# ' type='button'>Edit</button>
+                                                                <div><button onClick='deleteItem(#:data.ID#)' class='btn btn-warning btn-sm pull-right deleteButton' data-id=' #:data.ID# ' type='button'>Delete</button>
+                                                            </div>")
+                      .Width(135)
                       .Title("")
                       .Filterable(fa => fa.Enabled(false)); ;
               })
@@ -71,14 +90,14 @@
                   .ButtonCount(5))
               .DataSource(dataSource => dataSource
                   .Ajax()
-                  .Read(read => read.Action("GetAgeGroups", "AgeGroup"))
+                  .Read(read => read.Action("GetAll", "AgeGroup"))
                   .PageSize(20)).HtmlAttributes(new { style = "height: 450px;" })
         )
     </div>
     <script type="text/javascript">
         function editItem(id) {
             var myWindow = $("#editWindow");
-            $.post("@Url.Action("GetAgeGroup","AgeGroup")", { "id": id })
+            $.post("@Url.Action("Get","AgeGroup")", { "id": id })
                 .done(function(data) {
                     if (data != null) {
                         $("#editWindow-id").val(id);
@@ -86,10 +105,47 @@
                         $("#editWindow-description").val(data.Description);
                         myWindow = myWindow.data("kendoWindow");
                         myWindow.title("Edit age group");
-                        $("#editWindow-form").attr("action", '@Url.Action("EditAgeGroup", "AgeGroup")');
                         myWindow.center().open();
+                        $("#editWindow-submit").off('click');
+                        $("#editWindow-submit").on('click', function() {
+                            if (isFormValid("editWindow-form")) {
+                                $.post("@Url.Action("Edit", "AgeGroup")", $('#editWindow-form').serializeObject()).done(function (d) {
+                                    if (d === 1) {
+                                        displayNotification("Successfully edited the age group!", "info");
+                                    } else {
+                                        displayNotification("Unable to edit the age group!", "error");
+                                    }
+                                    myWindow.close();
+                                    RefreshKendoGrid("ageGroups");
+                                });
+                            }
+                        });
                     }
                 });
+        }
+
+        function deleteItem(id) {
+            if (id == null)
+                return;
+            var confirm = $("#deleteConfirm");
+            confirm = confirm.data("kendoWindow");
+            $("#deleteConfirm-yesButton").off('click');
+            $("#deleteConfirm-yesButton").on('click', function() {
+                $.post("@Url.Action("Delete", "AgeGroup")", { "id": id }).done(function (d) {
+                    if (d === 1) {
+                        displayNotification("Successfully deleted the age group!", "info");
+                    } else {
+                        displayNotification("Unable to delete the age group!", "error");
+                    }
+                    confirm.close();
+                    RefreshKendoGrid("ageGroups");
+                });
+            });
+            $("#deleteConfirm-noButton").off('click');
+            $("#deleteConfirm-noButton").on('click', function() {
+                confirm.close();
+            });
+            confirm.center().open();
         }
 
         $(document).ready(function() {
@@ -99,8 +155,16 @@
                 $("#editWindow-id").val("");
                 $("#editWindow-name").val("");
                 $("#editWindow-description").val("");
-                $("#editWindow-form").attr("action", '@Url.Action("AddAgeGroup","AgeGroup")');
                 myWindow.center().open();
+                $("#editWindow-submit").off('click');
+                $("#editWindow-submit").on('click', function() {
+                    if (isFormValid("editWindow-form")) {
+                        $.post("@Url.Action("Add", "AgeGroup")", $('#editWindow-form').serializeObject()).done(function () {
+                            myWindow.close();
+                            RefreshKendoGrid("ageGroup");
+                        });
+                    }
+                });
             });
         });
     </script>
